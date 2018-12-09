@@ -31,17 +31,14 @@ def panduan():
             #從前端hospital.html的unputbox的name抓使用者輸入的值
             county = request.form.get("county")
             township = request.form.get("township")
-            # return Search().search_area(county, township)
-            if county == '' and township == '':
-                return
+            if county.find('台') != -1:
+                county = county.replace('台', '臺')
             return CheckBox().print_ckbox(Search().search_area(county, township))
         elif 'searchDisease' in request.form:
             disease = request.form.get('disease')
-            # return Search().search_disease(disease)
             return Select().select_disease(Search().search_disease(disease))
         elif 'searchType' in request.form:
             types = request.values.getlist('type')
-            # return Search().search_type(types)
             return CheckBox().print_ckbox(Search().search_type(types))
         elif 'searchCategory' in request.form:
             keyword1 = request.form.get('keyword1')
@@ -59,6 +56,8 @@ def panduan():
             ## 地區
             county = request.form.get("county")
             township = request.form.get("township")
+            if county.find('台') != -1:
+                county = county.replace('台', '臺')
             ## 特殊疾病
             disease = request.form.get('disease')
             ## 醫院層級
