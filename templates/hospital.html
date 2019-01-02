@@ -35,38 +35,38 @@
     {% block scripts %}
     <script language="javascript" type="text/javascript" >
         $(function(){
-        var ty = ["氣喘疾病","急性心肌梗塞疾病","糖尿病","人工膝關節手術","腦中風","鼻竇炎","子宮肌瘤手術","消化性潰瘍疾病"];
-        $("#ty").autocomplete({
-            source:ty}
-            );
-
+             var ty = ["氣喘疾病","急性心肌梗塞疾病","糖尿病","人工膝關節手術","腦中風","鼻竇炎","子宮肌瘤手術","消化性潰瘍疾病"];
+             $("#ty").autocomplete({
+                 source:ty}
+             );
         });
-
-
 
         $(function () {
             var $table = $('table');
             var $tableB = $('h2');
             var currentPage = 0;//當前頁默認值為0
             var pageSize = 15*4;//每一頁顯示的數目
-      $table.bind('paging', function () {
-        $table.find('tbody tr').hide().slice(currentPage * pageSize, (currentPage + 1) * pageSize).show();
-      });
+
+        $table.bind('paging', function () {
+            $table.find('tbody tr').hide().slice(currentPage * pageSize, (currentPage + 1) * pageSize).show();
+
+        });
       var sumRows = $table.find('tbody tr').length;
       var sumPages = Math.ceil(sumRows / pageSize);//總頁數
       var large = sumPages * 36;
       var $pager = $('<div class="page" style="width:' + large + 'px" ></div>');  //新建div，放入a標籤,顯示底部分頁碼
       for (var pageIndex = 0; pageIndex < sumPages; pageIndex++) {
-        $('<a href="#results" id="pageStyle" onclick="changCss(this)"><span>' + (pageIndex + 1) + '</span></a>').bind("click", { "newPage": pageIndex }, function (event) {
+        $('<a href="#thead" id="pageStyle" onclick="changCss(this)"><span>' + (pageIndex + 1) + '</span></a>').bind("click", { "newPage": pageIndex }, function (event) {
           currentPage = event.data["newPage"];
           $table.trigger("paging");
+
           //觸發分頁函數
         }).appendTo($pager);
         $pager.append(" ");
+
       }
       $pager.insertAfter($tableB);
       $table.trigger("paging");
-
       //默認第一頁的a標籤效果
       var $pagess = $('#pageStyle');
       $pagess[0].style.backgroundColor = "rgb(101,129,152)";
@@ -177,22 +177,7 @@
         }
       }
     }
-    // 按提交出現的訊息
-        <!--function onSubmitVote() {-->
-            <!--var items = document.getElementsByName("item");-->
-            <!--var choices = 0;-->
-            <!--for (var j = 0; j < items.length; j++) {-->
-                <!--if (items[j].checked) {-->
-                    <!--choices++;-->
-                <!--}-->
-            <!--}-->
-            <!--if (choices == 0) {-->
-                <!--alert("請選擇選項再提交");-->
-            <!--}-->
-            <!--else {-->
-                <!--alert("提交成功");-->
-            <!--}-->
-        <!--}-->
+
 
     </script>
 
@@ -256,17 +241,19 @@
   font-size: 60px;
   font-weight: bold;
 }
+
 .textcolorb {
-    text-align: center;
+    text-align: left;
     color:black;
+    padding-top:10px;
+    font-size:17px;
 }
-.textcolorw {
-    text-align: center;
-    color:white;
-}
+
 .textcolorg {
-    text-align: center;
     color:rgb(73, 73, 73);
+    text-align:center;
+    font-size:35px;
+    font-weight:bold;
 }
 /* 三個搜尋框 */
 .border3 {
@@ -324,15 +311,12 @@
     border: 3px solid rgb(101,129,152);
     margin: 10px 7.5px;
     width: 500px;
-    height: 420px;
+    height: 360px;
     display: inline-block;
     vertical-align: top;
 }
 
 .bg{
-  /* background-color: lightpink; */
-  <!--background-image: linear-gradient(to top, #D28EFF  0%,#FFB7DD  100%);-->
-  <!--background-image: linear-gradient(to top, #D28EFF 0%, #E8CCFF 100%);-->
   margin:0px;
   padding:0px;
   background-image: url(https://images.unsplash.com/photo-1521540124319-66c09f0d5999?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=de1ecb553b42a0e7c749445672db4cf2&auto=format&fit=crop&w=1000&q=60);
@@ -362,8 +346,6 @@
   text-align: center;
 }
 .tt{
-
-
 }
 .left{
   margin-top: 0px;
@@ -403,13 +385,77 @@
   font-family:Microsoft JhengHei;
 }
 .imgLogo{
-  border:2px solid rgba(150, 150, 150, 0.507);
-border-radius:25px;
+  display:block;
+  width: 60%;
+  margin:20% auto;
 }
 .rl{
- display: inline-block;
- vertical-align: top;
+  display: inline-block;
+  vertical-align: top;
 }
+.typepl{
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+    padding-left: 30px;
+    padding-top:50px;
+}
+.typepr{
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+    padding-right: 30px;
+    padding-top:50px;
+}
+.keywordpr{
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+    padding-right: 30px
+}
+.keywordpl{
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+    padding-left: 30px
+}
+.footerImg{
+    display: inline-block;
+    vertical-align: top;
+    width:48%;
+}
+.footerText{
+    display: inline-block;
+    vertical-align: top;
+    width:50%;
+}
+.headerText{
+    padding:3% ;
+    display: inline-block;
+    vertical-align: top;
+    width:60%;
+}
+.headerImg{
+    display: inline-block;
+    max-width:300px;
+}
+.ckbox{
+    display: inline-block;
+    vertical-align: top;
+    width: 19.5%;
+    word-break: break-all;
+    padding:1%;
+}
+.overflowX{
+    overflow-x:hidden;
+}
+.review{
+    text-align:left;
+    padding-left:50px
+}
+.tableWidth{
+}
+
     /* 修改導覽列顏色 */
 
 .navbar {
@@ -511,7 +557,36 @@ border-radius:25px;
     color: #4c4c4c;
     background-color: rgb(184,206,217);
   }
+ .headerText{
+    padding:3% ;
+    display: inline-block;
+    vertical-align: top;
+    width:80%;
+ }
+ `
+ .headerImg{
+    display: inline-block;
+    max-width:300px;
+ }
+ .imgLogo{
+    display:block;
+    width: 60%;
+    margin:5% auto;
+    padding-top:10px
+ }
+ .textcolorb {
+    text-align: left;
+    color:black;
+    padding-top:10px;
+    font-size:14px;
+}
 
+.textcolorg {
+    color:rgb(73, 73, 73);
+    text-align:center;
+    font-size:25px;
+    font-weight:bold;
+}
 }
 @media (max-width: 767px) {
   .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item {
@@ -527,6 +602,19 @@ border-radius:25px;
   }
   .nofloat{
     clear:none;
+  }
+  .ckbox{
+    display: inline-block;
+    vertical-align: top;
+    width: 24.375%;
+    word-break: break-all;
+    padding:1%;
+  }
+  .overflowX{
+    overflow-x:scroll;
+  }
+  .tableWidth{
+    width:736px;
   }
 }
 
@@ -550,81 +638,113 @@ border-radius:25px;
     height: 280px;
     display: inline-block;
     vertical-align: top;
-    <!--color:pink;-->
-}
-/* 二個搜尋框 */
-.border2 {
+
+  }
+    /* 二個搜尋框 */
+  .border2 {
     border: 3px solid rgb(101,129,152);
     margin: 10px 7.5px;
     width:80%;
     height: 250px;
     display: inline-block;
     vertical-align: top;
-}
-/* 一個搜尋框 */
-.border1 {
+  }
+    /* 一個搜尋框 */
+  .border1 {
     border: 3px solid rgb(101,129,152);
     margin: 10px 7.5px;
     width:80%;
     height: 200px;
     display: inline-block;
     vertical-align: top;
-}
-.border11 {
+  }
+  .border11 {
     border: 3px solid rgb(101,129,152);
     margin: 10px 7.5px;
     width:80%;
     height: 220px;
-
-}
-.bordert{
+  }
+  .bordert{
     border: 3px solid rgb(101,129,152);
     margin: 10px 7.5px;
     width:80%;
     height: 180px;
     display: inline-block;
     vertical-align: top;
-}
-/* 分類多選搜尋框 */
-.border9 {
+  }
+    /* 分類多選搜尋框 */
+  .border9 {
     border: 3px solid rgb(101,129,152);
     margin: 10px 7.5px;
     width:80%;
     height: 320px;
     display: inline-block;
     vertical-align: top;
-}
-/* 評價搜尋框 */
-.borderRe {
+  }
+    /* 評價搜尋框 */
+  .borderRe {
     border: 3px solid rgb(101,129,152);
     margin: 10px 7.5px;
     width:80%;
     height: 400px;
     display: inline-block;
     vertical-align: top;
-}
-.tt{
+  }
+  .tt{
     width:200px;
+  }
 
-}
-.overflowX{
-   text-align:left;
-   overflow:auto;
-}
-.typepl{
+  .typepl{
     display: inline-block;
     vertical-align: top;
     text-align: left;
     padding-left: 10px;
     padding-top:0px;
-}
-.typepr{
+
+  }
+  .typepr{
     display: inline-block;
     vertical-align: top;
     text-align: left;
-    padding-right: 0px;
+    padding-right: 10px;
     padding-top:0px;
-}
+  }
+  .keywordpr{
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+    padding-right: 10px
+  }
+  .keywordpl{
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+    padding-left: 10px
+  }
+  .footerImg{
+    display: inline-block;
+    vertical-align: top;
+    width:100%;
+  }
+  .footerText{
+    display: inline-block;
+    vertical-align: top;
+    width:100%;
+  }
+  .ckbox{
+    display: inline-block;
+    vertical-align: top;
+    width: 32.5%;
+    word-break: break-all;
+    padding:1%;
+  }
+  .review{
+    text-align:center;
+    padding-left:0px;
+  }
+  .tableWidth{
+    width:600px;
+  }
 }
 
 .navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item {
@@ -638,11 +758,16 @@ border-radius:25px;
   color: #4c4c4c;
   background-color: rgb(184,206,217);
 }
-@media(max-width:501px){
 
-    .overflowX{
-    text-align:left;
+@media(max-width:410px){
+   .ckbox{
+      display: inline-block;
+      vertical-align: top;
+      width: 48.75%;
+      word-break: break-all;
+      padding:1%;
    }
+
 }
 .back-to-top {
     display:none;
@@ -662,20 +787,8 @@ border-radius:25px;
     text-decoration:none;
     color:#ffffff;
 }
-.typepl{
-    display: inline-block;
-    vertical-align: top;
-    text-align: left;
-    padding-left: 30px;
-    padding-top:50px;
-}
-.typepr{
-    display: inline-block;
-    vertical-align: top;
-    text-align: left;
-    padding-right: 30px;
-    padding-top:50px;
-}
+
+
 table {
     table-layout:fixed;
 
@@ -690,7 +803,7 @@ thead tr th {
 
 </head>
 <!-- 導覽列 -->
-<body class="span" style="overflow-x: hidden;">
+<body class="span" style="overflow-x: hidden;" >
 <!--回首頁浮動按鈕-->
 <a href="search" class="back-to-top" style="z-index:100">回到頁首</a>
 
@@ -721,55 +834,79 @@ return false;
             aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav span" style="text-align:center;">
             <li class="nav-item active">
                 <a class="nav-link span" href="/">搜尋 <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item dropdown">
+            <!--<li class="nav-item dropdown">-->
                 <!--<a class="nav-link dropdown-toggle" href="search" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
                     <!--搜尋-->
                 <!--</a>-->
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="text-align:center;">
-                    <div class="row">
-                        <div class="col" style="">
-                            <a class="dropdown-item" style="background-color:#bd1d1de5;color:white; ">依醫院</a>
-                            <a class="dropdown-item" href="#name">醫院名稱</a>
-                            <a class="dropdown-item" href="#area">醫院地點</a>
-                            <a class="dropdown-item" href="#type">醫院層級</a>
-                        </div>
-                        <div class="col" style="">
-                            <a class="dropdown-item" style="background-color:#bd1d1de5;color:white">依疾病</a>
-                            <!--<a class="dropdown-item" href="#department">醫院科別搜尋</a>-->
-                            <a class="dropdown-item" href="#dis">特殊疾病</a>
-                            <a class="dropdown-item" href="#topic">分類主題</a>
-                        </div>
-                        <div class="col" style="">
-                            <a class="dropdown-item"  style="background-color:#bd1d1de5;color:white">依評價</a>
-                            <a class="dropdown-item" href="#review">評價結果</a>
-                        </div>
-                    </div>
-                </div>
-            </li>
+                <!--<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="text-align:center;width:500px;">-->
+                    <!--<div class="row">-->
+                        <!--<div class="col" style="width:25%;">-->
+                            <!--<a class="dropdown-item" style="background-color:#bd1d1de5;color:white;display: inline-block;vertical-align: top; ">醫院特性</a>-->
+                            <!--<h6>醫院層級</h6>-->
+                            <!--<a class="dropdown-item" href="#type">醫學中心</a>-->
+                            <!--<a class="dropdown-item" href="#type">區域醫院</a>-->
+                            <!--<a class="dropdown-item" href="#type">地區醫院</a>-->
+                            <!--<a class="dropdown-item" href="#type">診所</a>-->
+                            <!--<h6>醫院地點</h6>-->
+                            <!--<a class="dropdown-item" href="#area">縣市</a>-->
+                            <!--<a class="dropdown-item" href="#area">鄉鎮市</a>-->
+                        <!--</div>-->
 
-
+                        <!--<div class="col" style="width:25%">-->
+                            <!--<a class="dropdown-item" style="background-color:#bd1d1de5;color:white;display: inline-block;vertical-align: top;">疾病分類</a>-->
+                            <!--<h6>慢性疾病</h6>-->
+                            <!--<a class="dropdown-item" href="#dis">特殊疾病</a>-->
+                            <!--<a class="dropdown-item" href="#topic">分類主題</a>-->
+                            <!--<h6>急重症</h6>-->
+                            <!--<a class="dropdown-item" href="#dis">特殊疾病</a>-->
+                            <!--<a class="dropdown-item" href="#topic">分類主題</a>-->
+                            <!--<h6>手術後</h6>-->
+                            <!--<a class="dropdown-item" href="#dis">特殊疾病</a>-->
+                            <!--<a class="dropdown-item" href="#topic">分類主題</a>-->
+                            <!--<h6>一般疾病</h6>-->
+                            <!--<a class="dropdown-item" href="#dis">特殊疾病</a>-->
+                            <!--<a class="dropdown-item" href="#topic">分類主題</a>-->
+                        <!--</div>-->
+                        <!--<div class="col" style="width:25%">-->
+                            <!--<a class="dropdown-item"  style="background-color:#bd1d1de5;color:white;display: inline-block;vertical-align: top;">評價分數</a>-->
+                            <!--<h6>整體評價</h6>-->
+                            <!--<a class="dropdown-item" href="#review">星等數目</a>-->
+                            <!--<a class="dropdown-item" href="#review">評價分數</a>-->
+                            <!--<a class="dropdown-item" href="#review">正向評價次數</a>-->
+                            <!--<a class="dropdown-item" href="#review">負向評價次數</a>-->
+                        <!--</div>-->
+                        <!--<div class="col" style="width:25%">-->
+                            <!--<a class="dropdown-item"  style="background-color:#bd1d1de5;color:white;display: inline-block;vertical-align: top;">其他</a>-->
+                            <!--<h6>醫院地點</h6>-->
+                            <!--<a class="dropdown-item" href="#disease">總治療人數</a>-->
+                            <!--<a class="dropdown-item" href="#review">優秀醫院</a>-->
+                            <!--<a class="dropdown-item" href="#">建議與問題</a>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</li>-->
         </ul>
     </div>
 </nav>
 <!-- 首頁背景圖 -->
 <div class="container-fiuld bg span">
     <div style="text-align:center">
-        <!-- 首頁文字介紹 -->
         <div style="background:rgba(255, 255, 255, 0.9);display: inline-block;vertical-align: top;margin:30px auto;width:80% ">
             <!-- 首頁logo -->
-            <div style="display: inline-block;margin:100px 60px">
-                <!--<img src="https://pbs.twimg.com/media/DrvK7_4VYAAWWNh.jpg" style="display:block;width: 200px" class="imgLogo">-->
-                <img src="{{ url_for('static', filename='logo2.0.png')}}" style="display:block;width: 180px" >
+            <div class="headerImg">
+                <img src="{{ url_for('static', filename='logo2.0.png')}}" class="imgLogo" style="">
             </div>
-            <div style="padding: 50px ;display: inline-block;vertical-align: top;">
-                <div class="textcolorg" style="font-size:35px;font-weight:bold;">輔大醫療機構評價網站測試版1.0</div>
-                <div style="text-align:center">
-                    <div class="textcolorb" style="text-align:left;padding-top:10px;max-width:510px">
+            <!-- 首頁文字介紹 -->
+            <div class="headerText">
+                <div class="textcolorg" style="">輔大醫療機構評價網站測試版1.0</div>
+                <div style="text-align:left">
+                    <div class="textcolorb">
                         輔大醫療機構評價網站是由輔大許多科系的老師及學生合作完成，主要目的是希望建構一個像旅館評價的網站，我們期望這個評價網站：<br>(1)病友都能看得懂<br>(2)具備豐富醫療品質資訊
                         <br>(3)病友就醫時能參考網站評價結果。<br>
                         評價網站的資訊來源為中央健康保險署「醫療品質資訊公開網」以及Google地圖的評論，部分評價分數是由人工智慧引擎計算後的結果。
@@ -806,7 +943,7 @@ return false;
 
 <!-- body -->
 
-<form action="/search" method="post" style="overflow-x:hidden">
+<form action="/search" method="post" style="overflow-x:hidden;" autocomplete="off" >
     <div class="container-fiuld span">
         <!--<div style=" height:1550px;background-color: white" >-->
         <div style="margin: 0px auto;text-align: center">
@@ -817,7 +954,7 @@ return false;
                     <div class="center20">
                         <div class="form-group row ">
                             <div class="col-sm-7 tt" style="margin:5px auto;">
-                                <input type="textbox" class="form-control" name="name1"  placeholder="請輸入醫院名稱">
+                                <input type="textbox" class="form-control" name="name1"  placeholder="請輸入醫院名稱" >
                             </div>
                         </div>
                         <div class="form-group row ">
@@ -844,7 +981,7 @@ return false;
                     <div class="center45">
                         <div class="form-group row span">
                             <div class="col-sm-7 tt" style="margin:5px auto;">
-                                <input type="textbox" class="form-control" id="inputc1" name="county" placeholder="請輸入縣市，如：新北">
+                                <input type="textbox" class="form-control" id="inputc1" name="county" placeholder="請輸入縣市，如：新北" >
                             </div>
                         </div>
                         <div class="form-group row span">
@@ -859,7 +996,7 @@ return false;
                 </div>
             </div>
             <!-- 清除浮動 -->
-            <!--<div style="clear:both;"></div>-->
+            <div style="clear:both;"></div>
 
 
             <!-- 醫院科別搜尋 -->
@@ -880,28 +1017,33 @@ return false;
             <!--</div>-->
             <!--</div>-->
             <!-- 特殊疾病搜尋 -->
-            <div class="card border3 " id="dis">
+            <div class="card border3 " id="dis" >
                 <div class="card-body">
-                    <h5 class="card-title left span" title="氣喘疾病、急性心肌梗塞疾病、糖尿病、人工膝關節手術、腦中風、鼻竇炎、子宮肌瘤手術、消化性潰瘍疾病">特殊疾病搜尋</h5>
-                    <div class="center45">
-                        <div class="form-group row span">
+                    <h5 class="card-title left " title="氣喘、急性心肌梗塞、糖尿病、人工膝關節手術、腦中風、鼻竇炎、子宮肌瘤手術、消化性潰瘍、血液透析">特殊疾病搜尋</h5>
+                    <div class="center20">
+                        <div class="form-group row">
                             <div class="col-sm-7 tt" style="margin:5px auto;">
                                 <input type="textbox" class="form-control span" id="ty" name="disease1"  placeholder="請輸入疾病，如：氣喘">
                             </div>
+                        </div>
+                        <div class="form-group row">
                             <div class="col-sm-7 tt" style="margin:5px auto;">
-                                <input type="textbox" class="form-control" name="disease2" id="ty2" placeholder="請輸入疾病，如：糖尿病">
-                            </div>
-                            <div class="col-sm-7 tt" style="margin:5px auto;">
-                                <input type="textbox" class="form-control" name="disease3" id="ty3" placeholder="請輸入疾病，如：鼻竇炎">
+                                <input type="textbox" class="form-control" name="disease2" id="ty2" placeholder="請輸入疾病">
                             </div>
                         </div>
-
-                        <!--<div class=" right" style="padding-top:5px">-->
-                        <!--<input type="submit" name="searchDisease" class="btn span" style="background-color:rgb(101,129,152);color:white" title="特殊疾病搜尋" value="確定">-->
-                        <!--</div>-->
+                        <div class="form-group row">
+                            <div class="col-sm-7 tt" style="margin:5px auto;">
+                                <input type="textbox" class="form-control" name="disease3" id="ty3" placeholder="請輸入疾病">
+                            </div>
+                        </div>
                     </div>
+
+                    <!--<div class=" right" style="padding-top:5px">-->
+                    <!--<input type="submit" name="searchDisease" class="btn span" style="background-color:rgb(101,129,152);color:white" title="特殊疾病搜尋" value="確定">-->
+                    <!--</div>-->
                 </div>
             </div>
+
             <!-- 清除浮動 -->
             <!--<div style="clear:both;"></div>-->
 
@@ -913,13 +1055,13 @@ return false;
                     <!-- 層級多選 -->
                     <div class="center20">
                         <div style="font-size: 18px">
-                            <div class="typepr">
+                            <div class="typepr" >
                                 <input type="checkbox" value="1" name="type" style="width:30px;height: 15px;" />醫學中心<br />
                                 <div style="padding-top:20px">
                                     <input type="checkbox" value="2" name="type" style="width:30px;height: 15px;" />區域醫院<br />
                                 </div>
                             </div>
-                            <div class="typepl">
+                            <div class="typepl" >
                                 <input type="checkbox" value="3" name="type" style="width:30px;height: 15px;" />地區醫院<br />
                                 <div style="padding-top:20px">
                                     <input type="checkbox" value="4" name="type" style="width:30px;height: 15px;"/>診所<br />
@@ -934,11 +1076,11 @@ return false;
             </div>
 
             <!--清除浮動 -->
-            <!--<div style="clear:both;"></div>-->
+            <div style="clear:both;"></div>
             <!--分類主題搜尋-->
             <div class="card border9 " id="topic">
                 <div class="card-body">
-                    <h5 class="card-title left span" title="應服藥物、疾病檢查、住院日數、健保費用、再次住院、再次急診、手術感染、中風復健、器官損傷">分類主題搜尋(至多選擇3種)</h5>
+                    <h5 class="card-title left span" title="應服藥物、疾病檢查、住院日數、健保費用、再次住院、再次急診、手術感染、中風復健、器官損傷、組合分數">分類主題搜尋(至多選擇3種)</h5>
                     <!-- 主題搜尋 -->
                     <div class="center20">
 
@@ -948,7 +1090,7 @@ return false;
                         <!--</div>-->
                         <!--</div>-->
                         <div style="font-size: 18px">
-                            <div style=" display: inline-block;vertical-align: top;text-align: left;padding-right: 30px">
+                            <div class="keywordpr">
                                 <input type="checkbox" value="1" name="keyword" style="width:30px;height: 15px; " onclick="ckt(this)" />應服藥物<br />
                                 <div style="padding-top:20px">
                                     <input type="checkbox" value="2" name="keyword" style="width:30px;height: 15px;" onclick="ckt(this)" />疾病檢查<br />
@@ -963,7 +1105,7 @@ return false;
                                     <input type="checkbox" value="5" name="keyword" style="width:30px;height: 15px;" onclick="ckt(this)" />再次住院<br />
                                 </div>
                             </div>
-                            <div style=" display: inline-block;vertical-align: top;text-align: left;padding-left: 30px;">
+                            <div class="keywordpl">
                                 <input type="checkbox" value="6" name="keyword" style="width:30px;height: 15px;" onclick="ckt(this)" />再次急診<br />
                                 <div style="padding-top:20px">
                                     <input type="checkbox" value="7" name="keyword" style="width:30px;height: 15px;" onclick="ckt(this)"/>手術感染<br />
@@ -973,6 +1115,9 @@ return false;
                                 </div>
                                 <div style="padding-top:20px">
                                     <input type="checkbox" value="9" name="keyword" style="width:30px;height: 15px;" onclick="ckt(this)"/>器官損傷<br />
+                                </div>
+                                <div style="padding-top:20px">
+                                    <input type="checkbox" value="10" name="keyword" style="width:30px;height: 15px;" onclick="ckt(this)"/>綜合分數<br />
                                 </div>
 
                             </div>
@@ -989,12 +1134,11 @@ return false;
                     <h5 class="card-title left span" title="評價">評價結果搜尋</h5>
                     <div class="center20">
                         <div style="text-align:center">
-                            <div class="form-group" style="text-align:left;padding-left:50px">
+                            <div class="form-group review">
                                 <label>請選擇星等(大於等於)</label>
-
                                 <div class="col-sm-7 my-1 tt" style="margin:5px auto;">
-                                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                                        <option selected>請選擇星等</option>
+                                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="star">
+                                        <option selected value="">請選擇星等</option>
                                         <option value="1">5</option>
                                         <option value="2">4(以上)</option>
                                         <option value="3">3(以上)</option>
@@ -1002,26 +1146,24 @@ return false;
                                         <option value="5">1(以上)</option>
                                     </select>
                                 </div>
-
-
                                 <label>正面評價數(大於等於)</label>
                                 <div class="form-group row span">
-                                    <div class="col-sm-7 tt" style="margin:5px auto;">
-                                        <input type="textbox" class="form-control" name="reviews" id="re" placeholder="如：5(則正面評論以上)">
+                                    <div class="col-sm-7 tt" style="margin:5px auto;" >
+                                        <input type="textbox" class="form-control" name="positive" id="re" placeholder="如：5(則正面評論以上)">
                                     </div>
                                 </div>
                                 <label>負面評價數(小於等於)</label>
                                 <div class="form-group row span">
                                     <div class="col-sm-7 tt" style="margin:5px auto;">
-                                        <input type="textbox" class="form-control" name="reviews" id="are" placeholder="如：5(則負面評論以下)">
+                                        <input type="textbox" class="form-control" name="negative" id="nre" placeholder="如：5(則負面評論以下)">
                                     </div>
                                 </div>
 
 
-                                <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                    <label class="form-check-label" for="exampleCheck1">只選擇優良指標醫院</label>
-                                </div>
+                                <!--<div class="form-group form-check">-->
+                                    <!--<input type="checkbox" class="form-check-input" id="exampleCheck1">-->
+                                    <!--<label class="form-check-label" for="exampleCheck1">只選擇優良指標醫院</label>-->
+                                <!--</div>-->
                             </div>
                         </div>
                     </div>
@@ -1034,6 +1176,7 @@ return false;
         </div>
         <!-- 清除浮動 -->
         <!--<div class="nofloat"></div>-->
+
 
 
         <!-- 搜尋鈕 -->
@@ -1049,12 +1192,14 @@ return false;
             </script>
             {% endif %}
             <h5 style="margin: 20px auto;">請選擇指標(至多選擇5個)</h5>
-            <div style="display: inline-block;vertical-align: top;text-align: left;padding-right: 100px;padding-left: 100px;">
-                {% for v, n in z_ckbox %}
-                <div style="display: inline-block;vertical-align: top;width: 200px;word-break: break-all;padding:10px">
-                    <input type="checkbox" value="{{v}}" name="item" style="width:30px;height: 15px;" onclick="onCheckBox(this)">{{ n }}
+            <div style="margin: 0px auto;text-align: center">
+                <div style="display: inline-block;vertical-align: top;text-align: left;padding:0% 5%;">
+                    {% for v, n in z_ckbox %}
+                    <div class="ckbox">
+                        <input type="checkbox" value="{{v}}" name="item" style="width:30px;height: 15px;" onclick="onCheckBox(this)">{{ n }}
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
             <!--指標確定鈕-->
             <div class="center5" style="padding-bottom: 20px">
@@ -1087,17 +1232,17 @@ return false;
                     <img src="{{ url_for('static', filename='無指標.png')}}" height="20px" title="無指標">&nbsp;無資料
                 </div>
             </div>
-            <div style="background-color:rgba(184,206,217,0.5);margin:10px 20px; word-break:break-all;">
+            <div style="background-color:rgba(184,206,217,0.5);margin:10px 2%;width:96%; word-break:break-all;overflow:scroll;">
                 <!--{% for message in get_flashed_messages(with_categories=True) %}-->
 
                 <!--<div class="alert alert-secondary" role="alert">-->
                 <!--{{ message[1] }}-->
                 <!--</div>-->
                 <!--{% endfor %}-->
-                <div style="margin:0px auto;overflow:auto;height:550px;overflow-x:hidden" class="overflowX">
+                <div style="margin:0px auto;height:550px;" class="tableWidth">
 
                     <table class="table table-hover span" style="border:2px rgba(101,129,152,0.8) solid;text-align:left;" rules="all" >
-                        <thead style="text-align:center;margin:0px auto;">
+                        <thead style="text-align:center;margin:0px auto;" id="thead">
                         <tr>
                             {% for column, full_name in z_col %}
                             <th style="background-color:rgba(184,206,217,1);">{{ column }}<img src="{{ url_for('static', filename='指標說明.png')}}" height="20px" title="{{ full_name }}"></th>
@@ -1109,7 +1254,7 @@ return false;
                         <tr >
                             <td style="background-color:rgba(184,206,217,1);width:280px;font-size:17px">{{ n[0] }}</td>
                             {% for i in range(ck_len) %}
-                            <td rowspan="4" style="vertical-align:middle;text-align:center;font-size:14px;width:280px;">
+                            <td rowspan="4" style="vertical-align:middle;text-align:center;font-size:14px;width:250px">
                                 {% if l[columns[i]] == 75 %}
                                 <img src="{{ url_for('static', filename='高指標.png')}}" height="50px" title="指標值：{{ v[columns[i]] }}{{ d[columns[i]] }}">
                                 <div style="vertical-align:middle;text-align:center;">{{ v[columns[i]] }}%<br>{{ d[columns[i]] }}</div>
@@ -1133,37 +1278,37 @@ return false;
                             <td>
                                 {{ n[1] }}
                                 {% if 0 <= n[6] < 0.5 %}
-                                <img src="{{ url_for('static', filename='0星.png')}}" height="20px">
+                                <img src="{{ url_for('static', filename='0星.png')}}" height="25%">
                                 {% endif %}
                                 {% if 0.5 <= n[6] < 1 %}
-                                <img src="{{ url_for('static', filename='0半星.png')}}" height="20px">
+                                <img src="{{ url_for('static', filename='0半星.png')}}" height="25%">
                                 {% endif %}
                                 {% if 1 <= n[6] < 1.5 %}
-                                <img src="{{ url_for('static', filename='1星.png')}}" height="20px">
+                                <img src="{{ url_for('static', filename='1星.png')}}" height="25%">
                                 {% endif %}
                                 {% if 1.5 <= n[6] < 2 %}
-                                <img src="{{ url_for('static', filename='1半星.png')}}" height="20px">
+                                <img src="{{ url_for('static', filename='1半星.png')}}" height="25%">
                                 {% endif %}
                                 {% if 2 <= n[6] < 2.5 %}
-                                <img src="{{ url_for('static', filename='2星.png')}}" height="20px">
+                                <img src="{{ url_for('static', filename='2星.png')}}" height="25%">
                                 {% endif %}
                                 {% if 2.5 <= n[6] < 3 %}
-                                <img src="{{ url_for('static', filename='2半星.png')}}" height="20px">
+                                <img src="{{ url_for('static', filename='2半星.png')}}" height="25%">
                                 {% endif %}
                                 {% if 3 <= n[6] < 3.5 %}
-                                <img src="{{ url_for('static', filename='3星.png')}}" height="20px">
+                                <img src="{{ url_for('static', filename='3星.png')}}" height="25%">
                                 {% endif %}
                                 {% if 3.5 <= n[6] < 4 %}
-                                <img src="{{ url_for('static', filename='3半星.png')}}" height="20px">
+                                <img src="{{ url_for('static', filename='3半星.png')}}" height="25%">
                                 {% endif %}
                                 {% if 4 <= n[6] < 4.5 %}
-                                <img src="{{ url_for('static', filename='4星.png')}}" height="20px">
+                                <img src="{{ url_for('static', filename='4星.png')}}" height="25%">
                                 {% endif %}
                                 {% if 4.5 <= n[6] < 5 %}
-                                <img src="{{ url_for('static', filename='4半星.png')}}" height="20px">
+                                <img src="{{ url_for('static', filename='4半星.png')}}" height="25%">
                                 {% endif %}
                                 {% if n[6] == 5 %}
-                                <img src="{{ url_for('static', filename='5.png')}}" height="20px">
+                                <img src="{{ url_for('static', filename='5星.png')}}" height="20px">
                                 {% endif %}
                             </td>
                         </tr>
@@ -1195,47 +1340,45 @@ return false;
 <!-- <div style=" height:300px;background-color: #fe9696;"> -->
 <div style="margin-top:20px;" class="span">
     <div style="background-color:rgb(101,129,152);">
-        <div class="row">
-            <div class="col">
-                <div style="text-align:left; color: white;margin:50px">
-                    <!--<h4>Contact Us</h4>-->
-                    <!--<h6>聯絡我們</h6>-->
-                    <h4>對網站有任何想法請給我們建議</h4>
-                    <div >
-                        <h6>醫資三  程伊萱</h6>
-                        <h6>醫資三  蔡亞立</h6>
-                        <h6>醫資三  林昱彤</h6>
-                        <h6>醫資三  王嘉琳</h6>
-                    </div>
+        <div class="footerText">
+            <div style="text-align:left; color: white;margin:10%">
+                <!--<h4>Contact Us</h4>-->
+                <!--<h6>聯絡我們</h6>-->
+                <div style="font-size:20px">對網站有任何想法請給我們建議</div>
+                <div >
+                    <h6>醫資三  程伊萱</h6>
+                    <h6>醫資三  蔡亞立</h6>
+                    <h6>醫資三  林昱彤</h6>
+                    <h6>醫資三  王嘉琳</h6>
                 </div>
             </div>
-            <div class="col">
-                <div class="center5 span" style="vertical-align:middle;text-align:center;margin:100px auto">
-                    <img src="{{ url_for('static', filename='聯絡3.0.png')}}" height="60px">
-                    <!--<form>-->
-                    <!--<div class="form-group form-control-sm col-7" style="margin: auto;">-->
-                    <!--<label for="exampleFormControlInput1"></label>-->
-                    <!--<input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Name">-->
-                    <!--</div>-->
-                    <!--<div class="form-group form-control-sm col-7" style="margin:15px auto;">-->
-                    <!--<label for="exampleFormControlInput1"></label>-->
-                    <!--<input type="email" class="form-control" id="exampleolInput1" placeholder="name@example.com">-->
-                    <!--</div>-->
-                    <!--<div class="form-group form-control-sm col-7" style="margin:15px auto;">-->
-                    <!--<label for="exampleFormControlInput1"></label>-->
-                    <!--<input type="text" class="form-control" id="ControlInput1" placeholder="Subject">-->
-                    <!--</div>-->
+        </div>
+        <div class="footerImg">
+            <div class="span" style="vertical-align:middle;text-align:center;">
+                <img src="{{ url_for('static', filename='聯絡3.0.png')}}" style="width:60%;margin:10%">
+                <!--<form>-->
+                <!--<div class="form-group form-control-sm col-7" style="margin: auto;">-->
+                <!--<label for="exampleFormControlInput1"></label>-->
+                <!--<input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Name">-->
+                <!--</div>-->
+                <!--<div class="form-group form-control-sm col-7" style="margin:15px auto;">-->
+                <!--<label for="exampleFormControlInput1"></label>-->
+                <!--<input type="email" class="form-control" id="exampleolInput1" placeholder="name@example.com">-->
+                <!--</div>-->
+                <!--<div class="form-group form-control-sm col-7" style="margin:15px auto;">-->
+                <!--<label for="exampleFormControlInput1"></label>-->
+                <!--<input type="text" class="form-control" id="ControlInput1" placeholder="Subject">-->
+                <!--</div>-->
 
-                    <!--<div class="form-group form-control-sm col-7" style="margin:15px auto;">-->
-                    <!--<label for="exampleFormControlTextarea1"></label>-->
-                    <!--<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Message"></textarea>-->
+                <!--<div class="form-group form-control-sm col-7" style="margin:15px auto;">-->
+                <!--<label for="exampleFormControlTextarea1"></label>-->
+                <!--<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Message"></textarea>-->
 
-                    <!--</div>-->
-                    <!--<div class="form-group form-control-sm col-7" style="margin:85px auto;">-->
-                    <!--<button type="button" class="btn btn-outline-dark" style="float: right;">Send</button>-->
-                    <!--</div>-->
-                    <!--</form>-->
-                </div>
+                <!--</div>-->
+                <!--<div class="form-group form-control-sm col-7" style="margin:85px auto;">-->
+                <!--<button type="button" class="btn btn-outline-dark" style="float: right;">Send</button>-->
+                <!--</div>-->
+                <!--</form>-->
             </div>
         </div>
     </div>

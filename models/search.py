@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, request, render_template, flash
+from flask import Flask, request, render_template, flash, redirect
 
 class Search():
 
@@ -22,7 +22,7 @@ class Search():
             ## 驗證使用者是否輸入不存在的條件
             validate = self.cursor.execute("SELECT h.id FROM hospitals h WHERE " + sql_where).fetchall()
             if validate == []:
-                return "抱歉，找不到您要的「{}{}」相關資訊。地區".format(county, township)
+                return "抱歉，找不到您要的「{}{}」相關資訊。".format(county, township)
             else:
                 # return CheckBox().print_ckbox(sql_where)
                 return sql_where
@@ -33,14 +33,15 @@ class Search():
     def search_disease(self, diseases):
         try:
             getStr = {
-                1: "m.m_2, m.m_3",
-                2: "m.m_6, m.m_7, m.m_8, m.m_9, m.m_10, m.m_11",
-                3: "m.m_12, m.m_13, m.m_14, m.m_15",
-                4: "m.m_16, m.m_17, m.m_18",
-                5: "m.m_19, m.m_20, m.m_21, m.m_22",
-                6: "m.m_23, m.m_24, m.m_25, m.m_26, m.m_27",
-                7: "m.m_28, m.m_29, m.m_30, m.m_31",
-                8: "m.m_32, m.m_33"
+                1: "m.m_2, m.m_3, m.m_41",
+                2: "m.m_6, m.m_7, m.m_8, m.m_9, m.m_10, m.m_11, m.m_42",
+                3: "m.m_12, m.m_13, m.m_14, m.m_15, m.m_43",
+                4: "m.m_16, m.m_17, m.m_18, m.m_44",
+                5: "m.m_19, m.m_20, m.m_21, m.m_22, m.m_45",
+                6: "m.m_23, m.m_24, m.m_25, m.m_26, m.m_27, m.m_46",
+                7: "m.m_28, m.m_29, m.m_30, m.m_31m.m_47",
+                8: "m.m_32, m.m_33, m.m_48",
+                9: "m.m_34, m.m_35, m.m_36, m.m_37, m.m_38, m.m_39, m.m_40, m.m_49"
             }
             sub_str = ''
             while '' in diseases:
@@ -80,14 +81,15 @@ class Search():
     def search_category(self, keywords):
         getStr = {
             "1": "m.m_3, m.m_6, m.m_7, m.m_10, m.m_11, m.m_20, m.m_21, m.m_22, m.m_23, m.m_24, m.m_26, m.m_27, m.m_32, m.m_33",
-            "2": "m.m_12, m.m_13, m.m_14, m.m_15, m.m_25",
+            "2": "m.m_12, m.m_13, m.m_14, m.m_15, m.m_25, m.m_34, m.m_35, m.m_36, m.m_37, m.m_38, m.m_39, m.m_40",
             "3": "m.m_30",
             "4": "",
             "5": "m.m_2, m.m_8, m.m_18, m.m_31",
             "6": "m.m_9",
             "7": "m.m_16, m.m_17",
             "8": "m.m_19",
-            "9": "m.m_28, m.m_29"
+            "9": "m.m_28, m.m_29",
+            "10": "m.m_41, m.m_42, m.m_43, m.m_44, m.m_45, m.m_46, m.m_47, m.m_48, m.m_49"
         }
         sub_str = ''
         ## 移除陣列中的空字串
@@ -117,10 +119,22 @@ class Search():
                     sql_where += ("h.name LIKE '%" + name + "%' OR h.abbreviation LIKE '%" + name + "%'")
                 validate = self.cursor.execute("SELECT h.id FROM hospitals h WHERE " + sql_where).fetchall()
                 if validate == []:
-                    return "抱歉，找不到您要的「{}」相關資訊。名稱".format(name)
+                    return "抱歉，找不到您要的「{}」相關資訊。".format(name)
             return sql_where
         except:
             return "抱歉，操作失敗"
+
+    ## 評價結果搜尋
+    def search_reviews(self, star, positive, negative):
+        sql_where = ''
+        if star != '':
+            sql_where += "fr.star >= " + star + " AND fr.star != 'N/A' AND "
+        if positive != '':
+            sql_where += "fr.positive >= " + positive + " AND fr.positive != 'N/A' AND "
+        if negative != '':
+            sql_where += "fr.negative >= " + negative+ " AND "
+        sql_where = sql_where[:-4]
+        return sql_where
 
     ## 查詢條件
     def search_filter(self, county, township, diseases, types, keywords, names):
@@ -149,7 +163,8 @@ class Search():
                 '6': "再次急診",
                 '7': "手術感染",
                 '8': "中風復健",
-                '9': "器官損傷"
+                '9': "器官損傷",
+                '10': "組合分數"
             }
             search_filter += getStr.get(keyword) + ', '
         while '' in names:
@@ -159,10 +174,9 @@ class Search():
         search_filter = search_filter[:-2]
         return search_filter
 
-
-
     ## 綜合搜尋
-    def search_all(self, county, township, diseases, types, keywords, names):
+    def search_all(self, county, township, diseases, types, keywords, names, star, positive, negative):
+        ## 取得查詢條件
         search_filter = Search().search_filter(county, township, diseases, types, keywords, names)
         sql_where = ''
         ## 取得地區搜尋的condition
@@ -181,8 +195,10 @@ class Search():
             return render_template('hospital.html', alert=name_condition)
         else:
             name_condition = '(' + name_condition + ')'
+        ## 取得評價結果condition
+        reviews_condition = '(' + Search().search_reviews(star, positive, negative) + ')'
 
-        conditions = [area_condition, type_condition, name_condition]
+        conditions = [area_condition, type_condition, name_condition, reviews_condition]
         ## 若沒有條件則移除
         while '()' in conditions:
             conditions.remove('()')
@@ -206,19 +222,19 @@ class Search():
         for index in disease_indexes:
             if index in category_indexes:
                 both_indexes.append(index)
-        print(search_filter)
+
         if category_select != '':   # 有分類主題
             if disease_select != '':   #有分類主題、特疾
-                return SelectAll(sql_where, search_filter).print_ckbox(both_indexes)
+                return Ckbox(sql_where, search_filter).print_ckbox(both_indexes)
             else:   # 有分類主題沒有特疾
-                return SelectAll(sql_where, search_filter).print_ckbox(category_indexes)
+                return Ckbox(sql_where, search_filter).print_ckbox(category_indexes)
         else:   ##沒有分類主題
             if disease_select != '':  # 沒有分類主題有特疾
-                return SelectAll(sql_where, search_filter).print_ckbox(disease_indexes)
+                return Ckbox(sql_where, search_filter).print_ckbox(disease_indexes)
             else:  # 都沒有
-                return SelectAll(sql_where, search_filter).print_ckbox('')
+                return Ckbox(sql_where, search_filter).print_ckbox('')
 
-class SelectAll():
+class Ckbox():
     def __init__(self, sql_where, search_filter):
         db = sqlite3.connect('voyager.db')
         self.cursor = db.cursor()
@@ -240,7 +256,7 @@ class SelectAll():
             else:
                 for i in range(len(indexes)):
                     ckboxVal.append(indexes[i])
-                    ckboxName.append(self.cursor.execute("SELECT name FROM indexes WHERE id = " + indexes[i][4:]).fetchone()[0])
+                    ckboxName.append(self.cursor.execute("SELECT abbreviation FROM indexes WHERE id = " + indexes[i][4:]).fetchone()[0])
             ## 用zip方法，將兩個list包在一起
             z_ckbox = zip(ckboxVal, ckboxName)
             ## 將sql_where傳至前端暫存，value不接受空格，因此將空格以//取代
@@ -263,7 +279,7 @@ class Select():
         ## 將condition改回
         sql_where = sql_where.replace("//", " ")
         ## select醫院的基本資料：名字、分數＆星等、正向評論數、中立評論數、負向評論數、電話與地址並存入normal[]
-        sqlstr = "SELECT h.abbreviation, fr.star, fr.positive,  fr.negative, h.phone, h.address, cast(fr.star as float) FROM hospitals h JOIN final_reviews fr ON h.id=fr.hospital_id " + sql_where
+        sqlstr = "SELECT h.abbreviation, fr.star, fr.positive,  fr.negative, h.phone, h.address, cast(fr.star as float) FROM hospitals h JOIN final_reviews fr ON h.id = fr.hospital_id " + sql_where
         normal = self.cursor.execute(sqlstr).fetchall()
         ## 若未找到任何資料，出現錯誤訊息，若有則進入else
         if normal == []:
@@ -284,13 +300,13 @@ class Select():
             value = items[r].replace('m.m_', 'm.v_')
             value_substr += (', ' + value)
         ## 取得data分母(就醫人數)
-        sqlstr = "SELECT " + deno_substr + " FROM merge_data m JOIN hospitals h ON m.hospital_id = h.id " + sql_where
+        sqlstr = "SELECT " + deno_substr + " FROM merge_data m JOIN hospitals h ON m.hospital_id = h.id JOIN final_reviews fr ON h.id = fr.hospital_id " + sql_where
         l_deno = self.cursor.execute(sqlstr).fetchall()
         ## 取得data指標值等級
-        sqlstr = "SELECT " + level_substr + " FROM merge_data m JOIN hospitals h ON m.hospital_id = h.id " + sql_where
+        sqlstr = "SELECT " + level_substr + " FROM merge_data m JOIN hospitals h ON m.hospital_id = h.id JOIN final_reviews fr ON h.id = fr.hospital_id " + sql_where
         l_level = self.cursor.execute(sqlstr).fetchall()
         ## 取得data指標值
-        sqlstr = "SELECT " + value_substr + " FROM merge_data m JOIN hospitals h ON m.hospital_id = h.id " + sql_where
+        sqlstr = "SELECT " + value_substr + " FROM merge_data m JOIN hospitals h ON m.hospital_id = h.id JOIN final_reviews fr ON h.id = fr.hospital_id " + sql_where
         l_value = self.cursor.execute(sqlstr).fetchall()
         return Result().get_column_name(normal, items, l_deno, l_level, l_value, search_filter)
 
@@ -309,11 +325,14 @@ class Result():
         ## 建立columns[]，存入從資料庫中取得的欄位名稱(縮寫)
         columns = []
         for c in getColumns:
+            print(c)
             columns.append(self.cursor.execute("SELECT abbreviation FROM column_name WHERE name = '" + c + "'").fetchone()[0])
         ## 建立full_name[]，存入欄位名稱(縮寫)的完整名字
         full_name = ['醫療機構資訊']
+        print(columns)
         for fn in columns:
             if fn != '醫療機構資訊':
+                print(fn)
                 full_name.append(self.cursor.execute("SELECT name FROM indexes WHERE abbreviation = '" + fn + "'").fetchone()[0])
         return Result().table(normal, columns, full_name, l_deno, l_level, l_value, search_filter)
 

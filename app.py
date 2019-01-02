@@ -48,10 +48,15 @@ def panduan():
             name2 = request.form.get('name2')
             name3 = request.form.get('name3')
             names = [name1, name2, name3]
-            return Search().search_all(county, township, diseases, types, keywords, names)
+            ## 評價結果
+            star = request.form.get("star")
+            positive = request.form.get("positive")
+            negative = request.form.get("negative")
+            return Search().search_all(county, township, diseases, types, keywords, names, star, positive, negative)
+            # return Search().filter(county, township, diseases, types, keywords, names)
 
 ##啟動
 if __name__ == '__main__':
     app.jinja_env.auto_reloaded = True  ##jinja2 重新讀取template
-    app.run('0.0.0.0', debug=True)
-    # app.run(debug=True)
+    # app.run('0.0.0.0', debug=True)
+    app.run(debug=True)
