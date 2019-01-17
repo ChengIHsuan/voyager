@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, flash
 from database import db_session, init_db
 from models.search import Search, Select ##import search.py裡面的class Search()
+from models.sort import Sort
 
 app = Flask(__name__)
 app.secret_key = "mlkmslmpw"
@@ -25,9 +26,9 @@ def panduan():
     if request.method == 'POST':
         if 'choose' in request.form:
             items = request.values.getlist('item')
-            sql_where = request.form.get('sqlstr')
+            sql_where = request.form.get('tmp_sqlstr')
             search_filter = request.form.get('tmp_filter')
-            return Select().select_normal(sql_where, items, search_filter)
+            return Select().add_sql_where(sql_where, items, search_filter)
         elif 'searchAll' in request.form:
             ## 地區
             county = request.form.get("county")
@@ -54,9 +55,15 @@ def panduan():
             negative = request.form.get("negative")
             return Search().search_all(county, township, diseases, types, keywords, names, star, positive, negative)
             # return Search().filter(county, township, diseases, types, keywords, names)
+        elif 'reSort' in request.form:
+            selected_index = request.form.get('selected_index')
+            item = request.form.get('tmp_items')
+            sql_where = str(request.form.get('tmp_sqlstr')).replace('//', ' ')
+            search_filter = str(request.form.get('tmp_filter')).replace('//', ' ')
+            return Sort().reSort(selected_index, sql_where, item, search_filter)
 
 ##啟動
 if __name__ == '__main__':
     app.jinja_env.auto_reloaded = True  ##jinja2 重新讀取template
-    app.run('0.0.0.0', debug=True)
-    # app.run(debug=True)
+    # app.run('0.0.0.0', debug=True)
+    app.run(debug=True)
