@@ -7,50 +7,59 @@ class Sort():
         db = sqlite3.connect('voyager.db')
         self.cursor = db.cursor()
 
-    def reSort(self, selected_index, sql_where, item, search_filter):
-        try:
-            items = item.split("//")
-            del items[-1]
-            index_value = self.cursor.execute("select name from column_name where abbreviation = '" + selected_index + "'").fetchone()[0]
-            index_level = index_value.replace('m.v_', 'm.l_')
-            orderby = (" order by " + index_level + " DESC , " + index_value + " DESC")
-            return Sort().add_sql_where(sql_where, items, search_filter, orderby)
-        except:
-            alert = "請選擇排序指標"
-            return render_template("hospital.html", alert=alert)
+    def reSort(self, selected_index, sql_where, tmp_indexes, search_filter):
+        # try:
+        indexes = tmp_indexes.split("//")
+        del indexes[-1]
+        index_value = 'm.v_' + selected_index  ##m.v_100##
+        index_level = 'm.l_' + selected_index  ##m.l_100##
+        P_or_N = self.cursor.execute("SELECT P_or_N FROM indexes WHERE id = " + selected_index).fetchone()[0]
+        ## 判斷正面或是負面指標
+        if P_or_N == 'P':  ## 正面指標降序排列
+            orderby = (" order by " + index_value + " DESC")
+        elif P_or_N == 'N':  ## 負面指標升序排列
+            orderby = (" order by " + index_level + " DESC, " + index_value + " ASC")
+        return Sort().select_normal(sql_where, indexes, search_filter, orderby)
+        # except:
+        #     alert = "請選擇排序指標"
+        #     return render_template("result.html", alert=alert)
 
     ## 加上所選標皆不為-1之條件
-    def add_sql_where(self, sql_where, items, search_filter, orderby):
-        str = ''
-        for item in items:
-            if item != items[-1]:
-                str += '(' + item + '!= -1) OR '
-            else:
-                str += '(' + item + '!= -1)'
-        ## 將condition改回，並加上指標皆不為-1之條件
-        sql_where = sql_where.replace("//", " ") + ' AND (' + str + ')'
-        return Sort().select_normal(sql_where, items, search_filter, orderby)
+    # def add_sql_where(self, sql_where, indexes, search_filter, orderby):
+    #     print('add')
+    #     try:
+    #         str = ''
+    #         for index in indexes:
+    #             if index != indexes[-1]:
+    #                 str += '(m.v_' + index + ' != -1) OR '
+    #             else:
+    #                 str += '(m.v_' + index + ' != -1)'
+    #         ## 將condition改回，並加上指標皆不為-1之條件
+    #         sql_where += ' AND (' + str + ')'
+    #         print(sql_where)
+    #         return Sort().select_normal(indexes, sql_where, search_filter, orderby)
+    #     except:
+    #         alert = "請選擇指標。"
+    #         return render_template('result.html', alert=alert)
 
-    def select_normal(self, sql_where, items, search_filter, orderby):
-        sqlstr = "SELECT h.abbreviation,  cast(fr.star as float), fr.positive,  fr.negative, h.phone, h.address FROM hospitals h JOIN final_reviews fr ON h.id = fr.hospital_id join merge_data m ON h.id = m.hospital_id" + sql_where + orderby
+    def select_normal(self, sql_where, indexes, search_filter, orderby):
+        sqlstr = "SELECT h.abbreviation, cast(fr.star as float), fr.positive, fr.negative, h.phone, h.address FROM hospitals h JOIN final_reviews fr ON h.id = fr.hospital_id join merge_data m ON h.id = m.hospital_id " + sql_where + orderby
         normal = self.cursor.execute(sqlstr).fetchall()
         ## 若未找到任何資料，出現錯誤訊息，若有則進入else
         if normal == []:
             flash('抱歉，找不到您要的資料訊息。')
-            return render_template("hospital.html")
+            return render_template("result.html")
         else:
-            return Sort().select_data2(normal, items, sql_where, search_filter, orderby)
+            return Sort().select_data2(normal, indexes, sql_where, search_filter, orderby)
 
-    def select_data2(self, normal, items, sql_where, search_filter, orderby):
+    def select_data2(self, normal, indexes, sql_where, search_filter, orderby):
+        value_substr = 'm.hospital_id'
         deno_substr = 'm.hospital_id'
         level_substr = 'm.hospital_id'
-        value_substr = 'm.hospital_id'
-        for r in range(len(items)):
-            value_substr += (', ' + items[r])
-            level = items[r].replace('m.v_', 'm.l_')
-            level_substr += (', ' + level)
-            deno = items[r].replace('m.v_', 'm.m_')
-            deno_substr += (', ' + deno)
+        for r in range(len(indexes)):
+            value_substr += (', ' + 'm.v_' + indexes[r])
+            level_substr += (', ' + 'm.l_' + indexes[r])
+            deno_substr += (', ' + 'm.m_' + indexes[r])
         ## 取得data指標值
         sqlstr = "SELECT " + value_substr + " FROM merge_data m JOIN hospitals h ON m.hospital_id = h.id JOIN final_reviews fr ON h.id = fr.hospital_id " + sql_where + orderby
         l_value = self.cursor.execute(sqlstr).fetchall()
@@ -62,7 +71,7 @@ class Sort():
         l_level = self.cursor.execute(sqlstr).fetchall()
         ## 將醫療機構資訊、指標值、就醫人數、指標值等級包裝成zip
         z_data = zip(normal, l_value, l_deno, l_level)
-        return Result().get_column_name(items, search_filter, sql_where, z_data)
+        return Result().get_column_name(indexes, search_filter, sql_where, z_data)
 
 class Result():
 
@@ -71,11 +80,11 @@ class Result():
         self.cursor = db.cursor()
 
     ## 取得欄位名稱
-    def get_column_name(self, items, search_filter, sql_where, z_data):
+    def get_column_name(self, indexes, search_filter, sql_where, z_data):
         ## 先取得欄位的原始名字(m.m_?)，「醫院機構資訊」為固定欄位，直接手動新增
         getColumns = ['醫療機構資訊']
-        for r in range(len(items)):
-            getColumns.append(items[r])
+        for r in range(len(indexes)):
+            getColumns.append(indexes[r])
         ## 建立columns[]，存入從資料庫中取得的欄位名稱(縮寫)
         columns = []
         for c in getColumns:
@@ -89,15 +98,16 @@ class Result():
         z_col = zip(columns, full_name)
         ## 選取的指標數量，-1是因為扣掉第一欄的醫療機構資訊
         ck_len = len(columns) - 1
-        indexes = columns[1:]
-        return Result().table(z_data, z_col, ck_len, search_filter, indexes, sql_where, items)
+        sort_indexes = columns[1:]
+        return Result().table(z_data, z_col, ck_len, search_filter, indexes, sql_where, sort_indexes)
 
     ## 將搜尋結果寫進表格
-    def table(self, z_data, z_col, ck_len, search_filter, indexes, sql_where, items):
-        tmp_items = ''
-        for r in range(len(items)):
-            tmp_items += items[r] + '//'
+    def table(self, z_data, z_col, ck_len, search_filter, indexes, sql_where, sort_indexes):
+        tmp_indexes = ''
+        for r in range(len(indexes)):
+            tmp_indexes += indexes[r] + '//'
         sql_where = sql_where.replace(' ', '//')
         tmp_filter = search_filter.replace(' ', '//')
+        z_indexes = zip(indexes, sort_indexes)
         ## render至前端HTML，ck_len為指標的長度，columns為欄位名稱，z為醫院資訊和指標值的zip
-        return render_template('hospital.html', scroll = 'results', ck_len=ck_len, z_col=z_col, z_data=z_data, search_filter=search_filter, tmp_filter=tmp_filter, indexes=indexes, sql_where=sql_where, tmp_items=tmp_items)
+        return render_template('result.html', scroll = 'results', ck_len=ck_len, z_col=z_col, z_data=z_data, search_filter=search_filter, tmp_filter=tmp_filter, sql_where=sql_where, tmp_indexes=tmp_indexes, z_indexes=z_indexes)

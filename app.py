@@ -2,6 +2,7 @@ from flask import Flask, request, render_template, flash
 from database import db_session, init_db
 from models.search import Search, Select ##import search.py裡面的class Search()
 from models.sort import Sort
+import sqlite3
 
 app = Flask(__name__)
 app.secret_key = "mlkmslmpw"
@@ -16,54 +17,57 @@ def init():
 def shutdown_session(exception=None):
     db_session.remove()
 
-##在地區搜尋介面取得使用者輸入的值/search_area
-@app.route('/', methods=['GET'])
-def renderSearch():
-    return render_template('hospital.html')
+@app.route('/', methods=['GET', 'POST'])
+def renderHome():
+    return render_template('home.html')
 
-@app.route('/search', methods=['POST'])
+##在地區搜尋介面取得使用者輸入的值/search_area
+@app.route('/search', methods=['GET', 'POST'])
+def renderSearch():
+    return render_template('search.html')
+
+@app.route('/result', methods=['GET'])
+def renderResult():
+    return  render_template('result.html')
+
+@app.route('/result', methods=['POST'])
 def panduan():
     if request.method == 'POST':
-        if 'choose' in request.form:
-            items = request.values.getlist('item')
-            sql_where = request.form.get('tmp_sqlstr')
-            search_filter = request.form.get('tmp_filter')
-            return Select().add_sql_where(sql_where, items, search_filter)
-        elif 'searchAll' in request.form:
-            ## 地區
-            county = request.form.get("county")
-            if county.find('台') != -1:
-                county = county.replace('台', '臺')
-            township = request.form.get("township")
+        if 'btnSearch' in request.form:
             ## 特殊疾病
-            disease1 = request.form.get('disease1')
-            disease2 = request.form.get('disease2')
-            disease3 = request.form.get('disease3')
-            diseases = [disease1, disease2, disease3]
-            ## 醫院層級
-            types = request.values.getlist('type')
-            ## 分類主題
-            keywords = request.values.getlist('keyword')
-            ## 醫院名稱
+            disease = request.form.get('disease')
+            ## 特疾病指標
+            indexes = request.values.getlist('ckIndex')
+            ## 醫療機構名稱
             name1 = request.form.get('name1')
             name2 = request.form.get('name2')
             name3 = request.form.get('name3')
             names = [name1, name2, name3]
-            ## 評價結果
+            ## 移除陣列中的空字串
+            while '' in names:
+                names.remove('')
+            ## 地區
+            county = request.form.get("county")
+            township = request.form.get("township")
+            if township == '鄉鎮市區不拘':
+                township = ''
+            ## 醫院層級
+            types = request.values.getlist('type')
+            ##Google星等
             star = request.form.get("star")
-            positive = request.form.get("positive")
-            negative = request.form.get("negative")
-            return Search().search_all(county, township, diseases, types, keywords, names, star, positive, negative)
-            # return Search().filter(county, township, diseases, types, keywords, names)
+            if star == None:
+                star = ''
+            ## 爛番茄
+            # return render_template('result.html')
+            return Search().search_all(county, township, disease, types, names, star, indexes)
         elif 'reSort' in request.form:
             selected_index = request.form.get('selected_index')
-            item = request.form.get('tmp_items')
+            indexes = request.form.get('tmp_indexes')
             sql_where = str(request.form.get('tmp_sqlstr')).replace('//', ' ')
             search_filter = str(request.form.get('tmp_filter')).replace('//', ' ')
-            return Sort().reSort(selected_index, sql_where, item, search_filter)
-
+            return Sort().reSort(selected_index, sql_where, indexes, search_filter)
 ##啟動
 if __name__ == '__main__':
     app.jinja_env.auto_reloaded = True  ##jinja2 重新讀取template
-    # app.run('0.0.0.0', debug=True)
-    app.run(debug=True)
+    app.run('0.0.0.0', debug=True)
+    # app.run(debug=True)
