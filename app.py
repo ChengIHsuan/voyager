@@ -107,5 +107,5 @@ def panduan2():
 ##啟動
 if __name__ == '__main__':
     app.jinja_env.auto_reloaded = True  ##jinja2 重新讀取template
-    # app.run('0.0.0.0', debug=True)
-    app.run(debug=True)
+    app.run('0.0.0.0', debug=True)
+    # app.run(debug=True)
