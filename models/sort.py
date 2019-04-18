@@ -22,7 +22,7 @@ class Sort():
         return Sort().select_normal(sql_where, indexes, search_filter, orderby)
         # except:
         #     alert = "請選擇排序指標"
-        #     return render_template("result.html", alert=alert)
+        #     return render_template("diseaseResult.html", alert=alert)
 
     ## 加上所選標皆不為-1之條件
     # def add_sql_where(self, sql_where, indexes, search_filter, orderby):
@@ -40,7 +40,7 @@ class Sort():
     #         return Sort().select_normal(indexes, sql_where, search_filter, orderby)
     #     except:
     #         alert = "請選擇指標。"
-    #         return render_template('result.html', alert=alert)
+    #         return render_template('diseaseResult.html', alert=alert)
 
     def select_normal(self, sql_where, indexes, search_filter, orderby):
         sqlstr = "SELECT h.abbreviation, cast(fr.star as float), fr.positive, fr.negative, h.phone, h.address FROM hospitals h JOIN final_reviews fr ON h.id = fr.hospital_id join merge_data m ON h.id = m.hospital_id " + sql_where + orderby
@@ -48,7 +48,7 @@ class Sort():
         ## 若未找到任何資料，出現錯誤訊息，若有則進入else
         if normal == []:
             flash('抱歉，找不到您要的資料訊息。')
-            return render_template("result.html")
+            return render_template("diseaseResult.html")
         else:
             return Sort().select_data2(normal, indexes, sql_where, search_filter, orderby)
 
@@ -110,4 +110,4 @@ class Result():
         tmp_filter = search_filter.replace(' ', '//')
         z_indexes = zip(indexes, sort_indexes)
         ## render至前端HTML，ck_len為指標的長度，columns為欄位名稱，z為醫院資訊和指標值的zip
-        return render_template('result.html', scroll = 'results', ck_len=ck_len, z_col=z_col, z_data=z_data, search_filter=search_filter, tmp_filter=tmp_filter, sql_where=sql_where, tmp_indexes=tmp_indexes, z_indexes=z_indexes)
+        return render_template('diseaseResult.html', scroll = 'results', ck_len=ck_len, z_col=z_col, z_data=z_data, search_filter=search_filter, tmp_filter=tmp_filter, sql_where=sql_where, tmp_indexes=tmp_indexes, z_indexes=z_indexes)
