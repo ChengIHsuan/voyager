@@ -25,22 +25,21 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
-    <link rel=stylesheet type="text/css" href="{{ url_for('static', filename='main1.4.css') }}">
+    <link rel=stylesheet type="text/css" href="{{ url_for('static', filename='main1.5.css') }}">
     <!--<link rel=stylesheet type="text/css" href="main1.3.css">-->
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script type="text/javascript" src="{{url_for('static', filename='js/resultJS.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/searchJS1.14.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/loading.js')}}"></script>
 
-    <script>
-        $(function(){
     {% if alert %}
+    <script>
       alert('{{alert}}');
-    {% endif %}
-    });
     </script>
+    {% endif %}
 </head>
 
 <body class="span">
@@ -50,7 +49,7 @@
 <form name="myForm" action="/diseaseResult" method="post" runat="server" autocomplete="on">
     <div class="container-fiuld">
         <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #658198;text-align: center">
-            <a class="navbar-brand" href="#"><img src="https://pbs.twimg.com/media/DrvK7_5UcAARp62.png" class=""
+            <a class="navbar-brand" href="/"><img src="https://pbs.twimg.com/media/DrvK7_5UcAARp62.png" class=""
                                                   style="width:70px"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,14 +70,42 @@
             </div>
         </nav>
         <div class="resultBg" style="display:inline-block;vertical-align: top;text-align: center;">
+            <!-- 麵包屑 -->
+            <ul class="breadcrumb" style="padding:1% 15px;width: 80%;margin: auto;text-align: center">
+                <li><a href="/">首頁</a></li>
+                <li><a href="search">找特殊疾病</a></li>
+                <li id="bread" style="color:rgba(0, 0, 0, 0.5)">{{reserved[11]}}</li>
+            </ul>
             <div style="text-align:center;padding-top: 10px">
                 <h5 class="resultText">搜尋條件<span><img src="static/條件下.png" height="5px"
                                                       style="padding-left:5px"></span></h5>
             </div>
+
+            <script>
+            $(document).ready(function() {
+                {% if reserved %}
+                    document.myForm.disease.options[{{reserved[0]}}].selected = true;
+                    indexSelect()
+                    document.myForm.diseaseCounty.options[{{reserved[1]}}].selected = true;
+                    diseaseRenew({{reserved[1]}})
+                    document.myForm.diseaseTownship.options[{{reserved[2]}}].selected = true;
+                    document.myForm.name1.value = '{{reserved[3]}}'
+                    document.myForm.name2.value = '{{reserved[4]}}'
+                    document.myForm.name3.value = '{{reserved[5]}}'
+                    document.myForm.t1.checked = {{reserved[6]}}
+                    document.myForm.t2.checked = {{reserved[7]}}
+                    document.myForm.t3.checked = {{reserved[8]}}
+                    document.myForm.t4.checked = {{reserved[9]}}
+                    document.myForm.star.options[{{reserved[10]}}].selected = true;
+                {% endif %}
+            });
+            </script>
+
             <div class="resultAll">
                 <div class="resultInput">
                     <div class="col" style="margin:2px auto;color: #000000">
-                        <span class="searchItem">特殊疾病*</span><span style="font-size:14px">&nbsp; (必選)</span>
+                        <span class="searchItem">特殊疾病</span><span style="font-size:15px;color: #da2222">
+                                *&nbsp;(必選)</span>
                         <select class="form-control form-control-sm resultS" id="disease" name="disease"
                                 onchange="indexSelect();">
                             <option selected value="no">*選擇疾病(必選)</option>
@@ -96,72 +123,77 @@
                     </div>
                     <div class="col" style="margin:2px auto;">
                         <h6>地區</h6>
-                        <select class="form-control form-control-sm resultArea " id="county" name="county"
-                                onChange="renew(this.selectedIndex);">
-                            <option selected value="">選擇縣市</option>
-                            <option value="基隆市">基隆市</option>
-                            <option value="臺北市">臺北市</option>
-                            <option value="新北市">新北市</option>
-                            <option value="桃園市">桃園市</option>
-                            <option value="新竹縣">新竹縣</option>
-                            <option value="新竹市">新竹市</option>
-                            <option value="苗栗縣">苗栗縣</option>
-                            <option value="臺中市">臺中市</option>
-                            <option value="彰化縣">彰化縣</option>
-                            <option value="南投縣">南投縣</option>
-                            <option value="雲林縣">雲林縣</option>
-                            <option value="嘉義市">嘉義市</option>
-                            <option value="嘉義縣">嘉義縣</option>
-                            <option value="臺南市">臺南市</option>
-                            <option value="高雄市">高雄市</option>
-                            <option value="屏東縣">屏東縣</option>
-                            <option value="臺東縣">臺東縣</option>
-                            <option value="花蓮縣">花蓮縣</option>
-                            <option value="宜蘭縣">宜蘭縣</option>
-                            <option value="澎湖縣">澎湖縣</option>
-                            <option value="金門縣">金門縣</option>
-                            <option value="連江縣">連江縣</option>
+                        <select class="form-control form-control-sm resultArea " id="diseaseCounty" name="diseaseCounty"
+                                onChange="diseaseRenew(this.selectedIndex);">
+                            <option selected value="0">選擇縣市</option>
+                            <option value="1">基隆市</option>
+                            <option value="2">臺北市</option>
+                            <option value="3">新北市</option>
+                            <option value="4">桃園市</option>
+                            <option value="5">新竹縣</option>
+                            <option value="6">新竹市</option>
+                            <option value="7">苗栗縣</option>
+                            <option value="8">臺中市</option>
+                            <option value="9">彰化縣</option>
+                            <option value="10">南投縣</option>
+                            <option value="11">雲林縣</option>
+                            <option value="12">嘉義市</option>
+                            <option value="13">嘉義縣</option>
+                            <option value="14">臺南市</option>
+                            <option value="15">高雄市</option>
+                            <option value="16">屏東縣</option>
+                            <option value="17">臺東縣</option>
+                            <option value="18">花蓮縣</option>
+                            <option value="19">宜蘭縣</option>
+                            <option value="20">澎湖縣</option>
+                            <option value="21">金門縣</option>
+                            <option value="22">連江縣</option>
                         </select>
-                        <select class="form-control form-control-sm resultArea" id="township" name="township" >
-                            <option selected value="">鄉鎮市區</option>
-                            <option value=""></option>
+                        <select class="form-control form-control-sm resultArea" id="diseaseTownship" name="diseaseTownship" >
+                            <option selected value="0">鄉鎮市區</option>
                         </select>
                     </div>
 
                     <div class="col" style="margin:2px auto;color: #000000">
                         <h6>星等</h6>
-                        <select class="form-control form-control-sm resultStar" id="star" name="star">
+                        <select class="form-control form-control-sm resultStar" id="star" name="diseaseStar">
                             <option selected value="">星等</option>
-                            <option value="5">5星</option>
-                            <option value="4">4星+</option>
-                            <option value="3">3星+</option>
-                            <option value="2">2星+</option>
                             <option value="1">1星+</option>
+                            <option value="2">2星+</option>
+                            <option value="3">3星+</option>
+                            <option value="4">4星+</option>
+                            <option value="5">5星</option>
+
+
+
+
                         </select>
                     </div>
                 </div>
                 <div class="resultInput">
                     <div class="col" style="margin:2px auto;color: #000000">
-                        <h6>醫療機構名稱</h6>
-                        <input type="textbox" class="form-control form-control-sm resultName" name="name1"
+                        <span class="searchItem">醫療機構名稱</span><span style="font-size:14px;color: #000000">
+                                &nbsp;(至多可選擇3個)</span>
+                        <div></div>
+                        <input type="textbox" class="form-control form-control-sm resultName" name="diseaseName1"
                                id="name1" placeholder="醫院名稱(選填)">
-                        <input type="textbox" class="form-control form-control-sm resultName" name="name2"
+                        <input type="textbox" class="form-control form-control-sm resultName" name="diseaseName2"
                                id="name2" placeholder="+ 醫院名稱">
-                        <input type="textbox" class="form-control form-control-sm resultName" name="name3"
+                        <input type="textbox" class="form-control form-control-sm resultName" name="diseaseName3"
                                id="name3" placeholder="+ 醫院名稱">
                     </div>
 
-
                     <div class="col" style="margin:2px auto;">
-                        <h6>醫院層級</h6>
+                        <span class="searchItem">醫院層級</span><span style="font-size:14px;color: #000000">
+                                &nbsp;(不選視為全選)</span>
                         <div style="font-size: 15px">
-                            <input type="checkbox" value="1" id="t1" name="type" />
+                            <input type="checkbox" value="1" id="t1" name="diseaseType" />
                             <label for="t1" class="resultType"><span></span>醫學中心</label>
-                            <input type="checkbox" value="2" id="t2" name="type" />
+                            <input type="checkbox" value="2" id="t2" name="diseaseType" />
                             <label for="t2" class="resultType"><span></span>區域醫院</label>
-                            <input type="checkbox" value="3" id="t3" name="type" />
+                            <input type="checkbox" value="3" id="t3" name="diseaseType" />
                             <label for="t3" class="resultType"><span></span>地區醫院</label>
-                            <input type="checkbox" value="4" id="t4" name="type" />
+                            <input type="checkbox" value="4" id="t4" name="diseaseType" />
                             <label for="t4" class="resultType"><span></span>診所</label>
                         </div>
                     </div>
@@ -178,19 +210,23 @@
 
                 <div class="resultIndex" id="resultIndex" name="resultIndex" style="display:block;margin: 0px auto">
                     <div class="col" style="margin:2px auto;">
-                        <span class="searchItem">疾病指標*</span><span style="font-size:14px">&nbsp; (必選1~5個)</span>
+                        <span class="searchItem">疾病指標</span><span style="font-size:15px;color:  #da2222">
+                                *&nbsp;(必選1~5個)</span>
                         <div id="no" style="font-size: 15px;display: block">
                             *請選擇疾病*
                         </div>
                         <div id="asthma" style="margin:2% auto;display: none">
+                            <input type="checkbox" value="42" id="s3" name="ckIndex" onclick="onCheckBox(this)" />
+                            <label for="s3" class="ckIndex2"><span></span>綜合分數</label>
                             <input type="checkbox" value="2" id="s1" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="s1" class="ckIndex2"><span></span>需要住院</label>
                             <input type="checkbox" value="3" id="s2" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="s2" class="ckIndex2"><span></span>給予藥物控制</label>
-                            <input type="checkbox" value="42" id="s3" name="ckIndex" onclick="onCheckBox(this)" />
-                            <label for="s3" class="ckIndex2"><span></span>綜合分數</label>
+
                         </div>
                         <div id="ami" style="margin:2% auto;display: none">
+                            <input type="checkbox" value="43" id="m7" name="ckIndex" onclick="onCheckBox(this)" />
+                            <label for="m7" class="ckIndex2"><span></span>綜合分數</label>
                             <input type="checkbox" value="6" id="m1" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="m1" class="ckIndex2"><span></span>給予藥物控制</label>
                             <input type="checkbox" value="7" id="m2" name="ckIndex" onclick="onCheckBox(this)" />
@@ -203,10 +239,11 @@
                             <label for="m5" class="ckIndex2"><span></span>給予降低心絞痛藥</label>
                             <input type="checkbox" value="11" id="m6" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="m6" class="ckIndex2"><span></span>給予阿斯匹靈比率</label>
-                            <input type="checkbox" value="43" id="m7" name="ckIndex" onclick="onCheckBox(this)" />
-                            <label for="m7" class="ckIndex2"><span></span>綜合分數</label>
+
                         </div>
                         <div id="diabetes" style="margin:2% auto;display: none">
+                            <input type="checkbox" value="44" id="i6" name="ckIndex" onclick="onCheckBox(this)" />
+                            <label for="i6" class="ckIndex2"><span></span>綜合分數</label>
                             <input type="checkbox" value="12" id="i1" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="i1" class="ckIndex2"><span></span>檢查糖化血色素</label>
                             <input type="checkbox" value="13" id="i2" name="ckIndex" onclick="onCheckBox(this)" />
@@ -217,20 +254,22 @@
                             <label for="i4" class="ckIndex2"><span></span>檢查血中膽固醇</label>
                             <input type="checkbox" value="41" id="i5" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="i5" class="ckIndex2"><span></span>加入照護方案比率</label>
-                            <input type="checkbox" value="44" id="i6" name="ckIndex" onclick="onCheckBox(this)" />
-                            <label for="i6" class="ckIndex2"><span></span>綜合分數</label>
+
                         </div>
                         <div id="knee" style="margin:2% auto;display: none">
+                            <input type="checkbox" value="45" id="n4" name="ckIndex" onclick="onCheckBox(this)" />
+                            <label for="n4" class="ckIndex2"><span></span>綜合分數</label>
                             <input type="checkbox" value="16" id="n1" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="n1" class="ckIndex2"><span></span>發生傷口表層感染</label>
                             <input type="checkbox" value="17" id="n2" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="n2" class="ckIndex2"><span></span>發生傷口深層感染</label>
                             <input type="checkbox" value="18" id="n3" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="n3" class="ckIndex2"><span></span>需要再次住院</label>
-                            <input type="checkbox" value="45" id="n4" name="ckIndex" onclick="onCheckBox(this)" />
-                            <label for="n4" class="ckIndex2"><span></span>綜合分數</label>
+
                         </div>
                         <div id="brain" style="margin:2% auto;display: none">
+                            <input type="checkbox" value="46" id="br5" name="ckIndex" onclick="onCheckBox(this)" />
+                            <label for="br5" class="ckIndex2"><span></span>綜合分數</label>
                             <input type="checkbox" value="19" id="br1" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="br1" class="ckIndex2"><span></span>中風後復建</label>
                             <input type="checkbox" value="20" id="br2" name="ckIndex" onclick="onCheckBox(this)" />
@@ -239,10 +278,11 @@
                             <label for="br3" class="ckIndex2"><span></span>住院1天內給予抗血栓藥</label>
                             <input type="checkbox" value="22" id="br4" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="br4" class="ckIndex2"><span></span>住院2天內給予抗血栓藥</label>
-                            <input type="checkbox" value="46" id="br5" name="ckIndex" onclick="onCheckBox(this)" />
-                            <label for="br5" class="ckIndex2"><span></span>綜合分數</label>
+
                         </div>
                         <div id="sinusitis" style="margin:2% auto;display: none">
+                            <input type="checkbox" value="47" id="a6" name="ckIndex" onclick="onCheckBox(this)" />
+                            <label for="a6" class="ckIndex2"><span></span>綜合分數</label>
                             <input type="checkbox" value="23" id="a1" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="a1" class="ckIndex2"><span></span>兒童急性鼻竇炎使用抗生素</label>
                             <input type="checkbox" value="24" id="a2" name="ckIndex" onclick="onCheckBox(this)" />
@@ -253,10 +293,11 @@
                             <label for="a4" class="ckIndex2"><span></span>成人急性鼻竇炎使用抗生素</label>
                             <input type="checkbox" value="27" id="a5" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="a5" class="ckIndex2"><span></span>成人慢性鼻竇炎使用抗生素</label>
-                            <input type="checkbox" value="47" id="a6" name="ckIndex" onclick="onCheckBox(this)" />
-                            <label for="a6" class="ckIndex2"><span></span>綜合分數</label>
+
                         </div>
                         <div id="uterus" style="margin:2% auto;display: none">
+                            <input type="checkbox" value="48" id="u5" name="ckIndex" onclick="onCheckBox(this)" />
+                            <label for="u5" class="ckIndex2"><span></span>綜合分數</label>
                             <input type="checkbox" value="28" id="u1" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="u1" class="ckIndex2"><span></span>手術完後影響排尿、腹部及骨盆功能</label>
                             <input type="checkbox" value="29" id="u2" name="ckIndex" onclick="onCheckBox(this)" />
@@ -265,18 +306,20 @@
                             <label for="u3" class="ckIndex2"><span></span>住院超過7天</label>
                             <input type="checkbox" value="31" id="u4" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="u4" class="ckIndex2"><span></span>需要再次住院</label>
-                            <input type="checkbox" value="48" id="u5" name="ckIndex" onclick="onCheckBox(this)" />
-                            <label for="u5" class="ckIndex2"><span></span>綜合分數</label>
+
                         </div>
                         <div id="pu" style="margin:2% auto;display: none">
+                            <input type="checkbox" value="49" id="p3" name="ckIndex" onclick="onCheckBox(this)" />
+                            <label for="p3" class="ckIndex2"><span></span>綜合分數</label>
                             <input type="checkbox" value="32" id="p1" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="p1" class="ckIndex2"><span></span>給予除菌藥物</label>
                             <input type="checkbox" value="33" id="p2" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="p2" class="ckIndex2"><span></span>給予抗發炎藥物</label>
-                            <input type="checkbox" value="49" id="p3" name="ckIndex" onclick="onCheckBox(this)" />
-                            <label for="p3" class="ckIndex2"><span></span>綜合分數</label>
+
                         </div>
                         <div id="blood" style="margin:2% auto;display: none">
+                            <input type="checkbox" value="50" id="b11" name="ckIndex" onclick="onCheckBox(this)" />
+                            <label for="b11" class="ckIndex2"><span></span>綜合分數</label>
                             <input type="checkbox" value="34" id="b1" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="b1" class="ckIndex2"><span></span>血清白蛋白(Albumin)檢查比率</label>
                             <input type="checkbox" value="35" id="b2" name="ckIndex" onclick="onCheckBox(this)" />
@@ -285,44 +328,40 @@
                             <label for="b3" class="ckIndex2"><span></span>貧血檢查(Hb)檢查比率</label>
                             <input type="checkbox" value="37" id="b4" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="b4" class="ckIndex2"><span></span>瘻管重建率</label>
-                            <!--<input type="checkbox" value="5" id="b5" name="ckIndex" onclick="onCheckBox(this)" />-->
-                            <!--<label for="b5" class="ckIndex2"><span></span>脫離率 (腎移植率)</label>-->
-                            <!--<input type="checkbox" value="6" id="b6" name="ckIndex" onclick="onCheckBox(this)" />-->
-                            <!--<label for="b6" class="ckIndex2"><span></span>B型肝炎表面抗原(HBsAg)轉陽率</label>-->
-                            <!--<input type="checkbox" value="7" id="b7" name="ckIndex" onclick="onCheckBox(this)" />-->
-                            <!--<label for="b7" class="ckIndex2"><span></span>C型肝炎抗體轉陽率</label>-->
-                            <!--<input type="checkbox" value="8" id="b8" name="ckIndex" onclick="onCheckBox(this)" />-->
-                            <!--<label for="b8" class="ckIndex2"><span></span>B肝是否設立透析專屬機器</label>-->
-                            <!--<input type="checkbox" value="9" id="b9" name="ckIndex" onclick="onCheckBox(this)" />-->
-                            <!--<label for="b9" class="ckIndex2"><span></span>C肝是否設立透析專屬機器</label>-->
-                            <!--<input type="checkbox" value="10" id="b10" name="ckIndex" onclick="onCheckBox(this)" />-->
-                            <!--<label for="b10" class="ckIndex2"><span></span>五十五歲以下透析病人移植登錄</label>-->
-                            <input type="checkbox" value="50" id="b11" name="ckIndex" onclick="onCheckBox(this)" />
-                            <label for="b11" class="ckIndex2"><span></span>綜合分數</label>
+                            <input type="checkbox" value="52" id="b5" name="ckIndex" onclick="onCheckBox(this)" />
+                            <label for="b5" class="ckIndex2"><span></span>脫離率 (腎移植率)</label>
+                            <input type="checkbox" value="53" id="b6" name="ckIndex" onclick="onCheckBox(this)" />
+                            <label for="b6" class="ckIndex2"><span></span>B型肝炎表面抗原(HBsAg)轉陽率</label>
+                            <input type="checkbox" value="54" id="b7" name="ckIndex" onclick="onCheckBox(this)" />
+                            <label for="b7" class="ckIndex2"><span></span>C型肝炎抗體轉陽率</label>
+                            <input type="checkbox" value="55" id="b8" name="ckIndex" onclick="onCheckBox(this)" />
+                            <label for="b8" class="ckIndex2"><span></span>B肝是否設立透析專屬機器</label>
+                            <input type="checkbox" value="56" id="b9" name="ckIndex" onclick="onCheckBox(this)" />
+                            <label for="b9" class="ckIndex2"><span></span>C肝是否設立透析專屬機器</label>
+                            <input type="checkbox" value="57" id="b10" name="ckIndex" onclick="onCheckBox(this)" />
+                            <label for="b10" class="ckIndex2"><span></span>五十五歲以下透析病人移植登錄</label>
+
                         </div>
                         <div id="kw" style="margin:2% auto;display: none">
+                            <input type="checkbox" value="51" id="kw11" name="ckIndex" onclick="onCheckBox(this)" />
+                            <label for="kw11" class="ckIndex2"><span></span>綜合分數</label>
                             <input type="checkbox" value="38" id="kw1" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="kw1" class="ckIndex2"><span></span>血清白蛋白(Albumin)檢查比率</label>
                             <input type="checkbox" value="39" id="kw2" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="kw2" class="ckIndex2"><span></span>效率(Weekly Kt_V)檢查比率</label>
                             <input type="checkbox" value="40" id="kw3" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="kw3" class="ckIndex2"><span></span>貧血檢查(Hb)檢查比率</label>
-                            <!--<input type="checkbox" value="4" id="kw4" name="ckIndex" onclick="onCheckBox(this)" />-->
-                            <!--<label for="kw4" class="ckIndex2"><span></span>腹膜透析腹膜炎發生率</label>-->
-                            <!--<input type="checkbox" value="5" id="kw5" name="ckIndex" onclick="onCheckBox(this)" />-->
-                            <!--<label for="kw5" class="ckIndex2"><span></span>脫離率 (腎移植率)</label>-->
-                            <!--<input type="checkbox" value="6" id="kw6" name="ckIndex" onclick="onCheckBox(this)" />-->
-                            <!--<label for="kw6" class="ckIndex2"><span></span>B型肝炎表面抗原(HBsAg)轉陽率</label>-->
-                            <!--<input type="checkbox" value="7" id="kw7" name="ckIndex" onclick="onCheckBox(this)" />-->
-                            <!--<label for="kw7" class="ckIndex2"><span></span>C型肝炎抗體轉陽率</label>-->
-                            <!--<input type="checkbox" value="8" id="kw8" name="ckIndex" onclick="onCheckBox(this)" />-->
-                            <!--<label for="kw8" class="ckIndex2"><span></span>各院所新增透析病人之腹膜透析人數</label>-->
-                            <!--<input type="checkbox" value="9" id="kw9" name="ckIndex" onclick="onCheckBox(this)" />-->
-                            <!--<label for="kw9" class="ckIndex2"><span></span>各院所新增透析病人之腹膜透析占率</label>-->
-                            <!--<input type="checkbox" value="10" id="kw10" name="ckIndex" onclick="onCheckBox(this)" />-->
-                            <!--<label for="kw10" class="ckIndex2"><span></span>五十五歲以下透析病人移植登錄率</label>-->
-                            <input type="checkbox" value="51" id="kw11" name="ckIndex" onclick="onCheckBox(this)" />
-                            <label for="kw11" class="ckIndex2"><span></span>綜合分數</label>
+                            <input type="checkbox" value="58" id="kw4" name="ckIndex" onclick="onCheckBox(this)" />
+                            <label for="kw4" class="ckIndex2"><span></span>腹膜透析腹膜炎發生率</label>
+                            <input type="checkbox" value="59" id="kw5" name="ckIndex" onclick="onCheckBox(this)" />
+                            <label for="kw5" class="ckIndex2"><span></span>脫離率 (腎移植率)</label>
+                            <input type="checkbox" value="60" id="kw6" name="ckIndex" onclick="onCheckBox(this)" />
+                            <label for="kw6" class="ckIndex2"><span></span>B型肝炎表面抗原(HBsAg)轉陽率</label>
+                            <input type="checkbox" value="61" id="kw7" name="ckIndex" onclick="onCheckBox(this)" />
+                            <label for="kw7" class="ckIndex2"><span></span>C型肝炎抗體轉陽率</label>
+                            <input type="checkbox" value="64" id="kw10" name="ckIndex" onclick="onCheckBox(this)" />
+                            <label for="kw10" class="ckIndex2"><span></span>五十五歲以下透析病人移植登錄率</label>
+
                         </div>
 
                     </div>
@@ -330,17 +369,11 @@
                 <!--清除浮動 -->
                 <div style="clear:both;"></div>
                 <div style="margin:10px 0px">
-                    <!--<div style="text-align:right;display: inline-block;vertical-align: top;">-->
-                    <!--<a href="">-->
-                    <!--<button type="reset" id="reset" class="btn-sm btnDelete" style="padding:8px 15px;">-->
-                    <!--清除</button>-->
-                    <!--</a>-->
-                    <!--</div>-->
-
                     <div style="text-align:left;display: inline-block;vertical-align: top;">
                         <a href="">
                             <button id="btnSearch" type="submit" class="btn-sm btnStart" disabled
-                                    style="padding:8px 15px;" name="btnSearch"><img src="static/search.png" style="width:17px;padding-right:5px;">
+                                    style="padding:8px 15px;" name="btnSearchDisease"><img src="static/search.png"
+                                                                                           style="width:17px;padding-right:5px;">
                                 搜尋</button>
                         </a>
                     </div>
@@ -357,11 +390,11 @@
 
         <!-- 結果 -->
         <div id="results" style="text-align: left;">
-            <!-- {% if scroll %}
-                <script>
+            {% if scroll %}
+            <script>
                 document.location.hash = '#' + '{{ scroll }}';
                  </script>
-                {% endif %} -->
+            {% endif %}
 
             <div class="" style="margin:10px;text-align: center">
                 <h3>醫療機構評價分數</h3>
@@ -377,16 +410,23 @@
                         </select>
                     </div>
                     <div style="display: inline-block;vertical-align: bottom;">
-                        <input type="submit" name="reSort" class="btn span"
-                               style="background-color:rgb(101,129,152);color:white" value="排序">
+                        <!--<input type="submit" name="reSort" class="btn span" id="reSort"-->
+                        <!--style="background-color:rgb(101,129,152);color:white" value="排序">-->
+                        <button id="reSort" type="submit" class="btn span"
+                                style="background-color:rgb(101,129,152);color:white" name="reSort">排序</button>
                         <input type="hidden" name="tmp_indexes" value="{{tmp_indexes}}">
                         <input type="hidden" name="tmp_sqlstr" value="{{sql_where}}">
                         <input type="hidden" name="tmp_filter" value="{{tmp_filter}}">
+                        <input type="hidden" name="tmp_reserved" value="{{reserved}}">
                     </div>
                 </div>
 
-                <div class="sortImg">
+                <div style="display: inline-block;vertical-align: middle;margin:5px 2%;">
                     <div class="percentSize">
+                        <img src="static/+1.1.png" style="vertical-align: sub;" height="20px"
+                             title="正向指標">&nbsp;正向指標&nbsp;
+                        <img src="static/-.png" style="vertical-align: sub;" height="20px"
+                             title="負向指標">&nbsp;負向指標&nbsp;
                         <img src="static/高指標.png" height="20px" title="高指標">&nbsp;百分等級大於75&nbsp;
                         <img src="static/中指標2.0.png" height="20px" title="中指標">&nbsp;百分等級50~75&nbsp;
                         <img src="static/低指標2.0.png" height="20px" title="低指標">&nbsp;百分等級小於50&nbsp;
@@ -399,53 +439,65 @@
 
             <!-- 表格 -->
             <div
-                    style="background-color:rgba(184,206,217,0.5);margin:10px 2%;width:96%; word-break:break-all;overflow:scroll;">
+                    style="background-color:rgba(184,206,217,0.5);margin:10px 2%;width:96%; word-break:break-all;">
                 <!--{% for message in get_flashed_messages(with_categories=True) %}-->
 
                 <!--<div class="alert alert-secondary" role="alert">-->
                 <!--{{ message[1] }}-->
                 <!--</div>-->
                 <!--{% endfor %}-->
-                <div style="margin:0px auto;height:550px;" class="tableWidth">
+                <div style="margin:0px auto;" class="tableWidth">
 
                     <table class="table table-hover" style="border:2px rgba(101,129,152,0.8) solid;text-align:left;"
                            rules="all">
                         <thead style="text-align:center;margin:0px auto;" id="thead">
                         <tr>
-                            <!-- {% for column, full_name in z_col %} -->
-                            <th style="background-color:rgba(184,206,217,1); vertical-align: middle;"
-                                valign="center">{{ column }}<img
-                                    src="{{ url_for('static', filename='指標說明.png')}}" height="20px"
-                                    title="{{ full_name }}"></th>
+                            <!-- {% for column, PorN, full_name in z_col %} -->
+                            <th style="background-color:rgba(184,206,217,1); vertical-align: middle;" valign="center">
+                                <!--{% if PorN == 'P' %}-->
+                                <img src="static/+1.1.png" height="20px" title="" style="vertical-align: sub;">
+                                <!--{% endif %}-->
+                                <!--{% if PorN == 'N' %}-->
+                                <img src="static/-.png" height="20px" title="" style="vertical-align: sub;">
+                                <!--{% endif %}-->
+                                {{ column }}
+                                <img src="{{ url_for('static', filename='指標說明.png')}}" height="20px" title="{{ full_name }}">
+                            </th>
                             <!-- {% endfor %} -->
                         </tr>
                         </thead>
                         <tbody style="font-size:15px">
                         <!-- {% for n, v, d, l in z_data %} -->
                         <tr>
-                            <td style="background-color:rgba(184,206,217,1);width:280px;font-size:17px;">
-                                {{ n[0] }}</td>
+                            <td style="background-color:rgba(184,206,217,1);width:280px;font-size:17px;">{{ n[0] }}</td>
                             <!-- {% for i in range(ck_len) %} -->
                             <td rowspan="4"
                                 style="vertical-align:middle;text-align:center;font-size:14px;width:250px">
+                                <!-- {% if l[i+1] == 102%} -->
+                                <img src="{{ url_for('static', filename='指標是.png')}}" height="60px">
+                                <div style="">{{ d[i+1] }}</div>
+                                <!-- {% endif %} --><!-- {% if l[i+1] == 101 %} -->
+                                <img src="{{ url_for('static', filename='指標否.png')}}" height="60px">
+                                <div style="">{{ d[i+1] }}</div>
+                                <!-- {% endif %} -->
                                 <!-- {% if l[i+1] == 75 %} -->
                                 <img src="{{ url_for('static', filename='高指標.png')}}" height="50px">
-                                <div style="vertical-align:middle;text-align:center;">{{ v[i+1] }}%</div>
+                                <div style="">{{ v[i+1] }}%</div>
                                 <div style="">{{ d[i+1] }}</div>
-                                <!-- {% endif %}
-                                {% if l[i+1] == 50 %} -->
+                                <!-- {% endif %} -->
+                                <!-- {% if l[i+1] == 50 %} -->
                                 <img src="{{ url_for('static', filename='中指標2.0.png')}}" height="50px">
-                                <div style="vertical-align:middle;text-align:center;">
+                                <div style="">
                                     {{ v[i+1] }}%<br>{{ d[i+1] }}</div>
-                                <!-- {% endif %}
-                                {% if l[i+1] == 0 %} -->
+                                <!-- {% endif %} -->
+                                <!-- {% if l[i+1] == 0 %} -->
                                 <img src="{{ url_for('static', filename='低指標2.0.png')}}" height="50px">
-                                <div style="vertical-align:middle;text-align:center;">
+                                <div style="">
                                     {{ v[i+1] }}%<br>{{ d[i+1] }}</div>
-                                <!-- {% endif %}
-                                {% if l[i+1] == -1 %} -->
+                                <!-- {% endif %} -->
+                                <!-- {% if l[i+1] == -1 %} -->
                                 <img src="{{ url_for('static', filename='無指標.png')}}" height="50px">
-                                <div style="vertical-align:middle;text-align:center;">此醫療機構無此指標值</div>
+                                <div style="">此醫療機構無此指標值</div>
                                 <!-- {% endif %} -->
                             </td>
                             <!-- {% endfor %} -->
@@ -493,9 +545,20 @@
                         </tr>
 
                         <tr title={{ n[5] }}>
-                            <td>電話：{{ n[4] }}&nbsp;
-                                地址：<img src="{{ url_for('static', filename='地址圖.png')}}" height="20px"
-                                        alt="圖片替代文字" title={{ n[5] }}></td>
+                            <td>
+                                <!-- 電話 -->
+                                <img style="vertical-align: sub;" src="static/phone.png"
+                                     height="20em" title="" >&nbsp;
+                                <span style="font-size:15px;">{{ n[4] }}</span>&nbsp;
+                                <!-- google map -->
+                                <a href="https://www.google.com.tw/maps/place/{{ n[5] }}" class="map"
+                                   target="_blank">
+                                    <img  title="在地圖中開啟" style="vertical-align: sub;"
+                                          src="static/address.png" height="20em">&nbsp;
+                                    <span title="{{ n[5] }}"
+                                          style="font-size:15px;">在地圖中開啟</span>
+                                </a>
+                            </td>
                         </tr>
                         <!-- {% endfor %} -->
                         </tbody>
@@ -542,7 +605,7 @@
         </div>
         <div class="footerImg">
             <div class="span" style="vertical-align:middle;text-align:center;">
-                <img src="static/聯絡3.0.png" style="width:60%;margin:10%">
+                <img src="static/聯絡4.0.png" style="width:60%;margin:10%">
 
             </div>
         </div>
