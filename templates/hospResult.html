@@ -144,15 +144,15 @@
                         </select>
                     </div>
                     <div class="col" style="margin:2px auto;color: #000000">
-                        <span class="searchItem">醫療機構名稱</span><span style="font-size:14px;color: #000000">
-                                &nbsp;(至多可選擇3個)</span>
+                        <span class="searchItem">醫院或診所名稱</span><span style="font-size:14px;color: #000000">
+                                &nbsp;(最多可以比較三家醫院或診所)</span>
                         <div></div>
                         <input type="textbox" class="form-control form-control-sm resultName name" id="name1" name="hospName1"
-                               placeholder="醫院名稱(選填)">
+                               placeholder="醫院或診所名稱">
                         <input type="textbox" class="form-control form-control-sm resultName name" id="name2" name="hospName2"
-                               placeholder="+ 醫院名稱">
+                               placeholder="+ 醫院或診所名稱">
                         <input type="textbox" class="form-control form-control-sm resultName name" id="name3" name="hospName3"
-                               placeholder="+ 醫院名稱">
+                               placeholder="+ 醫院或診所名稱">
                     </div>
 
                 </div>
@@ -169,8 +169,8 @@
                         </select>
                     </div>
                     <div class="col" style="margin:2% auto;">
-                        <span class="searchItem">醫院層級</span><span style="font-size:14px;color: #000000">
-                                &nbsp;(不選視為全選)</span>
+                        <span class="searchItem">醫院大小</span><span style="font-size:14px;color: #000000">
+                                &nbsp;(可以不勾選)</span>
                         <div style="font-size: 15px">
                             <input type="checkbox" value="1" id="t1" name="hospType" />
                             <label for="t1" class="resultType"><span></span>醫學中心</label>
@@ -214,7 +214,7 @@
                 </script>
             <!-- {% endif %} -->
 
-            <div style="margin:15px;text-align: center">
+            <div style="margin:15px;text-align: center" id="thead">
                 <h3>醫療機構搜尋結果</h3>
             </div>
 

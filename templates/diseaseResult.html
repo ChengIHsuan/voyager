@@ -73,7 +73,7 @@
             <!-- 麵包屑 -->
             <ul class="breadcrumb" style="padding:1% 15px;width: 80%;margin: auto;text-align: center">
                 <li><a href="/">首頁</a></li>
-                <li><a href="search">找特殊疾病</a></li>
+                <li><a href="search">找疾病</a></li>
                 <li id="bread" style="color:rgba(0, 0, 0, 0.5)">{{reserved[11]}}</li>
             </ul>
             <div style="text-align:center;padding-top: 10px">
@@ -104,7 +104,7 @@
             <div class="resultAll">
                 <div class="resultInput">
                     <div class="col" style="margin:2px auto;color: #000000">
-                        <span class="searchItem">特殊疾病</span><span style="font-size:15px;color: #da2222">
+                        <span class="searchItem">選擇疾病</span><span style="font-size:15px;color: #da2222">
                                 *&nbsp;(必選)</span>
                         <select class="form-control form-control-sm resultS" id="disease" name="disease"
                                 onchange="indexSelect();">
@@ -172,20 +172,20 @@
                 </div>
                 <div class="resultInput">
                     <div class="col" style="margin:2px auto;color: #000000">
-                        <span class="searchItem">醫療機構名稱</span><span style="font-size:14px;color: #000000">
-                                &nbsp;(至多可選擇3個)</span>
+                        <span class="searchItem">醫院或診所名稱</span><span style="font-size:14px;color: #000000">
+                                &nbsp;(最多可以比較三家醫院或診所)</span>
                         <div></div>
-                        <input type="textbox" class="form-control form-control-sm resultName" name="diseaseName1"
-                               id="name1" placeholder="醫院名稱(選填)">
-                        <input type="textbox" class="form-control form-control-sm resultName" name="diseaseName2"
-                               id="name2" placeholder="+ 醫院名稱">
-                        <input type="textbox" class="form-control form-control-sm resultName" name="diseaseName3"
-                               id="name3" placeholder="+ 醫院名稱">
+                        <input type="textbox" class="form-control form-control-sm resultName name" name="diseaseName1"
+                               id="name1" placeholder="醫院或診所名稱">
+                        <input type="textbox" class="form-control form-control-sm resultName name" name="diseaseName2"
+                               id="name2" placeholder="+ 醫院或診所名稱">
+                        <input type="textbox" class="form-control form-control-sm resultName name" name="diseaseName3"
+                               id="name3" placeholder="+ 醫院或診所名稱">
                     </div>
 
                     <div class="col" style="margin:2px auto;">
-                        <span class="searchItem">醫院層級</span><span style="font-size:14px;color: #000000">
-                                &nbsp;(不選視為全選)</span>
+                        <span class="searchItem">醫院大小</span><span style="font-size:14px;color: #000000">
+                                &nbsp;(可以不勾選)</span>
                         <div style="font-size: 15px">
                             <input type="checkbox" value="1" id="t1" name="diseaseType" />
                             <label for="t1" class="resultType"><span></span>醫學中心</label>
@@ -210,7 +210,7 @@
 
                 <div class="resultIndex" id="resultIndex" name="resultIndex" style="display:block;margin: 0px auto">
                     <div class="col" style="margin:2px auto;">
-                        <span class="searchItem">疾病指標</span><span style="font-size:15px;color:  #da2222">
+                        <span class="searchItem">檢查、用藥及治療等資訊</span><span style="font-size:15px;color:  #da2222">
                                 *&nbsp;(必選1~5個)</span>
                         <div id="no" style="font-size: 15px;display: block">
                             *請選擇疾病*
@@ -253,7 +253,7 @@
                             <input type="checkbox" value="15" id="i4" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="i4" class="ckIndex2"><span></span>檢查血中膽固醇</label>
                             <input type="checkbox" value="41" id="i5" name="ckIndex" onclick="onCheckBox(this)" />
-                            <label for="i5" class="ckIndex2"><span></span>加入照護方案比率</label>
+                            <label for="i5" class="ckIndex2"><span></span>有衛教師及營養師照顧的病友比率</label>
 
                         </div>
                         <div id="knee" style="margin:2% auto;display: none">
@@ -321,17 +321,17 @@
                             <input type="checkbox" value="50" id="b11" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="b11" class="ckIndex2"><span></span>綜合分數</label>
                             <input type="checkbox" value="34" id="b1" name="ckIndex" onclick="onCheckBox(this)" />
-                            <label for="b1" class="ckIndex2"><span></span>血清白蛋白(Albumin)檢查比率</label>
+                            <label for="b1" class="ckIndex2"><span></span>血清白蛋白檢查比率</label>
                             <input type="checkbox" value="35" id="b2" name="ckIndex" onclick="onCheckBox(this)" />
-                            <label for="b2" class="ckIndex2"><span></span>尿素氮透析效率(URR)檢查比率</label>
+                            <label for="b2" class="ckIndex2"><span></span>尿素氮檢查比率</label>
                             <input type="checkbox" value="36" id="b3" name="ckIndex" onclick="onCheckBox(this)" />
-                            <label for="b3" class="ckIndex2"><span></span>貧血檢查(Hb)檢查比率</label>
+                            <label for="b3" class="ckIndex2"><span></span>貧血檢查比率</label>
                             <input type="checkbox" value="37" id="b4" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="b4" class="ckIndex2"><span></span>瘻管重建率</label>
                             <input type="checkbox" value="52" id="b5" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="b5" class="ckIndex2"><span></span>脫離率 (腎移植率)</label>
                             <input type="checkbox" value="53" id="b6" name="ckIndex" onclick="onCheckBox(this)" />
-                            <label for="b6" class="ckIndex2"><span></span>B型肝炎表面抗原(HBsAg)轉陽率</label>
+                            <label for="b6" class="ckIndex2"><span></span>B型肝炎抗原轉陽性比率</label>
                             <input type="checkbox" value="54" id="b7" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="b7" class="ckIndex2"><span></span>C型肝炎抗體轉陽率</label>
                             <input type="checkbox" value="55" id="b8" name="ckIndex" onclick="onCheckBox(this)" />
@@ -339,28 +339,28 @@
                             <input type="checkbox" value="56" id="b9" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="b9" class="ckIndex2"><span></span>C肝是否設立透析專屬機器</label>
                             <input type="checkbox" value="57" id="b10" name="ckIndex" onclick="onCheckBox(this)" />
-                            <label for="b10" class="ckIndex2"><span></span>五十五歲以下透析病人移植登錄</label>
+                            <label for="b10" class="ckIndex2"><span></span>醫院協助病友進行腎臟移植登錄的比率</label>
 
                         </div>
                         <div id="kw" style="margin:2% auto;display: none">
                             <input type="checkbox" value="51" id="kw11" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="kw11" class="ckIndex2"><span></span>綜合分數</label>
                             <input type="checkbox" value="38" id="kw1" name="ckIndex" onclick="onCheckBox(this)" />
-                            <label for="kw1" class="ckIndex2"><span></span>血清白蛋白(Albumin)檢查比率</label>
+                            <label for="kw1" class="ckIndex2"><span></span>血清白蛋白檢查比率</label>
                             <input type="checkbox" value="39" id="kw2" name="ckIndex" onclick="onCheckBox(this)" />
-                            <label for="kw2" class="ckIndex2"><span></span>效率(Weekly Kt_V)檢查比率</label>
+                            <label for="kw2" class="ckIndex2"><span></span>排除廢物的效率</label>
                             <input type="checkbox" value="40" id="kw3" name="ckIndex" onclick="onCheckBox(this)" />
-                            <label for="kw3" class="ckIndex2"><span></span>貧血檢查(Hb)檢查比率</label>
+                            <label for="kw3" class="ckIndex2"><span></span>貧血檢查比率</label>
                             <input type="checkbox" value="58" id="kw4" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="kw4" class="ckIndex2"><span></span>腹膜透析腹膜炎發生率</label>
                             <input type="checkbox" value="59" id="kw5" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="kw5" class="ckIndex2"><span></span>脫離率 (腎移植率)</label>
                             <input type="checkbox" value="60" id="kw6" name="ckIndex" onclick="onCheckBox(this)" />
-                            <label for="kw6" class="ckIndex2"><span></span>B型肝炎表面抗原(HBsAg)轉陽率</label>
+                            <label for="kw6" class="ckIndex2"><span></span>B型肝炎抗原轉陽性比率</label>
                             <input type="checkbox" value="61" id="kw7" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="kw7" class="ckIndex2"><span></span>C型肝炎抗體轉陽率</label>
                             <input type="checkbox" value="64" id="kw10" name="ckIndex" onclick="onCheckBox(this)" />
-                            <label for="kw10" class="ckIndex2"><span></span>五十五歲以下透析病人移植登錄率</label>
+                            <label for="kw10" class="ckIndex2"><span></span>醫院協助病友進行腎臟移植登錄的比率</label>
 
                         </div>
 
@@ -424,9 +424,9 @@
                 <div style="display: inline-block;vertical-align: middle;margin:5px 2%;">
                     <div class="percentSize">
                         <img src="static/+1.1.png" style="vertical-align: sub;" height="20px"
-                             title="正向指標">&nbsp;正向指標&nbsp;
+                             title="正向指標">&nbsp;正向指標&nbsp;(越大越好)
                         <img src="static/-.png" style="vertical-align: sub;" height="20px"
-                             title="負向指標">&nbsp;負向指標&nbsp;
+                             title="負向指標">&nbsp;負向指標&nbsp;(越小越好)
                         <img src="static/高指標.png" height="20px" title="高指標">&nbsp;百分等級大於75&nbsp;
                         <img src="static/中指標2.0.png" height="20px" title="中指標">&nbsp;百分等級50~75&nbsp;
                         <img src="static/低指標2.0.png" height="20px" title="低指標">&nbsp;百分等級小於50&nbsp;
@@ -452,7 +452,7 @@
                            rules="all">
                         <thead style="text-align:center;margin:0px auto;" id="thead">
                         <tr>
-                            <!-- {% for column, PorN, full_name in z_col %} -->
+                            <!-- {% for column, PorN, description in columns %} -->
                             <th style="background-color:rgba(184,206,217,1); vertical-align: middle;" valign="center">
                                 <!--{% if PorN == 'P' %}-->
                                 <img src="static/+1.1.png" height="20px" title="" style="vertical-align: sub;">
@@ -461,7 +461,7 @@
                                 <img src="static/-.png" height="20px" title="" style="vertical-align: sub;">
                                 <!--{% endif %}-->
                                 {{ column }}
-                                <img src="{{ url_for('static', filename='指標說明.png')}}" height="20px" title="{{ full_name }}">
+                                <img src="{{ url_for('static', filename='指標說明.png')}}" height="20px" title="{{ description }}">
                             </th>
                             <!-- {% endfor %} -->
                         </tr>
@@ -497,7 +497,7 @@
                                 <!-- {% endif %} -->
                                 <!-- {% if l[i+1] == -1 %} -->
                                 <img src="{{ url_for('static', filename='無指標.png')}}" height="50px">
-                                <div style="">此醫療機構無此指標值</div>
+                                <div style="">無資料</div>
                                 <!-- {% endif %} -->
                             </td>
                             <!-- {% endfor %} -->

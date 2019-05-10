@@ -94,7 +94,7 @@
         <script>
             $(document).ready(function() {
                 {% if reserved %}
-                    document.myForm.depart.options[{{reserved[0]}}].selected = true;
+                    document.myForm.depart.options[{{reserved[0]}}-1].selected = true;
                     document.myForm.county.options[{{reserved[1]}}].selected = true;
                     departRenew({{reserved[1]}})
                     document.myForm.departTownship.options[{{reserved[2]}}].selected = true;
@@ -122,11 +122,11 @@
             <div class="resultAll">
                 <div class="resultInput">
                     <div class="col" style="margin:2px auto;color: #000000">
-                        <span class="searchItem">科別*</span><span style="font-size:14px">&nbsp; (必選)</span>
+                        <span class="searchItem">科別</span><span style="font-size:15px;color:  #da2222">
+                                        *&nbsp;(必選)</span>
                         <select style="margin:2px auto;" class="form-control form-control-sm inputS" id="branch"
                                 name="depart">
-                            <option selected value="0">請選擇科別</option>
-                            <option value="1">家醫科</option>
+                            <option selected value="1">家醫科</option>
                             <option value="2">內科</option>
                             <option value="3">外科</option>
                             <option value="4">小兒科</option>
@@ -173,17 +173,18 @@
                         </select>
                     </div>
                     <div class="col" style="margin:2px auto;color: #000000">
-                        <span class="searchItem">主觀指標*</span><span style="font-size:14px">&nbsp; (必選)</span>
+                        <span class="searchItem">環境、醫師態度及溝通等資訊</span><span style="font-size:15px;color:  #da2222">
+                                        *&nbsp;(必選)</span>
                         <div id="indexB" style="margin:2% auto">
                             <input type="checkbox" value="1" id="is1" name="subjective"
                                    onclick="onCheckBoxSub(this)" />
-                            <label for="is1" class="ckIndex2"><span></span>醫院評價及環境 </label>
+                            <label for="is1" class="ckIndex2"><span></span>醫院評價及環境</label>
                             <input type="checkbox" value="2" id="is2" name="subjective"
                                    onclick="onCheckBoxSub(this)" />
                             <label for="is2" class="ckIndex2"><span></span>醫療人員溝通及態度</label>
                             <input type="checkbox" value="3" id="is3" name="subjective"
                                    onclick="onCheckBoxSub(this)" />
-                            <label for="is3" class="ckIndex2"><span></span>醫療人員衛教及情緒安撫</label>
+                            <label for="is3" class="ckIndex2"><span></span>醫療人員對病友的衛教及情緒安撫</label>
                             <input type="checkbox" value="4" id="is4" name="subjective"
                                    onclick="onCheckBoxSub(this)" />
                             <label for="is4" class="ckIndex2"><span></span>醫院等候時間及流程安排</label>
@@ -192,13 +193,10 @@
                             <label for="is5" class="ckIndex2"><span></span>醫療人員專業</label>
                             <input type="checkbox" value="6" id="is6" name="subjective"
                                    onclick="onCheckBoxSub(this)" />
-                            <label for="is6" class="ckIndex2"><span></span>醫師檢查，給藥及協助轉診所</label>
+                            <label for="is6" class="ckIndex2"><span></span>醫師檢查，給藥及協助轉診</label>
                             <input type="checkbox" value="7" id="is7" name="subjective"
                                    onclick="onCheckBoxSub(this)" />
                             <label for="is7" class="ckIndex2"><span></span>不良事件發生</label>
-                            <input type="checkbox" value="8" id="is8" name="subjective"
-                                   onclick="onCheckBoxSub(this)" />
-                            <label for="is8" class="ckIndex2"><span></span>其他註解</label>
                         </div>
                     </div>
 
@@ -207,7 +205,7 @@
                     <div class="col" style="margin:2px auto;">
                         <h6>地區</h6>
                         <select class="form-control form-control-sm resultArea " id="county" name="departCounty"
-                                onChange="renew(this.selectedIndex);">
+                                onChange="departRenew(this.selectedIndex);">
                             <option selected value="0">選擇縣市</option>
                             <option value="1">基隆市</option>
                             <option value="2">臺北市</option>
@@ -238,18 +236,20 @@
                         </select>
                     </div>
                     <div class="col" style="margin:2px auto;color: #000000">
-                        <h6>醫療機構名稱</h6>
+                        <span class="searchItem">醫院或診所名稱</span><span style="font-size:14px;color: #000000">
+                                &nbsp;(最多可以比較三家醫院或診所)</span>
+                        <div></div>
                         <input type="textbox" class="form-control form-control-sm resultName name"
-                               name="departName1" id="name1" placeholder="醫院名稱(選填)">
+                               name="departName1" id="name1" placeholder="醫院或診所名稱">
                         <input type="textbox" class="form-control form-control-sm resultName name"
-                               name="departName2" id="name2" placeholder="+ 醫院名稱">
+                               name="departName2" id="name2" placeholder="+ 醫院或診所名稱">
                         <input type="textbox" class="form-control form-control-sm resultName name"
-                               name="departName3" id="name3" placeholder="+ 醫院名稱">
+                               name="departName3" id="name3" placeholder="+ 醫院或診所名稱">
                     </div>
 
 
                     <div class="col" style="margin:2px auto;">
-                        <h6>醫院層級</h6>
+                        <h6>醫院大小</h6>
                         <div style="font-size: 15px">
                             <input type="checkbox" value="1" id="t1" name="departType" />
                             <label for="t1" class="resultType"><span></span>醫學中心</label>
@@ -312,7 +312,7 @@
                 {% endif %} -->
 
             <div class="" style="margin:10px;text-align: center">
-                <h3>【{{reserved[10]}}】主觀指標分數</h3>
+                <h3>【{{reserved[10]}}】環境、醫師態度及溝通等品質分數</h3>
             </div>
             <!--<div style="display: inline-block;vertical-align: top;width: 96%;text-align: left">-->
             <!--&lt;!&ndash;排序選擇&ndash;&gt;-->
