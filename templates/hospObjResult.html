@@ -25,16 +25,17 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
-    <link rel=stylesheet type="text/css" href="{{ url_for('static', filename='main1.5.css') }}">
-    <!--<link rel=stylesheet type="text/css" href="hos.css">-->
-    <!--<script rel=stylesheet type="text/javascript" src="search.js"></script>-->
-    <script type="text/javascript" src="{{url_for('static', filename='js/searchJS1.14.js')}}"></script>
+    <link rel=stylesheet type="text/css" href="{{ url_for('static', filename='main1.7.css') }}">
+    <link rel=stylesheet type="text/css" href="hos.css">
+    <script rel=stylesheet type="text/javascript" src="searchJS1.15.js"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/searchJS1.15.js')}}"></script>
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <!-- <script type="text/javascript" src="{{url_for('static', filename='js/resultJS.js')}}"></script> -->
 
     {% if alert %}
@@ -156,9 +157,9 @@
                     <!-- 主觀指標鈕 -->
                     <div class="subOb">
                         <div style="float:right;">
-                                <button id="btnSubj" type="submit" class="btn-sm btnSubject"
-                                        style="padding:5px 15px;" name="btnSubj{{ normal[0] }}"><img src="static/subSearch.png" style="width:17px;padding-right:5px;">
-                                    主觀指標</button>
+                            <button id="btnSubj" type="submit" class="btn-sm btnSubject"
+                                    style="padding:5px 15px;" name="btnSubj{{ normal[0] }}"><img src="static/subSearch.png" style="width:17px;padding-right:5px;">
+                                主觀指標</button>
                         </div>
                         <br>
                         <!-- 客觀指標鈕 -->
@@ -174,10 +175,10 @@
                 </div>
             </div>
             <div style="text-align:center;padding-top: 10px">
-                <h5 class="resultText">檢查、用藥及治療等資訊查詢<span><img src="static/條件下.png" height="5px"
-                                                        style="padding-left:5px"></span></h5>
+                <h5 class="resultText">搜尋條件<span><img src="static/條件下.png" height="5px"
+                                                               style="padding-left:5px"></span></h5>
             </div>
-            <div class="resultAll">
+            <div class="resultAll" style="display: block">
                 <div class="resultInput">
 
                     <div class="col" style="margin:2px auto;color: #000000">
@@ -195,6 +196,7 @@
                             <option value="8">消化性潰瘍</option>
                             <option value="9">血液透析</option>
                             <option value="10">腹膜透析</option>
+                            <option value="11">慢性腎臟病</option>
                         </select>
                     </div>
 
@@ -306,8 +308,6 @@
                             <label for="p1" class="ckIndex2"><span></span>給予除菌藥物</label>
                             <input type="checkbox" value="33" id="p2" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="p2" class="ckIndex2"><span></span>給予抗發炎藥物</label>
-                            <input type="checkbox" value="49" id="p3" name="ckIndex" onclick="onCheckBox(this)" />
-                            <label for="p3" class="ckIndex2"><span></span>綜合分數</label>
                         </div>
                         <div id="blood" style="margin:2% auto;display: none">
                             <input type="checkbox" value="50" id="b11" name="ckIndex" onclick="onCheckBox(this)" />
@@ -353,6 +353,23 @@
                             <label for="kw7" class="ckIndex2"><span></span>C型肝炎抗體轉陽率</label>
                             <input type="checkbox" value="64" id="kw10" name="ckIndex" onclick="onCheckBox(this)" />
                             <label for="kw10" class="ckIndex2"><span></span>醫院協助病友進行腎臟移植登錄的比率</label>
+                        </div>
+                        <div id="ckd" style="margin:2% auto;display: none">
+                            <input type="checkbox" value="69" id="ckd1" name="ckIndex"
+                                   onclick="onCheckBox(this)" />
+                            <label for="ckd1" class="ckIndex2"><span></span>綜合分數</label>
+                            <input type="checkbox" value="65" id="ckd2" name="ckIndex"
+                                   onclick="onCheckBox(this)" />
+                            <label for="ckd2" class="ckIndex2"><span></span>檢查血脂</label>
+                            <input type="checkbox" value="66" id="ckd3" name="ckIndex"
+                                   onclick="onCheckBox(this)" />
+                            <label for="ckd3" class="ckIndex2"><span></span>檢查血清白蛋白</label>
+                            <input type="checkbox" value="67" id="ckd4" name="ckIndex"
+                                   onclick="onCheckBox(this)" />
+                            <label for="ckd4" class="ckIndex2"><span></span>至少每6個月檢測1次血色素</label>
+                            <input type="checkbox" value="68" id="ckd5" name="ckIndex"
+                                   onclick="onCheckBox(this)" />
+                            <label for="ckd5" class="ckIndex2"><span></span>測量血清鈣或磷</label>
                         </div>
                     </div>
 
@@ -411,16 +428,17 @@
             <div style="clear:both;"></div>
 
             <!-- 表格 -->
-            <div style="background-color:rgba(184,206,217,0.5);margin:10px 5%;">
+
+            <div style="background-color:rgba(184,206,217,0.5);margin:10px 5%;overflow: auto">
 
                 <div style="margin:0px auto;" class="tableWidth">
-
-                    <table class="table" style="border:5px rgba(255, 255, 255, 0.8) solid;text-align:left; "
+{% if z_data %}
+                    <table class="table" style="border:5px rgba(255, 255, 255, 0.8) solid;text-align:left; margin-bottom: 0px;"
                            rules="all">
                         <thead style="text-align:center;margin:auto;" id="thead">
                         <tr>
                             {% for c in columns %}
-                            <th class="thead" valign="center">
+                            <th class="thead" style="vertical-align: middle;" valign="center">
                                 {% if c[1] == 'P' %}
                                 <img src="static/+1.1.png" height="20px" title="" style="vertical-align: sub;">
                                 {% endif %}
@@ -474,6 +492,7 @@
                     </table>
                 </div>
             </div>
+            {% endif %}
         </div>
         {% endif %}
         <!-- 結果分頁 -->
@@ -499,7 +518,7 @@
                         - 公衛系: 陳宗泰 副教授<br>
                         - 資工系: 徐嘉連 副教授<br>
                         - 應美系: 陳力豪 副教授<br>
-                        - 醫資學程: 程伊萱、林昱彤、蔡亞立、王嘉琳、胡瀚文 同學
+                        - 醫資學程: 程伊萱、林昱彤、蔡亞立、胡瀚文 同學
                     </h6>
                     <li style="font-weight:bold;">給予我們任何<a href="https://goo.gl/forms/0M3BmbWXczWYmD9X2"
                                                            target="_blank" style="color:	pink;"><u>意見</u></a></li>

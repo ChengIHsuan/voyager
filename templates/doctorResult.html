@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zn-Hant-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>醫療機構評價網站</title>
+    <link rel="shortcut icon" href="static/favicon.ico">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- jQuery v1.9.1 -->
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <!-- Chosen v1.8.2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="{{url_for('static', filename='js/searchJS1.15.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/loading.js')}}"></script>
+    <link rel=stylesheet type="text/css" href="{{ url_for('static', filename='main1.7.css') }}">
+    <link rel=stylesheet type="text/css" href="hos.css">
+    <script rel=stylesheet type="text/javascript" src="searchJS1.15.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+    {% if alert %}
+    <script>
+      alert('{{alert}}');
+    </script>
+    {% endif %}
+</head>
+
+<body class="span">
+<!--回首頁浮動按鈕-->
+<a href="#top" class="back-to-top" style="z-index:101">回到頁首</a>
+
+<script>
+
+        jQuery(document).ready(function () {
+            var offset = 220;
+            var duration = 500;
+            jQuery(window).scroll(function () {
+                if (jQuery(this).scrollTop() > offset) {
+                    jQuery('.back-to-top').fadeIn(duration);
+                } else {
+                    jQuery('.back-to-top').fadeOut(duration);
+                }
+            });
+
+            jQuery('.back-to-top').click(function (event) {
+                event.preventDefault();
+                jQuery('html, body').animate({ scrollTop: 0 }, duration);
+                return false;
+            })
+        });
+    </script>
+<form name="myForm" action="/doctorResult" method="post" runat="server" autocomplete="on">
+    <div class="container-fiuld">
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #658198;text-align: center">
+            <a class="navbar-brand" href="/"><img src="https://pbs.twimg.com/media/DrvK7_5UcAARp62.png" class=""
+                                                  style="width:70px"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">首頁</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="search">搜尋 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <!--<li class="nav-item">-->
+                    <!--<a class="nav-link" href="#">聯絡我們</a>-->
+                    <!--</li>-->
+                </ul>
+            </div>
+        </nav>
+
+        <script>
+            $(document).ready(function() {
+                {% if reserved %}
+                    document.myForm.doctor.value = '{{ reserved[0] }}';
+                    document.myForm.docDepart.value = '{{ reserved[1] }}';
+                    document.myForm.docName.value = '{{ reserved[2] }}';
+                {% endif %}
+            });
+        </script>
+        <div class="resultBg" style="display:inline-block;vertical-align: top;text-align: center;">
+            <!-- 麵包屑 -->
+                <ul class="breadcrumb" style="padding:1% 15px;width: 80%;margin: auto;text-align: center">
+                    <li><a href="/">首頁</a></li>
+                    <li><a href="search">找醫師</a></li>
+                    <li style="color:rgba(0, 0, 0, 0.5)">醫師評價</li>
+                </ul>
+            <div style="text-align:center;padding-top: 10px">
+                <h5 class="resultText">搜尋條件<span><img src="static/條件下.png" height="6px"
+                                                      style="padding-left:5px"></span></h5>
+            </div>
+            <div class="resultAll">
+                <div class="resultInput">
+                    <div class="col" style="margin:2px auto;color: #000000">
+                        <span class="searchItem">醫師姓名</span>
+                        <div></div>
+                        <input type="textbox" style="width:100%" class="form-control form-control-sm resultName"
+                               name="doctor" id="doctor" placeholder="醫師姓名">
+                    </div>
+
+                    <div class="col" style="margin:2px auto;color: #000000">
+                        <span class="searchItem">科別</span>
+                        <select style="margin:2px auto;" class="form-control form-control-sm inputS" id="docDepart"
+                                name="docDepart">
+                            <option selected value="0">請選擇科別</option>
+                            <option value="1">家醫科</option>
+                            <option value="2">內科</option>
+                            <option value="3">外科</option>
+                            <option value="4">小兒科</option>
+                            <option value="5">婦產科</option>
+                            <option value="6">骨科</option>
+                            <option value="7">神經外科</option>
+                            <option value="8">泌尿科</option>
+                            <option value="9">耳鼻喉科</option>
+                            <option value="10">眼科</option>
+                            <option value="11">皮膚科</option>
+                            <option value="12">神經科</option>
+                            <option value="13">精神科</option>
+                            <option value="14">復健科</option>
+                            <option value="15">整形外科</option>
+                            <option value="16">急診醫學科</option>
+                            <option value="17">職業醫學科</option>
+                            <option value="18">牙科</option>
+                            <option value="19">復健牙科</option>
+                            <option value="20">牙髓病科</option>
+                            <option value="21">牙周病科</option>
+                            <option value="22">補綴牙科</option>
+                            <option value="23">齒顎矯正科</option>
+                            <option value="24">兒童牙科</option>
+                            <option value="25">口腔顎面外科</option>
+                            <option value="26">口腔診斷科</option>
+                            <option value="27">口腔病理科</option>
+                            <option value="28">中醫科</option>
+                            <option value="29">中醫內科</option>
+                            <option value="30">中醫外科</option>
+                            <option value="31">中醫眼科</option>
+                            <option value="32">中醫兒科</option>
+                            <option value="33">中醫婦科</option>
+                            <option value="34">中醫傷科</option>
+                            <option value="35">中醫針灸科</option>
+                            <option value="36">中醫痣科</option>
+                            <option value="37">中醫一般診療不分科</option>
+                            <option value="38">麻醉科</option>
+                            <option value="39">放射線科</option>
+                            <option value="40">病理科</option>
+                            <option value="41">核醫科</option>
+                            <option value="42">結核科</option>
+                            <option value="43">洗腎科</option>
+                        </select>
+                    </div>
+
+                    <div class="col" style="margin:2px auto;color: #000000">
+                        <span class="searchItem">醫院或診所名稱</span>
+                        <div></div>
+                        <input type="textbox" style="width:100%" class="form-control form-control-sm resultName name"
+                               name="docName" id="docName" placeholder="醫院或診所名稱">
+                    </div>
+
+                </div>
+
+                <!--清除浮動 -->
+                <div style="clear:both;"></div>
+                <div style="margin:10px 0px">
+
+                    <div style="text-align:left;display: inline-block;vertical-align: top;">
+                        <a href="">
+                            <button id="btnSearch" name="btnSearchDoc" type="submit"
+                                    class="btn-sm btnStart" style="padding:8px 15px;"><img
+                                    src="static/search.png" style="width:17px;padding-right:5px;">
+                                搜尋</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                    //條件收合
+                    $(".resultText").click(function () {
+                        $(".resultAll").slideToggle("fast");
+                    });
+                    //必選指標
+                    var sub = 0;
+                    var itemsSub = document.getElementsByName("subjective");
+                    function onCheckBoxSub(checkbox) {
+                        if (checkbox.checked) {
+                            sub++;
+                        }
+                        else {
+                            sub--;
+                        }
+                        if ( sub <= 0) {
+                            $('#btnSearchB').attr('disabled', true);
+                        } else {
+                            $('#btnSearchB').attr('disabled', false);
+                        }
+                    }
+                </script>
+        </div>
+
+        <!-- 結果 -->
+        <div id="results" style="text-align: left;">
+            <!-- {% if scroll %}
+                <script>
+                document.location.hash = '#' + '{{ scroll }}';
+                 </script>
+                {% endif %} -->
+
+            <div class="" style="margin:10px;text-align: center">
+                <h3>醫師評價</h3>
+            </div>
+
+        </div>
+        <!--清除浮動 -->
+        <div style="clear:both;"></div>
+
+        <!-- 表格 -->
+        <div
+                style="background-color:rgba(184,206,217,0.5);margin:10px 2%;width:96%; word-break:break-all;overflow: auto">
+            <div style="margin:0px auto;" class="tableWidth">
+
+                <table class="table table-hover" style="border:2px rgba(101,129,152,0.8) solid;text-align:left;"
+                       rules="all">
+                    <thead style="text-align:center;margin:0px auto;" id="thead">
+                    <tr>
+                        {% for column in columns%}
+                        <th style="background-color:rgba(184,206,217,1); vertical-align: middle;" valign="center">{{ column }}</th>
+                        {% endfor %}
+                    </tr>
+                    </thead>
+                    <tbody style="font-size:15px">
+                    {% for n, v in z_data%}
+                    <tr>
+                        <td style="background-color:rgba(184,206,217,1);width:280px;font-size:17px;">{{ n[0] }}</td>
+                        {% for i in range(col_len)%}
+                        <td rowspan="3"
+                            style="vertical-align:middle;text-align:center;font-size:14px;width:250px">
+                            <div style="vertical-align:middle;text-align:center;">
+                               {% if v[i] == None%}
+                                無資料
+                                {% else %}
+                                {% if v[i] >= 30 %}
+                                <img src="static/apple.png" height="50px">
+                                {% else %}
+                                <img src="static/badApple.png" height="50px">
+                                {% endif %}
+                                <br>{{ v[i] }}%
+                                {% endif %}
+                            </div>
+                        </td>
+                        {% endfor %}
+
+                    </tr>
+                    <tr>
+                        <td>{{ n[1] }}<br>{{ n[2] }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>相關評論數：{{ n[3] }} </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- 結果分頁 -->
+    <div class="center5 span">
+        <div style=" width: 150px;height: 60px;overflow: auto; overflow-y:hidden;margin: 0px auto">
+            <h2></h2>
+        </div>
+    </div>
+    </div>
+</form>
+
+
+
+<!-- footer -->
+<div style="margin-top:20px;" class="span" id="footer">
+    <div style="background-color:rgb(101,129,152);">
+        <div class="footerText">
+            <div style="text-align:left; color: white;padding:5%">
+                <ul style="list-style-position: outside;margin:0">
+                    <li style="font-weight:bold;">輔仁大學醫療評價計畫團隊介紹：</li>
+                    <h6>
+                        - 商研所: 李天行 教授<br>
+                        - 公衛系: 陳宗泰 副教授<br>
+                        - 資工系: 徐嘉連 副教授<br>
+                        - 應美系: 陳力豪 副教授<br>
+                        - 醫資學程: 程伊萱、林昱彤、蔡亞立、胡瀚文 同學
+                    </h6>
+                    <li style="font-weight:bold;">給予我們任何<a href="https://goo.gl/forms/0M3BmbWXczWYmD9X2"
+                                                           target="_blank" style="color:	pink;"><u>意見</u></a></li>
+
+                    <!-- Start of CuterCounter Code -->
+                    <li style="font-weight:bold;">您是第&nbsp;<a
+                            href="http://www.cutercounter.com/traditional-chinese-n/" target="_blank"><img
+                            src="http://www.cutercounter.com/hit.php?id=gvundckd&nd=6&style=51"
+                            alt="網頁計數器"></a>&nbsp;位訪客</li>
+                    <!-- End of CuterCounter Code -->
+                </ul>
+            </div>
+        </div>
+        <div class="footerImg">
+            <div class="span" style="vertical-align:middle;text-align:center;">
+                <img src="static/聯絡4.0.png" style="width:60%;margin:10%">
+
+            </div>
+        </div>
+        <hr>
+        <div style="padding:1% 5%">
+            <p style="text-align:center;font-size:12px;"> 本網站版權屬於 輔仁大學醫療評價計畫團隊所有，未經本站同意，請勿擅用圖案。<br>Copyright ©
+                2019
+                - FJU
+                Physician/Hospital Rating Website Team All Rights Reserved</p>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
