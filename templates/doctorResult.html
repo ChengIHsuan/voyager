@@ -232,8 +232,25 @@
             <div class="" style="margin:10px;text-align: center">
                 <h3>醫師評價</h3>
             </div>
+            <div style="display: inline-block;vertical-align: middle;margin:5px 2%;">
+                <div class="percentSize">
+                    <img src="static/appleRed.png" style="vertical-align: sub;" height="20px" title="">&nbsp;正面評論占率大於30%
+                    <div class="two" ></div>
+                    <img src="static/appleGreen.png" style="vertical-align: sub;" height="20px" title="">&nbsp;正面評論占率小於30%
+                </div>
+            </div>
 
         </div>
+        <style>
+                .two{
+                    display:none;
+                }
+                @media (max-width: 576px) {
+                    .two{
+                    display:block;
+                }
+                }
+            </style>
         <!--清除浮動 -->
         <div style="clear:both;"></div>
 
@@ -242,7 +259,7 @@
                 style="background-color:rgba(184,206,217,0.5);margin:10px 2%;width:96%; word-break:break-all;overflow: auto">
             <div style="margin:0px auto;" class="tableWidth">
 
-                <table class="table table-hover" style="border:2px rgba(101,129,152,0.8) solid;text-align:left;"
+                <table class="table table-hover" style="border:2px rgba(101,129,152,0.8) solid;text-align:left;margin-bottom:0px;"
                        rules="all">
                     <thead style="text-align:center;margin:0px auto;" id="thead">
                     <tr>
@@ -263,9 +280,9 @@
                                 無資料
                                 {% else %}
                                 {% if v[i] >= 30 %}
-                                <img src="static/apple.png" height="50px">
+                                <img src="static/appleRed.png" height="50px">
                                 {% else %}
-                                <img src="static/badApple.png" height="50px">
+                                <img src="static/appleGreen.png" height="50px">
                                 {% endif %}
                                 <br>{{ v[i] }}%
                                 {% endif %}

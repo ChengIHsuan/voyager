@@ -88,7 +88,7 @@
                     <li style="color:rgba(0, 0, 0, 0.5)">{{ normal[1] }}</li>
                     {% endif %}
                 </ul>
-                <img style="float: left" src="https://picsum.photos/200/150/?image=2">
+                <img class="hosImg" src="https://picsum.photos/200/150/?image=2">
                 <div class="tableHosName">
                     <!--醫療機構名稱-->
                     <p style="font-size:23px;margin: 0px">{{ normal[1] }}</p>
@@ -250,6 +250,23 @@
             <div class="" style="margin:15px;text-align: center">
                 <h3>各科別環境、醫師態度及溝通等品質分數</h3>
             </div>
+            <div style="display: inline-block;vertical-align: middle;margin:5px 2%;">
+                <div class="percentSize">
+                    <img src="static/appleRed.png" style="vertical-align: sub;" height="20px" title="">&nbsp;正面評論占率大於30%
+                    <div class="two" ></div>
+                    <img src="static/appleGreen.png" style="vertical-align: sub;" height="20px" title="">&nbsp;正面評論占率小於30%
+                </div>
+            </div>
+            <style>
+                .two{
+                    display:none;
+                }
+                @media (max-width: 576px) {
+                    .two{
+                    display:block;
+                }
+                }
+            </style>
             {% endif %}
             <!-- 表格 -->
             {% if z_data %}
@@ -258,7 +275,7 @@
                 <div style="margin:0px auto;" class="tableWidth">
 
                     <table class="table table-hover"
-                           style="border:5px rgba(255, 255, 255, 0.8) solid;text-align:left; " rules="all">
+                           style="border:5px rgba(255, 255, 255, 0.8) solid;text-align:left; margin-bottom: 0px;" rules="all">
                         <thead style="text-align:center;margin:0px auto;" id="thead">
                         <tr>
                             {% for c in columns %}
@@ -277,10 +294,10 @@
                                 {% if v[i+1] == None%}
                                     無資料
                                 {% else %}
-                                    {% if v[i+1] >= 70 %}
-                                        <img src="static/apple.png" height="50px">
+                                    {% if v[i+1] >= 30 %}
+                                        <img src="static/appleRed.png" height="50px">
                                     {% else %}
-                                        <img src="static/badApple.png" height="50px">
+                                        <img src="static/appleGreen.png" height="50px">
                                     {% endif %}
                                 <br>{{ v[i+1] }}%
                                 {% endif %}

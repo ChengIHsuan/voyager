@@ -85,7 +85,7 @@
                     <li><a href="search">找醫療機構</a></li>
                     <li style="color:rgba(0, 0, 0, 0.5)">{{ normal[1] }}</li>
                 </ul>
-                <img style="float: left" src="https://picsum.photos/200/150/?image=2">
+                <img class="hosImg" src="https://picsum.photos/200/150/?image=2">
                 <div class="tableHosName" id="indexes">
                     <!--醫療機構名稱-->
                     <p style="font-size:23px;margin: 0px">{{ normal[1] }}</p>
@@ -417,13 +417,25 @@
                              title="正向指標">&nbsp;正向指標&nbsp;(越大越好)
                         <img src="static/-.png" style="vertical-align: sub;" height="20px"
                              title="負向指標">&nbsp;負向指標&nbsp;(越小越好)
+                        <div class="two" ></div>
                         <img src="static/高指標.png" height="20px" title="高指標">&nbsp;百分等級大於75&nbsp;
                         <img src="static/中指標2.0.png" height="20px" title="中指標">&nbsp;百分等級50~75&nbsp;
+                        <div class="two" ></div>
                         <img src="static/低指標2.0.png" height="20px" title="低指標">&nbsp;百分等級小於50&nbsp;
                         <img src="static/無指標.png" height="20px" title="無指標">&nbsp;無資料
                     </div>
                 </div>
             </div>
+            <style>
+                .two{
+                    display:none;
+                }
+                @media (max-width: 576px) {
+                    .two{
+                    display:block;
+                }
+                }
+            </style>
             <!--清除浮動 -->
             <div style="clear:both;"></div>
 

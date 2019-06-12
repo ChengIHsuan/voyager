@@ -229,8 +229,8 @@
             <!-- 圖案解釋 -->
             <div style="display: inline-block;vertical-align: middle;margin:5px 2%;">
                 <div class="percentSize">
-                    <img src="static/apple.png" style="vertical-align: sub;" height="20px" title="">&nbsp;好蘋果&nbsp;
-                    <img src="static/badApple.png" style="vertical-align: sub;" height="20px" title="">&nbsp;壞蘋果
+                    <img src="static/appleRed.png" style="vertical-align: sub;" height="20px" title="">&nbsp;正面評論占率大於70%
+                    <img src="static/appleGreen.png" style="vertical-align: sub;" height="20px" title="">&nbsp;正面評論占率小於70%
                 </div>
             </div>
         </div>
@@ -249,7 +249,7 @@
                             {% for col, des in z_col %}
                             <th style="background-color:rgba(184,206,217,1); vertical-align: middle;" valign="center">
                                 {{ col }}
-                                <img src="{{ url_for('static', filename='指標說明.png')}}" height="20px" title="{{ des }}">
+
                             </th>
                             {% endfor %}
                         </tr>
@@ -270,9 +270,9 @@
                                     無資料
                                 {% else %}
                                     {% if v[i+1] >= 70 %}
-                                        <img src="static/apple.png" height="50px">
+                                        <img src="static/appleRed.png" height="50px">
                                     {% else %}
-                                        <img src="static/badApple.png" height="50px">
+                                        <img src="static/appleGreen.png" height="50px">
                                     {% endif %}
                                     <br>{{ v[i+1] }}%
                                 {% endif %}

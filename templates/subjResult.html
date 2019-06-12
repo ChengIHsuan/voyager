@@ -316,31 +316,24 @@
             <div class="" style="margin:10px;text-align: center">
                 <h3>【{{reserved[10]}}】環境、醫師態度及溝通等品質分數</h3>
             </div>
-            <!--<div style="display: inline-block;vertical-align: top;width: 96%;text-align: left">-->
-            <!--&lt;!&ndash;排序選擇&ndash;&gt;-->
-            <!--<div class="sort">-->
-            <!--<div class="form-group col-md-10 sortBtn" style="vertical-align: bottom;">-->
-            <!--<select id="inputState" class="form-control " name="selected_index">-->
-            <!--&lt;!&ndash; {% for id, abbr in z_indexes %} &ndash;&gt;-->
-            <!--<option value={{id}}>{{ abbr }}</option>-->
-            <!--&lt;!&ndash; {% endfor %} &ndash;&gt;-->
-            <!--</select>-->
-            <!--</div>-->
-            <!--<div style="display: inline-block;vertical-align: bottom;">-->
-            <!--<input type="submit" name="reSort" class="btn span"-->
-            <!--style="background-color:rgb(101,129,152);color:white" value="排序">-->
-            <!--</div>-->
-            <!--</div>-->
-
-            <!-- <div class="sortImg">
+            <div style="display: inline-block;vertical-align: middle;margin:5px 2%;">
                 <div class="percentSize">
-                    <img src="static/高指標.png" height="20px" title="高指標">&nbsp;百分等級大於75&nbsp;
-                    <img src="static/中指標2.0.png" height="20px" title="中指標">&nbsp;百分等級50~75&nbsp;
-                    <img src="static/低指標2.0.png" height="20px" title="低指標">&nbsp;百分等級小於50&nbsp;
-                    <img src="static/無指標.png" height="20px" title="無指標">&nbsp;無資料
+                    <img src="static/appleRed.png" style="vertical-align: sub;" height="20px" title="">&nbsp;正面評論占率大於30%
+                    <div class="two" ></div>
+                    <img src="static/appleGreen.png" style="vertical-align: sub;" height="20px" title="">&nbsp;正面評論占率小於30%
                 </div>
-            </div> -->
+            </div>
         </div>
+        <style>
+                .two{
+                    display:none;
+                }
+                @media (max-width: 576px) {
+                    .two{
+                    display:block;
+                }
+                }
+            </style>
         <!--清除浮動 -->
         <div style="clear:both;"></div>
 
@@ -354,15 +347,13 @@
             <!--{% endfor %}-->
             <div style="margin:0px auto;" class="tableWidth">
 
-                <table class="table table-hover" style="border:2px rgba(101,129,152,0.8) solid;text-align:left;"
+                <table class="table table-hover" style="border:2px rgba(101,129,152,0.8) solid;text-align:left;margin-bottom:0px;"
                        rules="all">
                     <thead style="text-align:center;margin:0px auto;" id="thead">
                     <tr>
                         <!-- {% for column, full_name in z_col %} -->
                         <th style="background-color:rgba(184,206,217,1); vertical-align: middle;"
-                            valign="center">{{ column }}<img
-                                src="{{ url_for('static', filename='指標說明.png')}}" height="20px"
-                                title="{{ full_name }}"></th>
+                            valign="center">{{ column }}</th>
                         <!-- {% endfor %} -->
                     </tr>
                     </thead>
@@ -379,10 +370,10 @@
                                 {% if v[i+1] == None%}
                                 無資料
                                 {% else %}
-                                {% if v[i+1] >= 70 %}
-                                <img src="static/apple.png" height="50px">
+                                {% if v[i+1] >= 30 %}
+                                <img src="static/appleRed.png" height="50px">
                                 {% else %}
-                                <img src="static/badApple.png" height="50px">
+                                <img src="static/appleGreen.png" height="50px">
                                 {% endif %}
                                 <br>{{ v[i+1] }}%
                                 {% endif %}
