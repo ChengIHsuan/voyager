@@ -26,10 +26,10 @@
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
 
-    <link rel=stylesheet type="text/css" href="{{ url_for('static', filename='main1.7.css') }}">
-    <link rel=stylesheet type="text/css" href="hos.css">
-    <script rel=stylesheet type="text/javascript" src="searchJS1.15.js"></script>
-    <script type="text/javascript" src="{{url_for('static', filename='js/searchJS1.15.js')}}"></script>
+    <link rel=stylesheet type="text/css" href="{{ url_for('static', filename='main1.5.css') }}">
+    <!--<link rel=stylesheet type="text/css" href="hos.css">-->
+    <!--<script rel=stylesheet type="text/javascript" src="search.js"></script>-->
+    <script type="text/javascript" src="{{url_for('static', filename='js/searchJS1.14.js')}}"></script>
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 
 
@@ -84,11 +84,9 @@
                 <ul class="breadcrumb">
                     <li><a href="/">首頁</a></li>
                     <li><a href="search">找醫療機構</a></li>
-                    {% if normal %}
                     <li style="color:rgba(0, 0, 0, 0.5)">{{ normal[1] }}</li>
-                    {% endif %}
                 </ul>
-                <img class="hosImg" src="https://picsum.photos/200/150/?image=2">
+                <img style="float: left" src="https://picsum.photos/200/150/?image=2">
                 <div class="tableHosName">
                     <!--醫療機構名稱-->
                     <p style="font-size:23px;margin: 0px">{{ normal[1] }}</p>
@@ -181,10 +179,10 @@
 
 
             <div style="text-align:center;padding-top: 10px">
-                <h5 class="resultText" >搜尋條件<span><img src="static/條件下.png" height="5px"
-                     style="padding-left:5px"></span></h5>
+                <h5 class="resultText">環境、醫師態度及溝通等資訊查詢<span><img src="static/條件下.png" height="5px"
+                                                        style="padding-left:5px"></span></h5>
             </div>
-            <div class="resultAll" style="display: block">
+            <div class="resultAll">
 
                 <div class="resultInputSub">
                     <div class="col" style="margin:2% auto;font-size: 15px;">
@@ -250,57 +248,30 @@
             <div class="" style="margin:15px;text-align: center">
                 <h3>各科別環境、醫師態度及溝通等品質分數</h3>
             </div>
-            <div style="display: inline-block;vertical-align: middle;margin:5px 2%;">
-                <div class="percentSize">
-                    <img src="static/appleRed.png" style="vertical-align: sub;" height="20px" title="">&nbsp;正面評論占率大於30%
-                    <div class="two" ></div>
-                    <img src="static/appleGreen.png" style="vertical-align: sub;" height="20px" title="">&nbsp;正面評論占率小於30%
-                </div>
-            </div>
-            <style>
-                .two{
-                    display:none;
-                }
-                @media (max-width: 576px) {
-                    .two{
-                    display:block;
-                }
-                }
-            </style>
             {% endif %}
             <!-- 表格 -->
-            {% if z_data %}
-            <div style="background-color:rgba(184,206,217,0.5);margin:10px 2%;overflow: auto">
+            <div style="background-color:rgba(184,206,217,0.5);margin:10px 2%;">
 
                 <div style="margin:0px auto;" class="tableWidth">
 
                     <table class="table table-hover"
-                           style="border:5px rgba(255, 255, 255, 0.8) solid;text-align:left; margin-bottom: 0px;" rules="all">
+                           style="border:5px rgba(255, 255, 255, 0.8) solid;text-align:left; " rules="all">
                         <thead style="text-align:center;margin:0px auto;" id="thead">
                         <tr>
                             {% for c in columns %}
-                            <th class="thead" style="vertical-align: middle;" valign="center">{{ c }}</th>
+                            <th class="thead" valign="center">{{ c }}</th>
                             {% endfor %}
                         </tr>
                         </thead>
                         <tbody style="font-size:17px;text-align:center;margin:0px auto;">
                         {% for d, v in z_data%}
                         <tr>
-                            <td style="vertical-align:middle;text-align:center;">
+                            <td>
                                 {{ d }}
                             </td>
-                            {% for i in range(col_len) %}
-                            <td style="vertical-align:middle;text-align:center;">
-                                {% if v[i+1] == None%}
-                                    無資料
-                                {% else %}
-                                    {% if v[i+1] >= 30 %}
-                                        <img src="static/appleRed.png" height="50px">
-                                    {% else %}
-                                        <img src="static/appleGreen.png" height="50px">
-                                    {% endif %}
-                                <br>{{ v[i+1] }}%
-                                {% endif %}
+                            {% for l in range(col_len) %}
+                            <td>
+                                {{ v[l+1] }}
                             </td>
                             {% endfor %}
                         </tr>
@@ -309,7 +280,6 @@
                     </table>
                 </div>
             </div>
-            {% endif %}
         </div>
 
     </div>
@@ -329,7 +299,7 @@
                         - 公衛系: 陳宗泰 副教授<br>
                         - 資工系: 徐嘉連 副教授<br>
                         - 應美系: 陳力豪 副教授<br>
-                        - 醫資學程: 程伊萱、林昱彤、蔡亞立、胡瀚文 同學
+                        - 醫資學程: 程伊萱、林昱彤、蔡亞立、王嘉琳、胡瀚文 同學
                     </h6>
                     <li style="font-weight:bold;">給予我們任何<a href="https://goo.gl/forms/0M3BmbWXczWYmD9X2"
                                                            target="_blank" style="color:	pink;"><u>意見</u></a></li>

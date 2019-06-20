@@ -8,7 +8,7 @@
     <title>醫療機構評價網站</title>
     <link rel="shortcut icon" href="static/favicon.ico">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <!-- jQuery v1.9.1 -->
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <!-- Chosen v1.8.2 -->
@@ -17,20 +17,19 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
-    <link rel=stylesheet type="text/css" href="{{ url_for('static', filename='main1.7.css') }}">
-    <link rel=stylesheet type="text/css" href="hos.css">
-    <script rel=stylesheet type="text/javascript" src="searchJS1.15.js"></script>
-    <script type="text/javascript" src="{{url_for('static', filename='js/searchJS1.15.js')}}"></script>
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+    <link rel=stylesheet type="text/css" href="{{ url_for('static', filename='main1.5.css') }}">
+    <!--<link rel=stylesheet type="text/css" href="hos.css">-->
+    <!--<script rel=stylesheet type="text/javascript" src="search.js"></script>-->
+    <script type="text/javascript" src="{{url_for('static', filename='js/searchJS1.14.js')}}"></script>
     <script type="text/javascript" src="{{url_for('static', filename='js/loading.js')}}"></script>
-    <script type="text/javascript" src="{{url_for('static', filename='js/pageHos.js')}}"></script>
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -40,7 +39,7 @@
 
     {% if alert %}
     <script>
-        alert('{{alert}}');
+      alert('{{alert}}');
     </script>
     {% endif %}
 
@@ -55,41 +54,37 @@
         function subj() {
             myForm.action = "/hospSubjResult";
         }
-
-        function comp() {
-            myForm.action = "/hospComparison";
-        }
     </script>
 </head>
 
 <body class="span">
-    <!--回首頁浮動按鈕-->
-    <a href="#top" class="back-to-top" style="z-index:101">回到頁首</a>
+<!--回首頁浮動按鈕-->
+<a href="#top" class="back-to-top" style="z-index:101">回到頁首</a>
 
-    <form name="myForm" method="post" runat="server" autocomplete="on">
-        <div class="container-fiuld">
-            <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #658198;text-align: center">
-                <a class="navbar-brand" href="/"><img src="https://pbs.twimg.com/media/DrvK7_5UcAARp62.png" class=""
-                        style="width:70px"></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+<form name="myForm" method="post" runat="server" autocomplete="on">
+    <div class="container-fiuld">
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #658198;text-align: center">
+            <a class="navbar-brand" href="/"><img src="https://pbs.twimg.com/media/DrvK7_5UcAARp62.png" class=""
+                                                  style="width:70px"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/">首頁</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="search">搜尋 <span class="sr-only">(current)</span></a>
-                        </li>
-                        <!--<li class="nav-item">-->
-                        <!--<a class="nav-link" href="#">聯絡我們</a>-->
-                        <!--</li>-->
-                    </ul>
-                </div>
-            </nav>
-            <script>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">首頁</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="search">搜尋 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <!--<li class="nav-item">-->
+                    <!--<a class="nav-link" href="#">聯絡我們</a>-->
+                    <!--</li>-->
+                </ul>
+            </div>
+        </nav>
+        <script>
             $(document).ready(function() {
                 {% if reserved %}
                     document.myForm.county.options[{{reserved[0]}}].selected = true;
@@ -105,321 +100,295 @@
                     document.myForm.star.options[{{reserved[9]}}].selected = true;
                 {% endif %}
             });
-            </script>
+        </script>
 
 
-            <div class="resultBg" style="display:inline-block;vertical-align: top;text-align: center;">
-                <div style="text-align:center;padding-top: 10px">
-                    <h5 class="resultText">搜尋條件<span><img src="static/條件下.png" height="5px"
-                                style="padding-left:5px"></span></h5>
-                </div>
-                <div class="resultAll">
-                    <div class="resultInput">
+        <div class="resultBg" style="display:inline-block;vertical-align: top;text-align: center;">
+            <div style="text-align:center;padding-top: 10px">
+                <h5 class="resultText">搜尋條件<span><img src="static/條件下.png" height="5px"
+                                                      style="padding-left:5px"></span></h5>
+            </div>
+            <div class="resultAll">
+                <div class="resultInput">
 
-                        <div class="col" style="margin:2px auto;">
-                            <h6>地區</h6>
-                            <select class="form-control form-control-sm resultArea " id="county" name="hospCounty"
+                    <div class="col" style="margin:2px auto;">
+                        <h6>地區</h6>
+                        <select class="form-control form-control-sm resultArea " id="county" name="hospCounty"
                                 onChange="hospRenew(this.selectedIndex);">
-                                <option selected value="0">選擇縣市</option>
-                                <option value="1">基隆市</option>
-                                <option value="2">臺北市</option>
-                                <option value="3">新北市</option>
-                                <option value="4">桃園市</option>
-                                <option value="5">新竹縣</option>
-                                <option value="6">新竹市</option>
-                                <option value="7">苗栗縣</option>
-                                <option value="8">臺中市</option>
-                                <option value="9">彰化縣</option>
-                                <option value="10">南投縣</option>
-                                <option value="11">雲林縣</option>
-                                <option value="12">嘉義市</option>
-                                <option value="13">嘉義縣</option>
-                                <option value="14">臺南市</option>
-                                <option value="15">高雄市</option>
-                                <option value="16">屏東縣</option>
-                                <option value="17">臺東縣</option>
-                                <option value="18">花蓮縣</option>
-                                <option value="19">宜蘭縣</option>
-                                <option value="20">澎湖縣</option>
-                                <option value="21">金門縣</option>
-                                <option value="22">連江縣</option>
-                            </select>
-                            <select class="form-control form-control-sm resultArea" id="hospTownship"
-                                name="hospTownship">
-                                <option selected value="0">鄉鎮市區</option>
-                            </select>
-                        </div>
-                        <div class="col" style="margin:2px auto;color: #000000">
-                            <span class="searchItem">醫院或診所名稱</span><span style="font-size:14px;color: #000000">
+                            <option selected value="0">選擇縣市</option>
+                            <option value="1">基隆市</option>
+                            <option value="2">臺北市</option>
+                            <option value="3">新北市</option>
+                            <option value="4">桃園市</option>
+                            <option value="5">新竹縣</option>
+                            <option value="6">新竹市</option>
+                            <option value="7">苗栗縣</option>
+                            <option value="8">臺中市</option>
+                            <option value="9">彰化縣</option>
+                            <option value="10">南投縣</option>
+                            <option value="11">雲林縣</option>
+                            <option value="12">嘉義市</option>
+                            <option value="13">嘉義縣</option>
+                            <option value="14">臺南市</option>
+                            <option value="15">高雄市</option>
+                            <option value="16">屏東縣</option>
+                            <option value="17">臺東縣</option>
+                            <option value="18">花蓮縣</option>
+                            <option value="19">宜蘭縣</option>
+                            <option value="20">澎湖縣</option>
+                            <option value="21">金門縣</option>
+                            <option value="22">連江縣</option>
+                        </select>
+                        <select class="form-control form-control-sm resultArea" id="hospTownship" name="hospTownship">
+                            <option selected value="0">鄉鎮市區</option>
+                        </select>
+                    </div>
+                    <div class="col" style="margin:2px auto;color: #000000">
+                        <span class="searchItem">醫院或診所名稱</span><span style="font-size:14px;color: #000000">
                                 &nbsp;(最多可以比較三家醫院或診所)</span>
-                            <div></div>
-                            <input type="textbox" class="form-control form-control-sm resultName name" id="name1"
-                                name="hospName1" placeholder="醫院或診所名稱">
-                            <input type="textbox" class="form-control form-control-sm resultName name" id="name2"
-                                name="hospName2" placeholder="+ 醫院或診所名稱">
-                            <input type="textbox" class="form-control form-control-sm resultName name" id="name3"
-                                name="hospName3" placeholder="+ 醫院或診所名稱">
-                        </div>
-
+                        <div></div>
+                        <input type="textbox" class="form-control form-control-sm resultName name" id="name1" name="hospName1"
+                               placeholder="醫院或診所名稱">
+                        <input type="textbox" class="form-control form-control-sm resultName name" id="name2" name="hospName2"
+                               placeholder="+ 醫院或診所名稱">
+                        <input type="textbox" class="form-control form-control-sm resultName name" id="name3" name="hospName3"
+                               placeholder="+ 醫院或診所名稱">
                     </div>
-                    <div class="resultInput">
-                        <div class="col" style="margin:2px auto;color: #000000">
-                            <h6>星等</h6>
-                            <select class="form-control form-control-sm resultStar" id="star" name="hospStar">
-                                <option selected value="">星等</option>
-                                <option value="1">1星+</option>
-                                <option value="2">2星+</option>
-                                <option value="3">3星+</option>
-                                <option value="4">4星+</option>
-                                <option value="5">5星</option>
-                            </select>
-                        </div>
-                        <div class="col" style="margin:2% auto;">
-                            <span class="searchItem">醫院大小</span><span style="font-size:14px;color: #000000">
+
+                </div>
+                <div class="resultInput">
+                    <div class="col" style="margin:2px auto;color: #000000">
+                        <h6>星等</h6>
+                        <select class="form-control form-control-sm resultStar" id="star" name="hospStar">
+                            <option selected value="">星等</option>
+                            <option value="1">1星+</option>
+                            <option value="2">2星+</option>
+                            <option value="3">3星+</option>
+                            <option value="4">4星+</option>
+                            <option value="5">5星</option>
+                        </select>
+                    </div>
+                    <div class="col" style="margin:2% auto;">
+                        <span class="searchItem">醫院大小</span><span style="font-size:14px;color: #000000">
                                 &nbsp;(可以不勾選)</span>
-                            <div style="font-size: 15px">
-                                <input type="checkbox" value="1" id="t1" name="hospType" />
-                                <label for="t1" class="resultType"><span></span>醫學中心</label>
-                                <input type="checkbox" value="2" id="t2" name="hospType" />
-                                <label for="t2" class="resultType"><span></span>區域醫院</label>
-                                <input type="checkbox" value="3" id="t3" name="hospType" />
-                                <label for="t3" class="resultType"><span></span>地區醫院</label>
-                                <input type="checkbox" value="4" id="t4" name="hospType" />
-                                <label for="t4" class="resultType"><span></span>診所</label>
-                            </div>
+                        <div style="font-size: 15px">
+                            <input type="checkbox" value="1" id="t1" name="hospType" />
+                            <label for="t1" class="resultType"><span></span>醫學中心</label>
+                            <input type="checkbox" value="2" id="t2" name="hospType" />
+                            <label for="t2" class="resultType"><span></span>區域醫院</label>
+                            <input type="checkbox" value="3" id="t3" name="hospType" />
+                            <label for="t3" class="resultType"><span></span>地區醫院</label>
+                            <input type="checkbox" value="4" id="t4" name="hospType" />
+                            <label for="t4" class="resultType"><span></span>診所</label>
                         </div>
-
                     </div>
 
+                </div>
 
 
-                    <!--清除浮動 -->
-                    <div style="clear:both;"></div>
-                    <div style="margin:10px 0px">
-                        <div style="text-align:left;display: inline-block;vertical-align: top;">
-                            <a href="">
-                                <button id="btnSearch" type="submit" class="btn-sm btnStart" style="padding:8px 15px;"
-                                    name="btnSearchHosp"><img src="static/search.png"
-                                        style="width:17px;padding-right:5px;" onclick="hosp()">
-                                    搜尋</button>
-                            </a>
-                        </div>
+
+                <!--清除浮動 -->
+                <div style="clear:both;"></div>
+                <div style="margin:10px 0px">
+                    <div style="text-align:left;display: inline-block;vertical-align: top;">
+                        <a href="">
+                            <button id="btnSearch" type="submit" class="btn-sm btnStart" style="padding:8px 15px;"
+                                    name="btnSearchHosp"><img src="static/search.png" style="width:17px;padding-right:5px;" onclick="hosp()">
+                                搜尋</button>
+                        </a>
                     </div>
                 </div>
-                <script>
+            </div>
+            <script>
                     //條件收合
                     $(".resultText").click(function () {
                         $(".resultAll").slideToggle("fast");
                     });
                 </script>
-            </div>
-            <!-- 結果 -->
-            <div id="results" style="text-align: left;">
-                <!-- {% if scroll %} -->
-                <script>
+        </div>
+        <!-- 結果 -->
+        <div id="results" style="text-align: left;">
+            <!-- {% if scroll %} -->
+            <script>
                     document.location.hash = '#' + '{{ scroll }}';
                 </script>
-                <!-- {% endif %} -->
+            <!-- {% endif %} -->
 
-                <div style="margin:15px;text-align: center" id="thead">
-                    <h3>醫療機構搜尋結果</h3>
-                </div>
-                <!-- 比較醫院 -->
-                <div style="margin:0px 10%;border:5px rgba(255, 255, 255, 0.8) solid;">
-                    <button id="" type="submit" class="btn-sm compare" style="padding:5px 15px;" name="btnHospComp" onclick="comp()">
-                        比較各家醫療機構
-                    </button>
-                </div>
-                <!-- 表格 -->
-                <div style="background-color:rgba(184,206,217,0.5);margin:10px 10%;">
-
-                    <div style="margin:0px auto; ">
-
-                        <table class="table " style="border:5px rgba(255, 255, 255, 0.8) solid;text-align:left;margin-bottom:0px;"
-                            rules="all">
-
-                            <tbody style="font-size:15px">
-                                <!-- {% for n in normal %} -->
-                                <tr>
-                                    <td style="font-size:17px;border:5px rgba(255, 255, 255, 0.8) solid;">
-                                        <!-- 醫院圖片 -->
-                                        <img  class="hosImg" src="https://picsum.photos/200/150/?image=2">
-                                        <div class="tableHosName">
-                                            <p style="font-size:23px;margin: 0px">{{ n[0] }}</p>
-                                            <!--醫療層級-->
-                                            <span style="font-size:15px;color: #5a5a5a">{{ n[1] }}</span>
-                                            <!--星等-->
-                                            <span
-                                                style="font-size:15px;color: #5a5a5a;background-color:rgba(255, 211, 229,0.5);;border-radius:5px;padding:2px 5px">{{ n[2]}}</span>
-                                            {% if 0 <= n[2] < 0.5 %}
-                                            <img style="vertical-align: sub;margin:0px 2px" src="static/0星.png"
-                                                height="20em">
-                                            {% endif %}
-                                            {% if 0.5 <= n[2] < 1 %}
-                                            <img style="vertical-align: sub;margin:0px 2px" src="static/0半星.png"
-                                                height="20em">
-                                            {% endif %}
-                                            {% if 1 <= n[2] < 1.5 %}
-                                            <img style="vertical-align: sub;margin:0px 2px" src="static/1星.png"
-                                                height="20em">
-                                            {% endif %}
-                                            {% if 1.5 <= n[2] < 2 %}
-                                            <img style="vertical-align: sub;margin:0px 2px" src="static/1半星.png"
-                                                height="20em">
-                                            {% endif %}
-                                            {% if 2 <= n[2] < 2.5 %}
-                                            <img style="vertical-align: sub;margin:0px 2px" src="static/2星.png"
-                                                height="20em">
-                                            {% endif %}
-                                            {% if 2.5 <= n[2] < 3 %}
-                                            <img style="vertical-align: sub;margin:0px 2px" src="static/2半星.png"
-                                                height="20em">
-                                            {% endif %}
-                                            {% if 3 <= n[2] < 3.5 %}
-                                            <img style="vertical-align: sub;margin:0px 2px" src="static/3星.png"
-                                                height="20em">
-                                            {% endif %}
-                                            {% if 3.5 <= n[2] < 4 %}
-                                            <img style="vertical-align: sub;margin:0px 2px" src="static/3半星.png"
-                                                height="20em">
-                                            {% endif %}
-                                            {% if 4 <= n[2] < 4.5 %}
-                                            <img style="vertical-align: sub;margin:0px 2px" src="static/4星.png"
-                                                height="20em">
-                                            {% endif %}
-                                            {% if 4.5 <= n[2] < 5 %}
-                                            <img style="vertical-align: sub;margin:0px 2px" src="static/4半星.png"
-                                                height="20em">
-                                            {% endif %}
-                                            {% if n[2] == 5 %}
-                                            <img style="vertical-align: sub;margin:0px 2px" src="static/5星.png"
-                                                height="20em">
-                                            {% endif %}
-
-
-
-                                            <span class="commentPh"><br>
-                                                總評論數
-                                                <!-- 總評論數手機版 -->
-                                                <span
-                                                    style="font-size:15px;font-weight: bold;color: #000000">&nbsp;{{ n[3] }}&nbsp;</span>
-                                                筆
-                                            </span>
-                                            <span class="comment">
-                                                總評論數
-                                                <!-- 總評論數電腦版 -->
-                                                <span
-                                                    style="font-size:15px;font-weight: bold;color: #000000">&nbsp;{{ n[3] }}&nbsp;</span>
-                                                筆
-                                            </span>
-                                            <hr style="margin:5px 0px">
-                                            <div style="margin:0px 0px 5px 0px;float: left;">
-                                                <!-- google map -->
-                                                <a href="https://www.google.com.tw/maps/place/{{ n[5] }}" class="map"
-                                                    target="_blank">
-                                                    <img title="在Google Map開啟"
-                                                        style="vertical-align: sub;margin:15px 5px 0px"
-                                                        src="static/address.png" height="20em">
-                                                    <!-- 地址 -->
-
-                                                    <span title="在Google Map開啟"
-                                                        style="font-size:15px;">{{ n[5] }}</span>
-                                                </a>
-                                                <div style="height:5px"></div>
-                                                <img style="vertical-align: sub;margin:0px 5px" src="static/phone.png"
-                                                    height="20em">
-                                                <!-- 電話 -->
-                                                <span style="font-size:15px;color: #5a5a5a">{{ n[4] }}</span>
-                                            </div>
-
-                                            <!-- 主觀指標鈕 -->
-                                            <div class="subOb">
-                                                <div style="float:right;">
-                                                    <button id="hospSubjResult" type="submit" class="btn-sm btnSubject"
-                                                        style="padding:5px 15px;" name="btnSubj{{ n[6] }}"
-                                                        onclick="subj()">
-                                                        <!-- 粉色放大鏡 -->
-                                                        <img src="static/subSearch.png"
-                                                            style="width:17px;padding-right:5px;">
-                                                        主觀指標
-                                                    </button>
-                                                </div>
-                                                <br>
-                                                <!-- 客觀指標鈕 -->
-                                                <div style="float:right;">
-                                                    <button id="hospObjResult" type="submit" class="btn-sm btnObject"
-                                                        style="padding:5px 15px;" name="btnObj{{ n[6] }}"
-                                                        onclick="obj()">
-                                                        <!-- 藍色放大鏡 -->
-                                                        <img src="static/obSearch.png"
-                                                            style="width:17px;padding-right:5px;">
-                                                        客觀指標
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <!-- {% endfor %} -->
-
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <div style="margin:15px;text-align: center" id="thead">
+                <h3>醫療機構搜尋結果</h3>
             </div>
-            <!-- 結果分頁 -->
-            <div class="center5 span">
-                <div style=" width: 150px;height: 60px;overflow: auto; overflow-y:hidden;margin: 0px auto">
-                    <h2></h2>
+
+            <!-- 表格 -->
+            <div style="background-color:rgba(184,206,217,0.5);margin:10px 10%;">
+
+                <div style="margin:0px auto; " class="tableWidth">
+
+                    <table class="table " style="border:5px rgba(255, 255, 255, 0.8) solid;text-align:left;"
+                           rules="all" >
+
+                        <tbody style="font-size:15px">
+                        {% for n in normal %}
+                        <tr>
+                            <td style="font-size:17px;border:5px rgba(255, 255, 255, 0.8) solid;">
+                                <!-- 醫院圖片 -->
+                                <img style="float: left" src="https://picsum.photos/200/150/?image=2">
+                                <div class="tableHosName">
+                                    <p style="font-size:23px;margin: 0px">{{ n[0] }}</p>
+                                    <!--醫療層級-->
+                                    <span style="font-size:15px;color: #5a5a5a">{{ n[1] }}</span>
+                                    <!--星等-->
+                                    <span style="font-size:15px;color: #5a5a5a;background-color:rgba(255, 211, 229,0.5);;border-radius:5px;padding:2px 5px">{{ n[2]}}</span>
+                                    {% if 0 <= n[2] < 0.5 %}
+                                    <img style="vertical-align: sub;margin:0px 2px" src="static/0星.png" height="20em">
+                                    {% endif %}
+                                    {% if 0.5 <= n[2] < 1 %}
+                                    <img style="vertical-align: sub;margin:0px 2px" src="static/0半星.png" height="20em">
+                                    {% endif %}
+                                    {% if 1 <= n[2] < 1.5 %}
+                                    <img style="vertical-align: sub;margin:0px 2px" src="static/1星.png" height="20em">
+                                    {% endif %}
+                                    {% if 1.5 <= n[2] < 2 %}
+                                    <img style="vertical-align: sub;margin:0px 2px" src="static/1半星.png" height="20em">
+                                    {% endif %}
+                                    {% if 2 <= n[2] < 2.5 %}
+                                    <img style="vertical-align: sub;margin:0px 2px" src="static/2星.png" height="20em">
+                                    {% endif %}
+                                    {% if 2.5 <= n[2] < 3 %}
+                                    <img style="vertical-align: sub;margin:0px 2px" src="static/2半星.png" height="20em">
+                                    {% endif %}
+                                    {% if 3 <= n[2] < 3.5 %}
+                                    <img style="vertical-align: sub;margin:0px 2px" src="static/3星.png" height="20em">
+                                    {% endif %}
+                                    {% if 3.5 <= n[2] < 4 %}
+                                    <img style="vertical-align: sub;margin:0px 2px" src="static/3半星.png" height="20em">
+                                    {% endif %}
+                                    {% if 4 <= n[2] < 4.5 %}
+                                    <img style="vertical-align: sub;margin:0px 2px" src="static/4星.png" height="20em">
+                                    {% endif %}
+                                    {% if 4.5 <= n[2] < 5 %}
+                                    <img style="vertical-align: sub;margin:0px 2px" src="static/4半星.png" height="20em">
+                                    {% endif %}
+                                    {% if n[2] == 5 %}
+                                    <img style="vertical-align: sub;margin:0px 2px" src="static/5星.png" height="20em">
+                                    {% endif %}
+
+
+
+                                    <span class="commentPh"><br>
+                                                總評論數
+                                        <!-- 總評論數手機版 -->
+                                                <span style="font-size:15px;font-weight: bold;color: #000000">&nbsp;{{ n[3] }}&nbsp;</span>
+                                                筆
+                                    </span>
+                                    <span class="comment">
+                                                總評論數
+                                        <!-- 總評論數電腦版 -->
+                                                <span style="font-size:15px;font-weight: bold;color: #000000">&nbsp;{{ n[3] }}&nbsp;</span>
+                                                筆
+                                    </span>
+                                    <hr style="margin:5px 0px">
+                                    <div style="margin:0px 0px 5px 0px;float: left;">
+                                        <!-- google map -->
+                                        <a href="https://www.google.com.tw/maps/place/{{ n[5] }}" class="map"
+                                           target="_blank">
+                                            <img  title="在Google Map開啟" style="vertical-align: sub;margin:15px 5px 0px"
+                                                  src="static/address.png" height="20em">
+                                            <!-- 地址 -->
+
+                                            <span title="在Google Map開啟"
+                                                  style="font-size:15px;">{{ n[5] }}</span>
+                                        </a>
+                                        <div style="height:5px"></div>
+                                        <img style="vertical-align: sub;margin:0px 5px" src="static/phone.png"
+                                             height="20em">
+                                        <!-- 電話 -->
+                                        <span style="font-size:15px;color: #5a5a5a">{{ n[4] }}</span>
+                                    </div>
+
+                                    <!-- 主觀指標鈕 -->
+                                    <div class="subOb">
+                                        <div style="float:right;">
+                                            <button id="hospSubjResult" type="submit" class="btn-sm btnSubject" style="padding:5px 15px;" name="btnSubj{{ n[6] }}" onclick="subj()">
+                                                <!-- 粉色放大鏡 -->
+                                                <img src="static/subSearch.png" style="width:17px;padding-right:5px;">
+                                                主觀指標
+                                            </button>
+                                        </div>
+                                        <br>
+                                        <!-- 客觀指標鈕 -->
+                                        <div style="float:right;">
+                                            <button id="hospObjResult" type="submit" class="btn-sm btnObject"
+                                                    style="padding:5px 15px;" name="btnObj{{ n[6] }}" onclick="obj()">
+                                                <!-- 藍色放大鏡 -->
+                                                <img src="static/obSearch.png"
+                                                     style="width:17px;padding-right:5px;">
+                                                客觀指標
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-    </form>
-
-
-
-    <!-- footer -->
-    <div style="margin-top:20px;" class="span" id="footer">
-        <div style="background-color:rgb(101,129,152);">
-            <div class="footerText">
-                <div style="text-align:left; color: white;padding:5%">
-                    <ul style="list-style-position: outside;margin:0">
-                        <li style="font-weight:bold;">輔仁大學醫療評價計畫團隊介紹：</li>
-                        <h6>
-                            - 商研所: 李天行 教授<br>
-                            - 公衛系: 陳宗泰 副教授<br>
-                            - 資工系: 徐嘉連 副教授<br>
-                            - 應美系: 陳力豪 副教授<br>
-                            - 醫資學程: 程伊萱、林昱彤、蔡亞立、胡瀚文 同學
-                        </h6>
-                        <li style="font-weight:bold;">給予我們任何<a href="https://goo.gl/forms/0M3BmbWXczWYmD9X2"
-                                target="_blank" style="color:	pink;"><u>意見</u></a></li>
-
-                        <!-- Start of CuterCounter Code -->
-                        <li style="font-weight:bold;">您是第&nbsp;<a
-                                href="http://www.cutercounter.com/traditional-chinese-n/" target="_blank"><img
-                                    src="http://www.cutercounter.com/hit.php?id=gvundckd&nd=6&style=51"
-                                    alt="網頁計數器"></a>&nbsp;位訪客</li>
-                        <!-- End of CuterCounter Code -->
-                    </ul>
-                </div>
-            </div>
-            <div class="footerImg">
-                <div class="span" style="vertical-align:middle;text-align:center;">
-                    <img src="static/聯絡4.0.png" style="width:60%;margin:10%">
-
-                </div>
-            </div>
-            <hr>
-            <div style="padding:1% 5%">
-                <p style="text-align:center;font-size:12px;"> 本網站版權屬於 輔仁大學醫療評價計畫團隊所有，未經本站同意，請勿擅用圖案。<br>Copyright ©
-                    2019
-                    - FJU
-                    Physician/Hospital Rating Website Team All Rights Reserved</p>
+        <!-- 結果分頁 -->
+        <div class="center5 span">
+            <div style=" width: 150px;height: 60px;overflow: auto; overflow-y:hidden;margin: 0px auto">
+                <h2></h2>
             </div>
         </div>
     </div>
+</form>
+
+
+
+<!-- footer -->
+<div style="margin-top:20px;" class="span" id="footer">
+    <div style="background-color:rgb(101,129,152);">
+        <div class="footerText">
+            <div style="text-align:left; color: white;padding:5%">
+                <ul style="list-style-position: outside;margin:0">
+                    <li style="font-weight:bold;">輔仁大學醫療評價計畫團隊介紹：</li>
+                    <h6>
+                        - 商研所: 李天行 教授<br>
+                        - 公衛系: 陳宗泰 副教授<br>
+                        - 資工系: 徐嘉連 副教授<br>
+                        - 應美系: 陳力豪 副教授<br>
+                        - 醫資學程: 程伊萱、林昱彤、蔡亞立、王嘉琳、胡瀚文 同學
+                    </h6>
+                    <li style="font-weight:bold;">給予我們任何<a href="https://goo.gl/forms/0M3BmbWXczWYmD9X2"
+                                                           target="_blank" style="color:	pink;"><u>意見</u></a></li>
+
+                    <!-- Start of CuterCounter Code -->
+                    <li style="font-weight:bold;">您是第&nbsp;<a
+                            href="http://www.cutercounter.com/traditional-chinese-n/" target="_blank"><img
+                            src="http://www.cutercounter.com/hit.php?id=gvundckd&nd=6&style=51"
+                            alt="網頁計數器"></a>&nbsp;位訪客</li>
+                    <!-- End of CuterCounter Code -->
+                </ul>
+            </div>
+        </div>
+        <div class="footerImg">
+            <div class="span" style="vertical-align:middle;text-align:center;">
+                <img src="static/聯絡4.0.png" style="width:60%;margin:10%">
+
+            </div>
+        </div>
+        <hr>
+        <div style="padding:1% 5%">
+            <p style="text-align:center;font-size:12px;"> 本網站版權屬於 輔仁大學醫療評價計畫團隊所有，未經本站同意，請勿擅用圖案。<br>Copyright ©
+                2019
+                - FJU
+                Physician/Hospital Rating Website Team All Rights Reserved</p>
+        </div>
+    </div>
+</div>
 </body>
 
 </html>
