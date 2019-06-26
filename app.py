@@ -5,6 +5,8 @@ from models.disease import Disease
 from models.subj import Subj
 from models.hospital import Hosp
 from models.search import Search
+from models.comp import Comp
+from models.doctor import Doc
 
 import sqlite3
 
@@ -30,11 +32,11 @@ def renderHome():
 def renderSearch():
     return render_template('search.html')
 
-@app.route('/diseaseResult', methods=['GET'])
-def renderDisease():
-    return  render_template('diseaseResult.html')
+# @app.route('/diseaseResult', methods=['GET'])
+# def renderDisease():
+#     return  render_template('diseaseResult.html')
 
-@app.route('/diseaseResult', methods=['POST'])
+@app.route('/diseaseResult', methods=['GET', 'POST'])
 def panduanDisease():
     if request.method == 'POST':
         if 'btnSearchDisease' in request.form:
@@ -73,7 +75,6 @@ def renderSubj():
 @app.route('/subjResult', methods=['POST'])
 def panduanSubj():
     if request.method == 'POST':
-        print('hi')
         if 'btnSearchDepart' in request.form:
             ## 科別
             depart = request.form.get('depart')
@@ -153,8 +154,57 @@ def panduanHospSubj():
                 subjectives = request.values.getlist('subjective')
                 return Hosp().search_subj(id, subjectives)
 
+@app.route('/hospComparison', methods=['GET'])
+def renderHospComp():
+    return render_template('hospComparison.html')
+
+@app.route('/hospComparison', methods=['POST'])
+def postHospComp():
+    if request.method == 'POST':
+        if 'btnHospComp' in request.form:
+            ## 地區
+            county = request.form.get('hospCounty')
+            township = request.form.get("hospTownship")
+            ## 醫療機構名稱
+            name1 = request.form.get('hospName1')
+            name2 = request.form.get('hospName2')
+            name3 = request.form.get('hospName3')
+            names = [name1, name2, name3]
+            ## 醫院層級
+            types = request.values.getlist('hospType')
+            ##Google星等
+            star = request.form.get("hospStar")
+            if star == None:
+                star = ''
+            return Comp().comp_hosp(county, township, names, types, star)
+        elif 'btnSearchHosp' in request.form:
+            ## 地區
+            county = request.form.get('hospCounty')
+            township = request.form.get("hospTownship")
+            ## 醫療機構名稱
+            name1 = request.form.get('hospName1')
+            name2 = request.form.get('hospName2')
+            name3 = request.form.get('hospName3')
+            names = [name1, name2, name3]
+            ## 醫院層級
+            types = request.values.getlist('hospType')
+            ##Google星等
+            star = request.form.get("hospStar")
+            if star == None:
+                star = ''
+            return Hosp().search_hosp(county, township, names, types, star)
+
+@app.route('/doctorResult', methods=['GET', 'POST'])
+def doctorResult():
+    if request.method == 'POST':
+        if 'btnSearchDoc' in request.form:
+            doctor = request.form.get('doctor')
+            depart = request.form.get('docDepart')
+            name = request.form.get('docName')
+        return Doc().search_doctor(doctor, depart, name)
+
 ##啟動
 if __name__ == '__main__':
     app.jinja_env.auto_reloaded = True  ##jinja2 重新讀取template
-    app.run('0.0.0.0', debug=False)
-    # app.run(debug=False)
+    # app.run('0.0.0.0', debug=False)
+    app.run(debug=False)

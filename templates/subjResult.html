@@ -26,15 +26,17 @@
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
 
-    <script type="text/javascript" src="{{url_for('static', filename='js/searchJS1.14.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/searchJS1.17.js')}}"></script>
     <script type="text/javascript" src="{{url_for('static', filename='js/loading.js')}}"></script>
-    <link rel=stylesheet type="text/css" href="{{ url_for('static', filename='main1.5.css') }}">
-    <!-- <link rel=stylesheet type="text/css" href="hos.css"> -->
+    <link rel=stylesheet type="text/css" href="{{ url_for('static', filename='main1.9.css') }}">
+    <link rel=stylesheet type="text/css" href="hos.css">
+    <script rel=stylesheet type="text/javascript" src="searchJS1.15.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/page.js')}}"></script>
 
     {% if alert %}
     <script>
@@ -110,11 +112,11 @@
         </script>
         <div class="resultBg" style="display:inline-block;vertical-align: top;text-align: center;">
             <!-- 麵包屑 -->
-                <ul class="breadcrumb" style="padding:1% 15px;width: 80%;margin: auto;text-align: center">
-                    <li><a href="/">首頁</a></li>
-                    <li><a href="search">找科別</a></li>
-                    <li style="color:rgba(0, 0, 0, 0.5)">{{ reserved[10] }}</li>
-                </ul>
+            <ul class="breadcrumb" style="padding:1% 15px;width: 80%;margin: auto;text-align: center">
+                <li><a href="/">首頁</a></li>
+                <li><a href="search">找科別</a></li>
+                <li style="color:rgba(0, 0, 0, 0.5)">{{ reserved[10] }}</li>
+            </ul>
             <div style="text-align:center;padding-top: 10px">
                 <h5 class="resultText">搜尋條件<span><img src="static/條件下.png" height="6px"
                                                       style="padding-left:5px"></span></h5>
@@ -314,37 +316,29 @@
             <div class="" style="margin:10px;text-align: center">
                 <h3>【{{reserved[10]}}】環境、醫師態度及溝通等品質分數</h3>
             </div>
-            <!--<div style="display: inline-block;vertical-align: top;width: 96%;text-align: left">-->
-            <!--&lt;!&ndash;排序選擇&ndash;&gt;-->
-            <!--<div class="sort">-->
-            <!--<div class="form-group col-md-10 sortBtn" style="vertical-align: bottom;">-->
-            <!--<select id="inputState" class="form-control " name="selected_index">-->
-            <!--&lt;!&ndash; {% for id, abbr in z_indexes %} &ndash;&gt;-->
-            <!--<option value={{id}}>{{ abbr }}</option>-->
-            <!--&lt;!&ndash; {% endfor %} &ndash;&gt;-->
-            <!--</select>-->
-            <!--</div>-->
-            <!--<div style="display: inline-block;vertical-align: bottom;">-->
-            <!--<input type="submit" name="reSort" class="btn span"-->
-            <!--style="background-color:rgb(101,129,152);color:white" value="排序">-->
-            <!--</div>-->
-            <!--</div>-->
-
-            <!-- <div class="sortImg">
+            <div style="display: inline-block;vertical-align: middle;margin:5px 2%;">
                 <div class="percentSize">
-                    <img src="static/高指標.png" height="20px" title="高指標">&nbsp;百分等級大於75&nbsp;
-                    <img src="static/中指標2.0.png" height="20px" title="中指標">&nbsp;百分等級50~75&nbsp;
-                    <img src="static/低指標2.0.png" height="20px" title="低指標">&nbsp;百分等級小於50&nbsp;
-                    <img src="static/無指標.png" height="20px" title="無指標">&nbsp;無資料
+                    <img src="static/appleRed.png" style="vertical-align: sub;" height="20px" title="">&nbsp;正面評論占率大於30%
+                    <div class="two" ></div>
+                    <img src="static/appleGreen.png" style="vertical-align: sub;" height="20px" title="">&nbsp;正面評論占率小於30%
                 </div>
-            </div> -->
+            </div>
         </div>
+        <style>
+                .two{
+                    display:none;
+                }
+                @media (max-width: 576px) {
+                    .two{
+                    display:block;
+                }
+                }
+            </style>
         <!--清除浮動 -->
         <div style="clear:both;"></div>
 
         <!-- 表格 -->
-        <div
-                style="background-color:rgba(184,206,217,0.5);margin:10px 2%;width:96%; word-break:break-all;">
+        <div style="background-color:rgba(184,206,217,0.5);margin:10px 2%;width:96%; word-break:break-all;overflow: auto;">
             <!--{% for message in get_flashed_messages(with_categories=True) %}-->
 
             <!--<div class="alert alert-secondary" role="alert">-->
@@ -353,15 +347,13 @@
             <!--{% endfor %}-->
             <div style="margin:0px auto;" class="tableWidth">
 
-                <table class="table table-hover" style="border:2px rgba(101,129,152,0.8) solid;text-align:left;"
+                <table class="table table-hover" style="border:2px rgba(101,129,152,0.8) solid;text-align:left;margin-bottom:0px;"
                        rules="all">
                     <thead style="text-align:center;margin:0px auto;" id="thead">
                     <tr>
                         <!-- {% for column, full_name in z_col %} -->
                         <th style="background-color:rgba(184,206,217,1); vertical-align: middle;"
-                            valign="center">{{ column }}<img
-                                src="{{ url_for('static', filename='指標說明.png')}}" height="20px"
-                                title="{{ full_name }}"></th>
+                            valign="center">{{ column }}</th>
                         <!-- {% endfor %} -->
                     </tr>
                     </thead>
@@ -369,11 +361,23 @@
                     <!-- {% for n, v in z_data %} -->
                     <tr>
                         <td style="background-color:rgba(184,206,217,1);width:280px;font-size:17px;">
-                            {{ n[0] }}</td>
+                            {{ n[0] }}
+                        </td>
                         <!-- {% for i in range(ck_len) %} -->
                         <td rowspan="4"
                             style="vertical-align:middle;text-align:center;font-size:14px;width:250px">
-                            <div style="vertical-align:middle;text-align:center;">{{ v[i+1] }}%</div>
+                            <div style="vertical-align:middle;text-align:center;">
+                                {% if v[i+1] == None%}
+                                無資料
+                                {% else %}
+                                {% if v[i+1] >= 30 %}
+                                <img src="static/appleRed.png" height="50px">
+                                {% else %}
+                                <img src="static/appleGreen.png" height="50px">
+                                {% endif %}
+                                <br>{{ v[i+1] }}%
+                                {% endif %}
+                            </div>
                         </td>
                         <!-- {% endfor %} -->
                     </tr>
@@ -420,21 +424,21 @@
                     </tr>
 
                     <tr title={{ n[4] }}>
-                            <td>
-                                <!-- 電話 -->
-                                <img style="vertical-align: sub;" src="static/phone.png"
-                                     height="20em" title="" >&nbsp;
-                                <span style="font-size:15px;">{{ n[3] }}</span>&nbsp;
-                                <!-- google map -->
-                                <a href="https://www.google.com.tw/maps/place/{{ n[4] }}" class="map"
-                                   target="_blank">
-                                    <img  title="在地圖中開啟" style="vertical-align: sub;"
-                                          src="static/address.png" height="20em">&nbsp;
-                                    <span title="{{ n[4] }}"
-                                          style="font-size:15px;">在地圖中開啟</span>
-                                </a>
-                            </td>
-                        </tr>
+                        <td>
+                            <!-- 電話 -->
+                            <img style="vertical-align: sub;" src="static/phone.png"
+                                 height="20em" title="" >&nbsp;
+                            <span style="font-size:15px;">{{ n[3] }}</span>&nbsp;
+                            <!-- google map -->
+                            <a href="https://www.google.com.tw/maps/place/{{ n[4] }}" class="map"
+                               target="_blank">
+                                <img  title="在地圖中開啟" style="vertical-align: sub;"
+                                      src="static/address.png" height="20em">&nbsp;
+                                <span title="{{ n[4] }}"
+                                      style="font-size:15px;">在地圖中開啟</span>
+                            </a>
+                        </td>
+                    </tr>
                     <!-- {% endfor %} -->
                     </tbody>
                 </table>
@@ -464,7 +468,7 @@
                         - 公衛系: 陳宗泰 副教授<br>
                         - 資工系: 徐嘉連 副教授<br>
                         - 應美系: 陳力豪 副教授<br>
-                        - 醫資學程: 程伊萱、林昱彤、蔡亞立、王嘉琳、胡瀚文 同學
+                        - 醫資學程: 程伊萱、林昱彤、蔡亞立、胡瀚文 同學
                     </h6>
                     <li style="font-weight:bold;">給予我們任何<a href="https://goo.gl/forms/0M3BmbWXczWYmD9X2"
                                                            target="_blank" style="color:	pink;"><u>意見</u></a></li>

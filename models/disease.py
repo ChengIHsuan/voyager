@@ -10,7 +10,7 @@ class Disease():
 
     ## 綜合搜尋
     def search_all(self, disease, county, township, types, names, star, indexes):
-        # try:
+        try:
             ## 保留搜尋條件
             reserved = Search().disease_reserved(disease, county, township, names, types, star)
             reserved.append(Search().search_disease(disease))
@@ -40,9 +40,9 @@ class Disease():
             if sql_where != '':
                 sql_where = 'WHERE ' + sql_where
             return Select().exclude_none_data(indexes, sql_where, reserved)
-        # except BaseException as e:
-        #     print('search_all Exception' + e)
-        #     return  render_template('search.hml')
+        except BaseException as e:
+            print('search_all Exception' + e)
+            return  render_template('search.hml')
 
 class Select():
 
@@ -52,7 +52,7 @@ class Select():
 
     ## 排除所選指標皆為-1之資料
     def exclude_none_data(self, indexes, sql_where, reserved):
-        # try:
+        try:
             ## 產生所有指標不能皆為-1之條件
             str = ''
             for index in indexes:
@@ -63,13 +63,13 @@ class Select():
             ## 將condition加上所有指標不能皆為-1之條件
             sql_where += ' AND (' + str + ')'
             return Select().select_normal(indexes, sql_where, reserved)
-        # except BaseException as e:
-        #     print('exclude_none_data Exception' + e)
-        #     return render_template('search.html')
+        except BaseException as e:
+            print('exclude_none_data Exception' + e)
+            return render_template('search.html')
 
     ## 取得醫療機構資訊
     def select_normal(self, indexes, sql_where, reserved):
-        # try:
+        try:
             deno_substr = ""
             for r in range(len(indexes)):
                 # 截取merge_data分母數字
@@ -95,7 +95,6 @@ class Select():
                     if deno_all[k][r + 1] == "（此指標無確切就醫人數":
                         new_deno = 0
                     else:
-                        print(deno_all[k])
                         # 把資料全部轉成整數
                         new_deno = int(deno_all[k][r + 1])
                     if new_deno < 30:
@@ -138,13 +137,13 @@ class Select():
                 return render_template("search.html", alert=alert)
             else:
                 return Select().select_data(normal, indexes, sql_where, reserved)
-        # except BaseException as e:
-        #     print('select_normal Exception' + e)
-        #     return render_template('search.html')
+        except BaseException as e:
+            print('select_normal Exception' + e)
+            return render_template('search.html')
 
     ## 取得使用者勾選的資訊
     def select_data(self, normal, indexes, sql_where, reserved):
-        # try:
+        try:
             value_substr = 'm.hospital_id'
             deno_substr = 'm.hospital_id'
             level_substr = 'm.hospital_id'
@@ -182,9 +181,9 @@ class Select():
             ## 將醫療機構資訊、指標值、就醫人數、指標值等級包裝成zip
             z_data = zip(normal, l_value, l_deno, l_level)
             return Result().get_column_name(indexes, z_data, sql_where, reserved)
-        # except BaseException as e:
-        #     print('select_data Exception' + e)
-        #     return render_template('search.html')
+        except BaseException as e:
+            print('select_data Exception' + e)
+            return render_template('search.html')
 
 class Result():
 
@@ -194,7 +193,7 @@ class Result():
 
     ## 取得欄位名稱
     def get_column_name(self, indexes, z_data, sql_where, reserved):
-        # try:
+        try:
             ## 先取得欄位的原始名字(m.v_?)，「醫院機構資訊」為固定欄位，直接手動新增
             getColumns=['醫療機構資訊']
             for index in indexes:
@@ -211,13 +210,13 @@ class Result():
             ## sort_indexes第一個為【醫療機構資訊】，不列入排序選項
             del sort_indexes[0]
             return Result().table(z_data, columns, ck_len, indexes, sql_where, sort_indexes, reserved)
-        # except BaseException as e:
-        #     print('get_column_name Exception' + e)
-        #     return render_template('search.html')
+        except BaseException as e:
+            print('get_column_name Exception' + e)
+            return render_template('search.html')
 
     ## 將搜尋結果寫進表格
     def table(self, z_data, columns, ck_len, indexes, sql_where, sort_indexes, reserved):
-        # try:
+        try:
             tmp_indexes = ''
             for r in range(len(indexes)):
                 tmp_indexes += indexes[r] + '//'
@@ -225,6 +224,6 @@ class Result():
             z_indexes = zip(indexes, sort_indexes)
             ## render至前端HTML，ck_len為指標的長度，columns為欄位名稱，z為醫院資訊和指標值的zip
             return render_template('diseaseResult.html', reserved=reserved, ck_len=ck_len, columns=columns, z_data=z_data, sql_where=sql_where, tmp_indexes=tmp_indexes, z_indexes=z_indexes)
-        # except BaseException as e:
-        #     print('table Exception' + e)
-        #     return render_template('search.html')
+        except BaseException as e:
+            print('table Exception' + e)
+            return render_template('search.html')
