@@ -206,5 +206,7 @@ def doctorResult():
 ##啟動
 if __name__ == '__main__':
     app.jinja_env.auto_reloaded = True  ##jinja2 重新讀取template
-    # app.run('0.0.0.0', debug=False)
-    app.run(debug=False)
+    ## 推上網站使用
+    app.run('0.0.0.0', debug=False)
+    ## 於PyCharm測試使用
+    # app.run(debug=False)
