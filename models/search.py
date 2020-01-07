@@ -6,28 +6,8 @@ class Search():
         db = sqlite3.connect('voyager.db')
         self.cursor = db.cursor()
 
-    ## 醫療機構
-    def search_hosp(self, hospital_id):
-        try:
-            sqlstr = "SELECT h.id, h.abbreviation, h.type, cast(fr.star as float), fr.reviews, h.address, h.phone FROM hospitals h JOIN final_reviews fr ON h.id = fr.hospital_id WHERE h.id={}".format(
-                hospital_id)
-            normal = self.cursor.execute(sqlstr).fetchone()
-            return normal
-        except:
-            return "抱歉，操作失敗。[H]"
 
-    ## 科別
-    def search_depart(self, depart):
-        try:
-            if depart != '0' :
-                sql_where = "s.depart_id = {}".format(depart)
-                return sql_where
-            else:
-                return ''
-        except:
-            return "抱歉，操作失敗。[Dpt]"
-
-    ## 地區搜尋
+    ## 地區搜尋條件
     def search_area(self, county, township):
         try:
             areaStr = {
@@ -65,28 +45,7 @@ class Search():
         except:
             return "抱歉，操作失敗。[A]"
 
-    ## 特殊疾病
-    def search_disease(self, disease):
-        try:
-            ## 取得各疾病名稱
-            getStr = {
-                '1': "氣喘",
-                '2': "急性心肌梗塞",
-                '3': "糖尿病",
-                '4': "人工膝關節手術",
-                '5': "腦中風",
-                '6': "鼻竇炎",
-                '7': "子宮肌瘤手術",
-                '8': "消化性潰瘍",
-                '9': "血液透析",
-                '10': "腹膜透析",
-                '11': "慢性腎臟病"
-            }
-            return getStr.get(disease)
-        except:
-            return "抱歉，操作失敗。[D]"
-
-    ## 醫院層級
+    ## 醫院層級搜尋條件
     def search_type(self, types):
         try:
             ## 建立一個tuple，使前端取回的type值可以對應正確的醫療層級
@@ -109,7 +68,7 @@ class Search():
         except:
             return "抱歉，操作失敗。[T]"
 
-    ## 醫院名稱
+    ## 醫院名稱搜尋條件
     def search_name(self, names):
         try:
             ## 移除陣列中的空字串，即使用者未輸入之txtbox
@@ -133,7 +92,7 @@ class Search():
         except:
             return "抱歉，操作失敗。[N]"
 
-    ## 星等
+    ## 星等搜尋條件
     def search_star(self, star):
         try:
             sql_where = ''
@@ -143,6 +102,18 @@ class Search():
         except:
             return "抱歉，操作失敗。[S]"
 
+    ## 【找科別】科別搜尋條件
+    def search_depart(self, depart):
+        try:
+            if depart != '0' :
+                sql_where = "s.depart_id = {}".format(depart)
+                return sql_where
+            else:
+                return ''
+        except:
+            return "抱歉，操作失敗。[Dpt]"
+
+    ## 【找醫師】醫師搜尋條件
     def search_doctor(self, doctor):
         try:
             if doctor != '':
@@ -153,68 +124,34 @@ class Search():
         except:
             return "抱歉，操作失敗。[Doc]"
 
-    ## 醫療機構保留條件
-    def hosp_reserved(self, county, township, names, types, star):
+    ## 【麵包屑】特殊疾病名稱
+    def disease_breadcrumb(self, disease):
         try:
-            ## reserved = [縣市, 鄉鎮市區, 名稱1, 名稱2, 名稱3, 醫學中心, 區域醫院, 地區醫院, 診所, 星等]
-            reserved = [county, township]
-            for name in names:
-                reserved.append(name)
-            ## 醫療層級預設皆為false，若使用者有勾選擇改為true
-            for f in range(4):  #共有4個醫療層級#
-                reserved.append('false')
-            for type in types:
-                i = (int(type) + 4)  #層級value為1~4，對應保留條件陣列中5~8位置#
-                reserved[i] = 'true'
-            while star == '':  #即使用者沒有選擇星等#
-                star = 0
-            reserved.append(star)
-            return reserved
+            ## 取得各疾病名稱
+            getStr = {
+                '1': "氣喘",
+                '2': "急性心肌梗塞",
+                '3': "糖尿病",
+                '4': "人工膝關節手術",
+                '5': "腦中風",
+                '6': "鼻竇炎",
+                '7': "子宮肌瘤手術",
+                '8': "消化性潰瘍",
+                '9': "血液透析",
+                '10': "腹膜透析",
+                '11': "慢性腎臟病"
+            }
+            return getStr.get(disease)
         except:
-            return "抱歉，操作失敗。[HR]"
+            return "抱歉，操作失敗。[D_Brd]"
 
-    ## 疾病保留條件
-    def disease_reserved(self, disease, county, township, names, types, star):
+    ## 【麵包屑】科別名稱
+    def depart_breadcrumb(self, depart_id):
         try:
-            ## reserved = [特殊疾病, 縣市, 鄉鎮市區, 名稱1, 名稱2, 名稱3, 醫學中心, 區域醫院, 地區醫院, 診所, 星等]
-            reserved = [disease, county, township]
-            for name in names:
-                reserved.append(name)
-            ## 醫療層級預設皆為false，若使用者有勾選擇改為true
-            for f in range(4):  #共有4個醫療層級#
-                reserved.append('false')
-            for type in types:
-                i = (int(type) + 5)  #層級value為1~4，對應保留條件陣列中6~9位置#
-                reserved[i] = 'true'
-            while star == '':  #即使用者沒有選擇星等#
-                star = 0
-            reserved.append(star)
-            return reserved
+            sqlstr = "SELECT name FROM depart WHERE id = {}".format(depart_id)
+            depart = self.cursor.execute(sqlstr).fetchone()[0]
+            return depart
         except:
-            return "抱歉，操作失敗。[DR]"
+            return "抱歉，操作失敗。[Dpt_Brd]"
 
-    ## 科別保留條件
-    def subj_reserved(self, depart, county, township, types, names):
-        try:
-            ## reserved = [科別, 縣市, 鄉鎮市區, 醫學中心, 區域醫院, 地區醫院, 診所, 名稱1, 名稱2, 名稱3,]
-            reserved = [depart, county, township]
-            ## 醫療層級預設皆為false，若使用者有勾選擇改為true
-            for f in range(4):  #共有4個醫療層級#
-                reserved.append('false')
-            for type in types:
-                i = (int(type) + 2)  #層級value為1~4，對應保留條件陣列中3~6位置#
-                reserved[i] = 'true'
-            for name in names:
-                reserved.append(name)
-            return reserved
-        except:
-            return "抱歉，操作失敗。[SR]"
-
-    def doc_reserved(self, doctor, depart, name):
-        try:
-            ## reserved = [科別, 縣市, 鄉鎮市區, 醫學中心, 區域醫院, 地區醫院, 診所, 名稱1, 名稱2, 名稱3,]
-            reserved = [doctor, depart, name]
-            return reserved
-        except:
-            return "抱歉，操作失敗。[CR]"
 

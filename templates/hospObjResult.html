@@ -77,88 +77,88 @@
 
         <div class="resultBg" style="display:inline-block;vertical-align: top;text-align: center;">
 
-            {% if normal %}
+            {% if hosp_info %}
             <div style="width:80%;margin:1% auto">
                 <!-- 麵包屑 -->
                 <ul class="breadcrumb">
                     <li><a href="/">首頁</a></li>
                     <li><a href="search">找醫療機構</a></li>
-                    <li style="color:rgba(0, 0, 0, 0.5)">{{ normal[1] }}</li>
+                    <li style="color:rgba(0, 0, 0, 0.5)">{{ hosp_info[1] }}</li>
                 </ul>
                 <img class="hosImg" src="https://picsum.photos/200/150/?image=2">
                 <div class="tableHosName" id="indexes">
                     <!--醫療機構名稱-->
-                    <p style="font-size:23px;margin: 0px">{{ normal[1] }}</p>
+                    <p style="font-size:23px;margin: 0px">{{ hosp_info[1] }}</p>
                     <!--醫療層級-->
-                    <span style="font-size:15px;color: #5a5a5a">{{ normal[2] }}</span>
+                    <span style="font-size:15px;color: #5a5a5a">{{ hosp_info[2] }}</span>
                     <!--星等-->
-                    <span style="font-size:15px;color: #5a5a5a;background-color:rgba(255, 211, 229,0.5);;border-radius:5px;padding:2px 5px">{{ normal[3]}}</span>
-                    {% if 0 <= normal[3] < 0.5 %}
+                    <span style="font-size:15px;color: #5a5a5a;background-color:rgba(255, 211, 229,0.5);;border-radius:5px;padding:2px 5px">{{ hosp_info[3]}}</span>
+                    {% if 0 <= hosp_info[3] < 0.5 %}
                     <img style="vertical-align: sub;margin:0px 2px" src="static/0星.png" height="20em">
                     {% endif %}
-                    {% if 0.5 <= normal[3] < 1 %}
+                    {% if 0.5 <= hosp_info[3] < 1 %}
                     <img style="vertical-align: sub;margin:0px 2px" src="static/0半星.png" height="20em">
                     {% endif %}
-                    {% if 1 <= normal[3] < 1.5 %}
+                    {% if 1 <= hosp_info[3] < 1.5 %}
                     <img style="vertical-align: sub;margin:0px 2px" src="static/1星.png" height="20em">
                     {% endif %}
-                    {% if 1.5 <= normal[3] < 2 %}
+                    {% if 1.5 <= hosp_info[3] < 2 %}
                     <img style="vertical-align: sub;margin:0px 2px" src="static/1半星.png" height="20em">
                     {% endif %}
-                    {% if 2 <= normal[3] < 2.5 %}
+                    {% if 2 <= hosp_info[3] < 2.5 %}
                     <img style="vertical-align: sub;margin:0px 2px" src="static/2星.png" height="20em">
                     {% endif %}
-                    {% if 2.5 <= normal[3] < 3 %}
+                    {% if 2.5 <= hosp_info[3] < 3 %}
                     <img style="vertical-align: sub;margin:0px 2px" src="static/2半星.png" height="20em">
                     {% endif %}
-                    {% if 3 <= normal[3] < 3.5 %}
+                    {% if 3 <= hosp_info[3] < 3.5 %}
                     <img style="vertical-align: sub;margin:0px 2px" src="static/3星.png" height="20em">
                     {% endif %}
-                    {% if 3.5 <= normal[3] < 4 %}
+                    {% if 3.5 <= hosp_info[3] < 4 %}
                     <img style="vertical-align: sub;margin:0px 2px" src="static/3半星.png" height="20em">
                     {% endif %}
-                    {% if 4 <= normal[3] < 4.5 %}
+                    {% if 4 <= hosp_info[3] < 4.5 %}
                     <img style="vertical-align: sub;margin:0px 2px" src="static/4星.png" height="20em">
                     {% endif %}
-                    {% if 4.5 <= normal[3] < 5 %}
+                    {% if 4.5 <= hosp_info[3] < 5 %}
                     <img style="vertical-align: sub;margin:0px 2px" src="static/4半星.png" height="20em">
                     {% endif %}
-                    {% if normal[3] == 5 %}
+                    {% if hosp_info[3] == 5 %}
                     <img style="vertical-align: sub;margin:0px 2px" src="static/5星.png" height="20em">
                     {% endif %}
                     <!--評論數-->
                     <span class="commentPh"><br>
                             總評論數
-                            <span style="font-size:15px;font-weight: bold;color: #000000">&nbsp;{{ normal[4] }}&nbsp;</span>
+                            <span style="font-size:15px;font-weight: bold;color: #000000">&nbsp;{{ hosp_info[4] }}&nbsp;</span>
                             筆
                         </span>
                     <span class="comment">
                             總評論數
-                            <span style="font-size:15px;font-weight: bold;color: #000000">&nbsp;{{ normal[4] }}&nbsp;</span>
+                            <span style="font-size:15px;font-weight: bold;color: #000000">&nbsp;{{ hosp_info[4] }}&nbsp;</span>
                             筆
                         </span>
                     <hr style="margin:5px 0px">
                     <div style="margin:0px 0px 5px 0px;float: left;">
                         <!--google map-->
-                        <a href="https://www.google.com.tw/maps/place/{{ normal[5] }}" class="map"
+                        <a href="https://www.google.com.tw/maps/place/{{ hosp_info[5] }}" class="map"
                            target="_blank">
                             <!--地址-->
                             <img  title="在Google Map開啟" style="vertical-align: sub;margin:15px 5px 0px"
                                   src="static/address.png" height="20em">
                             <span title="在Google Map開啟"
-                                  style="font-size:15px;">{{ normal[5] }}</span>
+                                  style="font-size:15px;">{{ hosp_info[5] }}</span>
                         </a>
                         <!--電話-->
                         <div style="height:5px"></div>
                         <img style="vertical-align: sub;margin:0px 5px" src="static/phone.png"
                              height="20em">
-                        <span style="font-size:15px;color: #5a5a5a">{{ normal[6] }}</span>
+                        <span style="font-size:15px;color: #5a5a5a">{{ hosp_info[6] }}</span>
                     </div>
                     <!-- 主觀指標鈕 -->
                     <div class="subOb">
                         <div style="float:right;">
                             <button id="btnSubj" type="submit" class="btn-sm btnSubject"
-                                    style="padding:5px 15px;" name="btnSubj{{ normal[0] }}"><img src="static/subSearch.png" style="width:17px;padding-right:5px;">
+                                    style="padding:5px 15px;" name="btnSubj{{ hosp_info[0] }}"><img src="static/subSearch.png" style="width:17px;padding-right:5px;">
                                 主觀指標</button>
                         </div>
                         <br>
@@ -166,7 +166,7 @@
                         <div style="float:right;">
                             <a href="/專題檔案/hosNameObResult.html">
                                 <button id="btnObj" type="submit" class="btn-sm btnObject"
-                                        style="padding:5px 15px;" name="btnObj{{ normal[0] }}"><img src="static/obSearch.png"
+                                        style="padding:5px 15px;" name="btnObj{{ hosp_info[0] }}"><img src="static/obSearch.png"
                                                                                                     style="width:17px;padding-right:5px;">
                                     客觀指標</button>
                             </a>
@@ -383,7 +383,7 @@
                     <div style="text-align:left;display: inline-block;vertical-align: top;">
                         <a href="">
                             <button id="btnSearchOb" type="submit" class="btn-sm btnStart" style="padding:8px 15px;"
-                                    disabled name="btnSearch{{ normal[0] }}"><img src="static/search.png"
+                                    disabled name="btnSearch{{ hosp_info[0] }}"><img src="static/search.png"
                                                                                   style="width:17px;padding-right:5px;">
                                 搜尋</button>
                         </a>
@@ -418,10 +418,10 @@
                         <img src="static/-.png" style="vertical-align: sub;" height="20px"
                              title="負向指標">&nbsp;負向指標&nbsp;(越小越好)
                         <div class="two" ></div>
-                        <img src="static/高指標.png" height="20px" title="高指標">&nbsp;百分等級大於75&nbsp;
-                        <img src="static/中指標2.0.png" height="20px" title="中指標">&nbsp;百分等級50~75&nbsp;
+                        <img src="static/高指標.png" height="20px" title="高指標">&nbsp;分數為前24名以內
+                        <img src="static/中指標2.0.png" height="20px" title="中指標">&nbsp;分數為25到49名之間&nbsp;
                         <div class="two" ></div>
-                        <img src="static/低指標2.0.png" height="20px" title="低指標">&nbsp;百分等級小於50&nbsp;
+                        <img src="static/低指標2.0.png" height="20px" title="低指標">&nbsp;分數為50名以後
                         <img src="static/無指標.png" height="20px" title="無指標">&nbsp;無資料
                     </div>
                 </div>
@@ -530,7 +530,6 @@
                         - 公衛系: 陳宗泰 副教授<br>
                         - 資工系: 徐嘉連 副教授<br>
                         - 應美系: 陳力豪 副教授<br>
-                        - 醫資學程: 程伊萱、林昱彤、蔡亞立、胡瀚文 同學
                     </h6>
                     <li style="font-weight:bold;">給予我們任何<a href="https://goo.gl/forms/0M3BmbWXczWYmD9X2"
                                                            target="_blank" style="color:	pink;"><u>意見</u></a></li>

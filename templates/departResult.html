@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zn-Hant-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>醫療機構評價網站</title>
+    <link rel="shortcut icon" href="static/favicon.ico">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- jQuery v1.9.1 -->
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <!-- Chosen v1.8.2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="{{url_for('static', filename='js/searchJS1.17.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/loading.js')}}"></script>
+    <link rel=stylesheet type="text/css" href="{{ url_for('static', filename='main1.9.css') }}">
+    <link rel=stylesheet type="text/css" href="hos.css">
+    <script rel=stylesheet type="text/javascript" src="searchJS1.15.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/page.js')}}"></script>
+
+    {% if alert %}
+    <script>
+      alert('{{alert}}');
+    </script>
+    {% endif %}
+</head>
+
+<body class="span">
+<!--回首頁浮動按鈕-->
+<a href="#top" class="back-to-top" style="z-index:101">回到頁首</a>
+
+<script>
+
+        jQuery(document).ready(function () {
+            var offset = 220;
+            var duration = 500;
+            jQuery(window).scroll(function () {
+                if (jQuery(this).scrollTop() > offset) {
+                    jQuery('.back-to-top').fadeIn(duration);
+                } else {
+                    jQuery('.back-to-top').fadeOut(duration);
+                }
+            });
+
+            jQuery('.back-to-top').click(function (event) {
+                event.preventDefault();
+                jQuery('html, body').animate({ scrollTop: 0 }, duration);
+                return false;
+            })
+        });
+    </script>
+<form name="myForm" action="/departResult" method="post" runat="server" autocomplete="on">
+    <div class="container-fiuld">
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #658198;text-align: center">
+            <a class="navbar-brand" href="/"><img src="https://pbs.twimg.com/media/DrvK7_5UcAARp62.png" class=""
+                                                  style="width:70px"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">首頁</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="search">搜尋 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <!--<li class="nav-item">-->
+                    <!--<a class="nav-link" href="#">聯絡我們</a>-->
+                    <!--</li>-->
+                </ul>
+            </div>
+        </nav>
+
+        <script>
+            $(document).ready(function() {
+                {% if reserved %}
+                    document.myForm.depart.options[{{reserved[0]}}-1].selected = true;
+                    document.myForm.county.options[{{reserved[1]}}].selected = true;
+                    departRenew({{reserved[1]}})
+                    document.myForm.departTownship.options[{{reserved[2]}}].selected = true;
+                    document.myForm.t1.checked = {{reserved[3]}}
+                    document.myForm.t2.checked = {{reserved[4]}}
+                    document.myForm.t3.checked = {{reserved[5]}}
+                    document.myForm.t4.checked = {{reserved[6]}}
+                    document.myForm.name1.value = '{{reserved[7]}}'
+                    document.myForm.name2.value = '{{reserved[8]}}'
+                    document.myForm.name3.value = '{{reserved[9]}}'
+                {% endif %}
+            });
+        </script>
+        <div class="resultBg" style="display:inline-block;vertical-align: top;text-align: center;">
+            <!-- 麵包屑 -->
+            <ul class="breadcrumb" style="padding:1% 15px;width: 80%;margin: auto;text-align: center">
+                <li><a href="/">首頁</a></li>
+                <li><a href="search">找科別</a></li>
+                <li style="color:rgba(0, 0, 0, 0.5)">{{ reserved[10] }}</li>
+            </ul>
+            <div style="text-align:center;padding-top: 10px">
+                <h5 class="resultText">搜尋條件<span><img src="static/條件下.png" height="6px"
+                                                      style="padding-left:5px"></span></h5>
+            </div>
+            <div class="resultAll">
+                <div class="resultInput">
+                    <div class="col" style="margin:2px auto;color: #000000">
+                        <span class="searchItem">科別</span><span style="font-size:15px;color:  #da2222">
+                                        *&nbsp;(必選)</span>
+                        <select style="margin:2px auto;" class="form-control form-control-sm inputS" id="branch"
+                                name="depart">
+                            <option selected value="1">家醫科</option>
+                            <option value="2">內科</option>
+                            <option value="3">外科</option>
+                            <option value="4">小兒科</option>
+                            <option value="5">婦產科</option>
+                            <option value="6">骨科</option>
+                            <option value="7">神經外科</option>
+                            <option value="8">泌尿科</option>
+                            <option value="9">耳鼻喉科</option>
+                            <option value="10">眼科</option>
+                            <option value="11">皮膚科</option>
+                            <option value="12">神經科</option>
+                            <option value="13">精神科</option>
+                            <option value="14">復健科</option>
+                            <option value="15">整形外科</option>
+                            <option value="16">急診醫學科</option>
+                            <option value="17">職業醫學科</option>
+                            <option value="18">牙科</option>
+                            <option value="19">復健牙科</option>
+                            <option value="20">牙髓病科</option>
+                            <option value="21">牙周病科</option>
+                            <option value="22">補綴牙科</option>
+                            <option value="23">齒顎矯正科</option>
+                            <option value="24">兒童牙科</option>
+                            <option value="25">口腔顎面外科</option>
+                            <option value="26">口腔診斷科</option>
+                            <option value="27">口腔病理科</option>
+                            <option value="28">中醫科</option>
+                            <option value="29">中醫內科</option>
+                            <option value="30">中醫外科</option>
+                            <option value="31">中醫眼科</option>
+                            <option value="32">中醫兒科</option>
+                            <option value="33">中醫婦科</option>
+                            <option value="34">中醫傷科</option>
+                            <option value="35">中醫針灸科</option>
+                            <option value="36">中醫痣科</option>
+                            <option value="37">中醫一般診療不分科</option>
+                            <option value="38">麻醉科</option>
+                            <option value="39">放射線科</option>
+                            <option value="40">病理科</option>
+                            <option value="41">核醫科</option>
+                            <option value="42">結核科</option>
+                            <option value="43">洗腎科</option>
+
+                        </select>
+                    </div>
+                    <div class="col" style="margin:2px auto;color: #000000">
+                        <span class="searchItem">環境、醫師態度及溝通等資訊</span><span style="font-size:15px;color:  #da2222">
+                                        *&nbsp;(必選)</span>
+                        <div id="indexB" style="margin:2% auto">
+                            <input type="checkbox" value="1" id="is1" name="subjective"
+                                   onclick="onCheckBoxSub(this)" />
+                            <label for="is1" class="ckIndex2"><span></span>醫院評價及環境</label>
+                            <input type="checkbox" value="2" id="is2" name="subjective"
+                                   onclick="onCheckBoxSub(this)" />
+                            <label for="is2" class="ckIndex2"><span></span>醫療人員溝通及態度</label>
+                            <input type="checkbox" value="3" id="is3" name="subjective"
+                                   onclick="onCheckBoxSub(this)" />
+                            <label for="is3" class="ckIndex2"><span></span>醫療人員對病友的衛教及情緒安撫</label>
+                            <input type="checkbox" value="4" id="is4" name="subjective"
+                                   onclick="onCheckBoxSub(this)" />
+                            <label for="is4" class="ckIndex2"><span></span>醫院等候時間及流程安排</label>
+                            <input type="checkbox" value="5" id="is5" name="subjective"
+                                   onclick="onCheckBoxSub(this)" />
+                            <label for="is5" class="ckIndex2"><span></span>醫療人員專業</label>
+                            <input type="checkbox" value="6" id="is6" name="subjective"
+                                   onclick="onCheckBoxSub(this)" />
+                            <label for="is6" class="ckIndex2"><span></span>醫師檢查，給藥及協助轉診</label>
+                            <input type="checkbox" value="7" id="is7" name="subjective"
+                                   onclick="onCheckBoxSub(this)" />
+                            <label for="is7" class="ckIndex2"><span></span>不良事件發生</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="resultInput">
+                    <div class="col" style="margin:2px auto;">
+                        <h6>地區</h6>
+                        <select class="form-control form-control-sm resultArea " id="county" name="departCounty"
+                                onChange="departRenew(this.selectedIndex);">
+                            <option selected value="0">選擇縣市</option>
+                            <option value="1">基隆市</option>
+                            <option value="2">臺北市</option>
+                            <option value="3">新北市</option>
+                            <option value="4">桃園市</option>
+                            <option value="5">新竹縣</option>
+                            <option value="6">新竹市</option>
+                            <option value="7">苗栗縣</option>
+                            <option value="8">臺中市</option>
+                            <option value="9">彰化縣</option>
+                            <option value="10">南投縣</option>
+                            <option value="11">雲林縣</option>
+                            <option value="12">嘉義市</option>
+                            <option value="13">嘉義縣</option>
+                            <option value="14">臺南市</option>
+                            <option value="15">高雄市</option>
+                            <option value="16">屏東縣</option>
+                            <option value="17">臺東縣</option>
+                            <option value="18">花蓮縣</option>
+                            <option value="19">宜蘭縣</option>
+                            <option value="20">澎湖縣</option>
+                            <option value="21">金門縣</option>
+                            <option value="22">連江縣</option>
+                        </select>
+                        <select class="form-control form-control-sm resultArea" id="departTownship"
+                                name="departTownship">
+                            <option selected value="0">鄉鎮市區</option>
+                        </select>
+                    </div>
+                    <div class="col" style="margin:2px auto;color: #000000">
+                        <span class="searchItem">醫院或診所名稱</span><span style="font-size:14px;color: #000000">
+                                &nbsp;(最多可以比較三家醫院或診所)</span>
+                        <div></div>
+                        <input type="textbox" class="form-control form-control-sm resultName name"
+                               name="departName1" id="name1" placeholder="醫院或診所名稱">
+                        <input type="textbox" class="form-control form-control-sm resultName name"
+                               name="departName2" id="name2" placeholder="+ 醫院或診所名稱">
+                        <input type="textbox" class="form-control form-control-sm resultName name"
+                               name="departName3" id="name3" placeholder="+ 醫院或診所名稱">
+                    </div>
+
+
+                    <div class="col" style="margin:2px auto;">
+                        <h6>醫院大小</h6>
+                        <div style="font-size: 15px">
+                            <input type="checkbox" value="1" id="t1" name="departType" />
+                            <label for="t1" class="resultType"><span></span>醫學中心</label>
+                            <input type="checkbox" value="2" id="t2" name="departType" />
+                            <label for="t2" class="resultType"><span></span>區域醫院</label>
+                            <input type="checkbox" value="3" id="t3" name="departType" />
+                            <label for="t3" class="resultType"><span></span>地區醫院</label>
+                            <input type="checkbox" value="4" id="t4" name="departType" />
+                            <label for="t4" class="resultType"><span></span>診所</label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--清除浮動 -->
+                <div style="clear:both;"></div>
+                <div style="margin:10px 0px">
+
+                    <div style="text-align:left;display: inline-block;vertical-align: top;">
+                        <a href="">
+                            <button id="btnSearchB" name="btnSearchDepart" type="submit"
+                                    class="btn-sm btnStart" disabled style="padding:8px 15px;"><img
+                                    src="static/search.png" style="width:17px;padding-right:5px;">
+                                搜尋</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                    //條件收合
+                    $(".resultText").click(function () {
+                        $(".resultAll").slideToggle("fast");
+                    });
+                    //必選指標
+                    var sub = 0;
+                    var itemsSub = document.getElementsByName("subjective");
+                    function onCheckBoxSub(checkbox) {
+                        if (checkbox.checked) {
+                            sub++;
+                        }
+                        else {
+                            sub--;
+                        }
+                        if ( sub <= 0) {
+                            $('#btnSearchB').attr('disabled', true);
+                        } else {
+                            $('#btnSearchB').attr('disabled', false);
+                        }
+                    }
+                </script>
+        </div>
+
+        <!-- 結果 -->
+        <div id="results" style="text-align: left;">
+            <!-- {% if scroll %}
+                <script>
+                document.location.hash = '#' + '{{ scroll }}';
+                 </script>
+                {% endif %} -->
+
+            <div class="" style="margin:10px;text-align: center">
+                <h3>【{{reserved[10]}}】環境、醫師態度及溝通等品質分數</h3>
+            </div>
+            <div style="display: inline-block;vertical-align: middle;margin:5px 2%;">
+                <div class="percentSize">
+                    <img src="static/appleRed.png" style="vertical-align: sub;" height="20px" title="">&nbsp;正面評論占率大於30%
+                    <div class="two" ></div>
+                    <img src="static/appleGreen.png" style="vertical-align: sub;" height="20px" title="">&nbsp;正面評論占率小於30%
+                </div>
+            </div>
+        </div>
+        <style>
+                .two{
+                    display:none;
+                }
+                @media (max-width: 576px) {
+                    .two{
+                    display:block;
+                }
+                }
+            </style>
+        <!--清除浮動 -->
+        <div style="clear:both;"></div>
+
+        <!-- 表格 -->
+        <div style="background-color:rgba(184,206,217,0.5);margin:10px 2%;width:96%; word-break:break-all;overflow: auto;">
+            <!--{% for message in get_flashed_messages(with_categories=True) %}-->
+
+            <!--<div class="alert alert-secondary" role="alert">-->
+            <!--{{ message[1] }}-->
+            <!--</div>-->
+            <!--{% endfor %}-->
+            <div style="margin:0px auto;" class="tableWidth">
+
+                <table class="table table-hover" style="border:2px rgba(101,129,152,0.8) solid;text-align:left;margin-bottom:0px;"
+                       rules="all">
+                    <thead style="text-align:center;margin:0px auto;" id="thead">
+                    <tr>
+                        <!-- {% for column in columns %} -->
+                        <th style="background-color:rgba(184,206,217,1); vertical-align: middle;"
+                            valign="center">{{ column[0] }}</th>
+                        <!-- {% endfor %} -->
+                    </tr>
+                    </thead>
+                    <tbody style="font-size:15px">
+                    <!-- {% for n, v in z_data %} -->
+                    <tr>
+                        <td style="background-color:rgba(184,206,217,1);width:280px;font-size:17px;">
+                            {{ n[0] }}
+                        </td>
+                        <!-- {% for i in range(col_len) %} -->
+                        <td rowspan="4"
+                            style="vertical-align:middle;text-align:center;font-size:14px;width:250px">
+                            <div style="vertical-align:middle;text-align:center;">
+                                {% if v[i+1] == None%}
+                                無資料
+                                {% else %}
+                                {% if v[i+1] >= 30 %}
+                                <img src="static/appleRed.png" height="50px">
+                                {% else %}
+                                <img src="static/appleGreen.png" height="50px">
+                                {% endif %}
+                                <br>{{ v[i+1] }}%
+                                {% endif %}
+                            </div>
+                        </td>
+                        <!-- {% endfor %} -->
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ n[1] }}
+                            {% if 0 <= n[1] < 0.5 %}
+                            <img src="{{ url_for('static', filename='0星.png')}}" height="25%">
+                            {% endif %}
+                            {% if 0.5 <= n[1] < 1 %}
+                            <img src="{{ url_for('static', filename='0半星.png')}}" height="25%">
+                            {% endif %}
+                            {% if 1 <= n[1] < 1.5 %}
+                            <img src="{{ url_for('static', filename='1星.png')}}" height="25%">
+                            {% endif %}
+                            {% if 1.5 <= n[1] < 2 %}
+                            <img src="{{ url_for('static', filename='1半星.png')}}" height="25%">
+                            {% endif %}
+                            {% if 2 <= n[1] < 2.5 %}
+                            <img src="{{ url_for('static', filename='2星.png')}}" height="25%">
+                            {% endif %}
+                            {% if 2.5 <= n[1] < 3 %}
+                            <img src="{{ url_for('static', filename='2半星.png')}}" height="25%">
+                            {% endif %}
+                            {% if 3 <= n[1] < 3.5 %}
+                            <img src="{{ url_for('static', filename='3星.png')}}" height="25%">
+                            {% endif %}
+                            {% if 3.5 <= n[1] < 4 %}
+                            <img src="{{ url_for('static', filename='3半星.png')}}" height="25%">
+                            {% endif %}
+                            {% if 4 <= n[1] < 4.5 %}
+                            <img src="{{ url_for('static', filename='4星.png')}}" height="25%">
+                            {% endif %}
+                            {% if 4.5 <= n[1] < 5 %}
+                            <img src="{{ url_for('static', filename='4半星.png')}}" height="25%">
+                            {% endif %}
+                            {% if n[1] == 5 %}
+                            <img src="{{ url_for('static', filename='5星.png')}}" height="20px">
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>相關評論數：{{ n[2] }} </td>
+                    </tr>
+
+                    <tr title={{ n[4] }}>
+                        <td>
+                            <!-- 電話 -->
+                            <img style="vertical-align: sub;" src="static/phone.png"
+                                 height="20em" title="" >&nbsp;
+                            <span style="font-size:15px;">{{ n[3] }}</span>&nbsp;
+                            <!-- google map -->
+                            <a href="https://www.google.com.tw/maps/place/{{ n[4] }}" class="map"
+                               target="_blank">
+                                <img  title="在地圖中開啟" style="vertical-align: sub;"
+                                      src="static/address.png" height="20em">&nbsp;
+                                <span title="{{ n[4] }}"
+                                      style="font-size:15px;">在地圖中開啟</span>
+                            </a>
+                        </td>
+                    </tr>
+                    <!-- {% endfor %} -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- 結果分頁 -->
+    <div class="center5 span">
+        <div style=" width: 150px;height: 60px;overflow: auto; overflow-y:hidden;margin: 0px auto">
+            <h2></h2>
+        </div>
+    </div>
+    </div>
+</form>
+
+
+
+<!-- footer -->
+<div style="margin-top:20px;" class="span" id="footer">
+    <div style="background-color:rgb(101,129,152);">
+        <div class="footerText">
+            <div style="text-align:left; color: white;padding:5%">
+                <ul style="list-style-position: outside;margin:0">
+                    <li style="font-weight:bold;">輔仁大學醫療評價計畫團隊介紹：</li>
+                    <h6>
+                        - 商研所: 李天行 教授<br>
+                        - 公衛系: 陳宗泰 副教授<br>
+                        - 資工系: 徐嘉連 副教授<br>
+                        - 應美系: 陳力豪 副教授<br>
+                    </h6>
+                    <li style="font-weight:bold;">給予我們任何<a href="https://goo.gl/forms/0M3BmbWXczWYmD9X2"
+                                                           target="_blank" style="color:	pink;"><u>意見</u></a></li>
+
+                    <!-- Start of CuterCounter Code -->
+                    <li style="font-weight:bold;">您是第&nbsp;<a
+                            href="http://www.cutercounter.com/traditional-chinese-n/" target="_blank"><img
+                            src="http://www.cutercounter.com/hit.php?id=gvundckd&nd=6&style=51"
+                            alt="網頁計數器"></a>&nbsp;位訪客</li>
+                    <!-- End of CuterCounter Code -->
+                </ul>
+            </div>
+        </div>
+        <div class="footerImg">
+            <div class="span" style="vertical-align:middle;text-align:center;">
+                <img src="static/聯絡4.0.png" style="width:60%;margin:10%">
+
+            </div>
+        </div>
+        <hr>
+        <div style="padding:1% 5%">
+            <p style="text-align:center;font-size:12px;"> 本網站版權屬於 輔仁大學醫療評價計畫團隊所有，未經本站同意，請勿擅用圖案。<br>Copyright ©
+                2019
+                - FJU
+                Physician/Hospital Rating Website Team All Rights Reserved</p>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
